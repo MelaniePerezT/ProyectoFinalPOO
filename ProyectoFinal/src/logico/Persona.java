@@ -33,9 +33,8 @@ public class Persona {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public Persona(String id, String nombre, int edad, String cedula, String correo) {
+	public Persona(String nombre, int edad, String cedula, String correo) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.edad = edad;
 		this.cedula = cedula;
