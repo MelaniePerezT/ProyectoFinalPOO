@@ -16,12 +16,11 @@ public class Cliente extends Persona {
 	public void setCantVentas(int cantVentas) {
 		this.cantVentas = cantVentas;
 	}
-	public Cliente(String nombre, int edad, String cedula, String correo, char clasificacion,
-			int cantVentas) {
+	public Cliente(String nombre, int edad, String cedula, String correo) {
 		super(nombre, edad, cedula, correo);
 		super.id = Tienda.getInstance().generarIdCliente();
 		this.clasificacion = 'C'; /*Nota: Es para que empiece siempre en Comun*/
-		this.cantVentas = cantVentas;
+		this.cantVentas = 0;
 	}
 	
 	

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Proveedor extends Persona {
 	private String empresa;
-	private ArrayList <Producto> productos; /*Hay que agregar la clase Productos para que quite el error*/
+	private ArrayList <Producto> productos; 
 	public String getEmpresa() {
 		return empresa;
 	}

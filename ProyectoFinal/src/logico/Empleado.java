@@ -5,7 +5,7 @@ public class Empleado extends Persona {
 	private boolean empleadoMes;
 	private int cantVentas;
 	private float comisionVentas;
-	private float salario;
+	private float salario; /*Nota: preguntar sobre la utilidad de esta variable*/
 	public boolean isEmpleadoMes() {
 		return empleadoMes;
 	}
@@ -30,14 +30,22 @@ public class Empleado extends Persona {
 	public void setSalario(float salario) {
 		this.salario = salario;
 	}
-	public Empleado(String nombre, int edad, String cedula, String correo, boolean empleadoMes, int cantVentas,
-			float comisionVentas, float salario) {
+	
+	public float calcularSalario() {
+		return comisionVentas * cantVentas;
+	}
+	
+	
+	
+	
+	public Empleado(String nombre, int edad, String cedula, String correo,
+			float comisionVentas) {
 		super(nombre, edad, cedula, correo);
 		super.id = Tienda.getInstance().generarIdEmpleado();
-		this.empleadoMes = empleadoMes;
-		this.cantVentas = cantVentas;
+		this.empleadoMes = false;/*Empiece asi por default*/
+		this.cantVentas = 0;/*Empiece asi por default*/
 		this.comisionVentas = comisionVentas;
-		this.salario = salario;
+		//this.salario = calcularSalario();
 	}
 
 }
