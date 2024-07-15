@@ -148,7 +148,49 @@ public class Tienda {
 		return true;
 		
 	}
+	public Factura buscarFacturaId(String idFactura) {
+		Factura factura=null;
+		boolean encontrado = false;
+		int i = 0;
+			while (!encontrado && i < listaFacturas.size()) {
+				if(listaFacturas.get(i).getId().equalsIgnoreCase(idFactura)){
+					encontrado = true;
+					factura= listaFacturas.get(i);
+				}
+				i++;
+		}
+		
+		return factura;
+	}
 	
+	public Producto buscarProductoId(String idProducto) {
+		Producto producto=null;
+		boolean encontrado = false;
+		int i = 0;
+			while (!encontrado && i < listaProductos.size()) {
+				if(listaProductos.get(i).getId().equalsIgnoreCase(idProducto)){
+					encontrado = true;
+					producto= listaProductos.get(i);
+				}
+				i++;
+		}
+		
+		return producto;
+	}
+	public Persona buscarPersonaId(String idPersona) {
+		Persona persona=null;
+		boolean encontrado = false;
+		int i = 0;
+			while (!encontrado && i < listaProductos.size()) {
+				if(listaPersonas.get(i).getId().equalsIgnoreCase(idPersona)){
+					encontrado = true;
+					persona= listaPersonas.get(i);
+				}
+				i++;
+		}
+		
+		return persona;
+	}
 	
 	
 	
