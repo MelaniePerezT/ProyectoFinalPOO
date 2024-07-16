@@ -302,6 +302,8 @@ public class Tienda {
 	        listaFacturas.remove(aux);
 	    }
 	}
+	
+	/*Nota:*/
 
 	
 	
