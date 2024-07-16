@@ -15,7 +15,39 @@ public class Main_pruebas {
 	        for (Persona persona : miTienda.getListaPersonas()) {
 	            System.out.println(persona.id +" "+ persona.nombre);
 	        }
+	        
+	        
+	        Persona buscada = miTienda.buscarPersonaId("Cliente - 1");
+	        if (buscada != null) {
+	            System.out.println("Persona encontrada: " + buscada.getNombre());
+	        } else {
+	            System.out.println("Persona no encontrada.");
+	        }
+
+	        
+	        int indice = miTienda.buscarPersonaByIdgetIndex("Cliente - 1");
+	        System.out.println("Índice de persona: " + indice);
+
+	        
+
+	        miTienda.eliminarPersona("Empleado - 1");
+	        Persona eliminada = miTienda.buscarPersonaId("Empleado - 1");
+	        if (eliminada == null) {
+	            System.out.println("Persona eliminada correctamente.");
+	        } else {
+	            System.out.println("Error al eliminar persona.");
+	        }
+
+	        Cliente clienteVIP = new Cliente("Cliente VIP", 30, "123456789", "vip@gmail.com");
+	        clienteVIP.setCantVentas(10);
+	        miTienda.RegistrarPersona(clienteVIP);
+	        miTienda.VerSiClienteVIP();
+	        if (clienteVIP.getClasificacion() == 'V') {
+	            System.out.println("Cliente VIP actualizado correctamente.");
+	        } else {
+	            System.out.println("Error al actualizar cliente VIP.");
+	        }
+	    }
 		
-	}
 
 }

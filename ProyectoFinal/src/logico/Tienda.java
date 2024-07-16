@@ -181,7 +181,7 @@ public class Tienda {
 		Persona persona=null;
 		boolean encontrado = false;
 		int i = 0;
-			while (!encontrado && i < listaProductos.size()) {
+			while (!encontrado && i < listaPersonas.size()) {
 				if(listaPersonas.get(i).getId().equalsIgnoreCase(idPersona)){
 					encontrado = true;
 					persona= listaPersonas.get(i);
@@ -192,6 +192,61 @@ public class Tienda {
 		return persona;
 	}
 	
+	public int buscarPersonaByIdgetIndex(String idPersona) {
+		int persona = -1;
+		boolean encontrado  = false;
+		int i =0;
+		while (!encontrado && i < listaPersonas.size()) {
+			if(listaPersonas.get(i).getId().equalsIgnoreCase(idPersona)){
+				persona = i;
+				encontrado = true;
+			}
+			i++;
+		}
+
+		return persona;
+	}
+
+	public void updatePersona(Persona persona) {
+		int index = buscarPersonaByIdgetIndex(persona.getId());
+		if(index!= -1){
+			listaPersonas.set(index, persona);
+		}
+		
+	}
+
+	public void eliminarPersona(String idPersonaSeleccionada) {
+		Persona aux = buscarPersonaId(idPersonaSeleccionada);
+		if(aux!=null){
+			listaPersonas.remove(aux);
+		}
+		
+	}
+
+	public void VerSiClienteVIP() { /*Nota: Lo hice de manera en que se llame esta funcion para actualizar a TODOS los Clientes de la lista*/
+		
+		for (Persona cliente : listaPersonas) {
+			
+			if(cliente instanceof Cliente) {
+				
+				int cantidadVentas = ((Cliente) cliente).getCantVentas();
+				
+				if(cantidadVentas > 5) {
+					((Cliente) cliente).setClasificacion('V');
+					
+				}
+			}
+			
+		}
+		
+	}
+	
+	public float calcularSalarioEmpleado(Empleado empleado) {
+		float totalSalario =0;
+		totalSalario  = empleado.getComisionVentas() * empleado.getCantVentas();
+		return totalSalario;
+	}
+
 	
 	
 }
