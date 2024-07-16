@@ -247,6 +247,63 @@ public class Tienda {
 		return totalSalario;
 	}
 
+	public int buscarProductoByIdgetIndex(String idProducto) {
+	    int index = -1;
+	    boolean encontrado = false;
+	    int i = 0;
+	    while (!encontrado && i < listaProductos.size()) {
+	        if (listaProductos.get(i).getId().equalsIgnoreCase(idProducto)) {
+	            index = i;
+	            encontrado = true;
+	        }
+	        i++;
+	    }
+	    return index;
+	}
+
+	public void updateProducto(Producto producto) {
+	    int index = buscarProductoByIdgetIndex(producto.getId());
+	    if (index != -1) {
+	        listaProductos.set(index, producto);
+	    }
+	}
+
+	public void eliminarProducto(String idProducto) {
+	    Producto aux = buscarProductoId(idProducto);
+	    if (aux != null) {
+	        listaProductos.remove(aux);
+	    }
+	}
+
+	public int buscarFacturaByIdgetIndex(String idFactura) {
+	    int index = -1;
+	    boolean encontrado = false;
+	    int i = 0;
+	    while (!encontrado && i < listaFacturas.size()) {
+	        if (listaFacturas.get(i).getId().equalsIgnoreCase(idFactura)) {
+	            index = i;
+	            encontrado = true;
+	        }
+	        i++;
+	    }
+	    return index;
+	}
+
+	public void updateFactura(Factura factura) {
+	    int index = buscarFacturaByIdgetIndex(factura.getId());
+	    if (index != -1) {
+	        listaFacturas.set(index, factura);
+	    }
+	}
+
+	public void eliminarFactura(String idFactura) {
+	    Factura aux = buscarFacturaId(idFactura);
+	    if (aux != null) {
+	        listaFacturas.remove(aux);
+	    }
+	}
+
+	
 	
 	
 }
