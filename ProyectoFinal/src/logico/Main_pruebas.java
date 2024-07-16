@@ -47,6 +47,18 @@ public class Main_pruebas {
 	        } else {
 	            System.out.println("Error al actualizar cliente VIP.");
 	        }
+	        MemoriaRam memo= new MemoriaRam("Producto - 1", 1, "JAHA", 120, 64, "Tipo");
+	        miTienda.getInstance().RegistrarProducto(memo);
+	        boolean alarma=miTienda.getInstance().alarmaProducto("Producto - 1");
+	        if(alarma)
+	        {
+	        	 System.out.println("Se estan agotando");
+	        }
+	        else
+	        {
+	        	 System.out.println("Quedan disponibles");
+	        }
+	        
 	    }
 		
 

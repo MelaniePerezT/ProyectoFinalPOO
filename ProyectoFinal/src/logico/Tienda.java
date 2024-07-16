@@ -2,6 +2,8 @@ package logico;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 
 public class Tienda {
 	
@@ -304,6 +306,18 @@ public class Tienda {
 	}
 	
 	/*Nota:*/
+	
+	public boolean alarmaProducto(String idProducto)
+	{
+		Boolean alarma=false;
+		Producto producto=buscarProductoId(idProducto);
+		if(producto.cantDisponible<=1)
+		{
+			alarma=true;
+			
+		}
+		return alarma;
+	}
 
 	
 	
