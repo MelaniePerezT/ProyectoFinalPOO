@@ -22,9 +22,10 @@ public class Microprocesador extends Producto {
 	public void setVelocidadProcesamiento(int velocidadProcesamiento) {
 		this.velocidadProcesamiento = velocidadProcesamiento;
 	}
-	public Microprocesador(String numSerie, int cantDisponible, String marca, float precio, String modelo,
+	
+	public Microprocesador(String numSerie, int cantDisponible, Persona proveedor, String marca, float precio, String modelo,
 			String socket, int velocidadProcesamiento) {
-		super(numSerie, cantDisponible, marca, precio);
+		super(numSerie, cantDisponible, proveedor, marca, precio);
 		this.modelo = modelo;
 		this.socket = socket;
 		this.velocidadProcesamiento = velocidadProcesamiento;

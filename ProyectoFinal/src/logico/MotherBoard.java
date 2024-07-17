@@ -32,9 +32,9 @@ public class MotherBoard extends Producto {
 	public void setListaDiscoDuroAceptados(ArrayList<String> listaDiscoDuroAceptados) {
 		this.listaDiscoDuroAceptados = listaDiscoDuroAceptados;
 	}
-	public MotherBoard(String numSerie, int cantDisponible, String marca, float precio, String modelo,
+	public MotherBoard(String numSerie, int cantDisponible, Persona proveedor, String marca, float precio, String modelo,
 			String tipoSocket, String tipoRam, ArrayList<String> listaDiscoDuroAceptados) {
-		super(numSerie, cantDisponible, marca, precio);
+		super(numSerie, cantDisponible, proveedor, marca, precio);
 		this.modelo = modelo;
 		this.tipoSocket = tipoSocket;
 		this.tipoRam = tipoRam;
