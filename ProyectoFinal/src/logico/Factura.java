@@ -29,4 +29,12 @@ public class Factura {
 		this.productosFacturados = productosFacturados;
 	}
 
+	public float precioTotal()
+	{
+		float precio=0;
+		for (Producto producto : productosFacturados) {
+			precio+=producto.precioVenta();
+		}
+		return precio;
+	}
 }

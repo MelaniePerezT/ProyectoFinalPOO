@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
+
 public class Tienda {
 	
 	public static int numCliente = 1;
@@ -13,10 +14,10 @@ public class Tienda {
 	public static int numProducto = 1;
 	public static int numFactura =1;
 	
+	
 	private ArrayList <Persona> listaPersonas;
 	private ArrayList <Producto> listaProductos;
 	private ArrayList <Factura> listaFacturas;
-
 	
 	private static Tienda miTienda = null;
 
@@ -319,6 +320,14 @@ public class Tienda {
 		return alarma;
 	}
 
+	public float totalVentas()
+	{
+		float total=0;
+		for (Factura fat : listaFacturas) {
+			total+=fat.precioTotal();
+		}
+		return total;
+	}
 	
 	
 	
