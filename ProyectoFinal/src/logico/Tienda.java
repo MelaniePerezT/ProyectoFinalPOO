@@ -18,6 +18,7 @@ public class Tienda {
 	private ArrayList <Persona> listaPersonas;
 	private ArrayList <Producto> listaProductos;
 	private ArrayList <Factura> listaFacturas;
+	private ArrayList <ArrayList<String>> listaCombos= new ArrayList<>();
 	
 	private static Tienda miTienda = null;
 
@@ -306,7 +307,7 @@ public class Tienda {
 	    }
 	}
 	
-	/*Nota:*/
+	/*Nota:* Produce una alarma si el producto se esta agotando*/
 	
 	public boolean alarmaProducto(String idProducto)
 	{
@@ -320,6 +321,7 @@ public class Tienda {
 		return alarma;
 	}
 
+	// Nota: el total de todas las facturas de venta
 	public float totalVentas()
 	{
 		float total=0;
@@ -332,6 +334,7 @@ public class Tienda {
 		}
 		return total;
 	}
+	//Nota: el total de la facturas de compra
 	public float totalCompra()
 	{
 		float total=0;
@@ -344,6 +347,7 @@ public class Tienda {
 		}
 		return total;
 	}
+	//Nota: el total de las ganacias producida por la tienda
 	public float totalGanancias()
 	{
 		float total=0;
@@ -360,7 +364,66 @@ public class Tienda {
 		}
 		return total;
 	}
-	
-	
-	
+	// Nota: esta dice el producto favorito
+	public Producto productoFavorito()
+	{
+		Producto pro=null;
+		int cantMay=0;
+		int cantP=0;
+		for (Producto prod : listaProductos) {
+			for (Factura fat : listaFacturas) {
+				if(fat.getId().equalsIgnoreCase(prod.getId()))
+				{
+					cantP++;
+				}
+			}
+			if(cantMay<cantP)
+			{
+				cantMay=cantP;
+				pro= prod;
+			}
+			cantP=0;
+		}
+		return pro;
+	}
+	//  Nota: esta funcion determina el total de los productos en inventario
+	public int[] cantInventario()
+	{
+		int [] array =new int[4];
+		for (Producto producto : listaProductos) {
+				if(producto instanceof MotherBoard)
+				{
+					array[0]++;
+				}
+				else if (producto instanceof DiscoDuro) {
+					array[1]++; 
+				} else if (producto instanceof MemoriaRam) {
+					array[2]++;
+				} else if (producto instanceof Microprocesador) {
+					array[3]++;
+				}	
+		}
+		return array;
+	}
+	//Nota: esta funcion me crea un combo y me lo agrega en una lista de combos
+	public void creacionCombos(String... ids)
+	{
+		ArrayList<String> combos= new ArrayList<>();
+		  for (String id : ids) {
+		        Producto producto = buscarProductoId(id);
+		        if (producto != null) {
+		            combos.add(producto.getId());
+		        } 
+		    }
+		 listaCombos.add(combos);
+	}
+	//Nota: Esta funcion te dice si el producto esta disponible o no
+	public boolean disponibleProducto(String id)
+	{
+		boolean disponible=false;
+		Producto producto= buscarProductoId(id);
+		if(producto.isEstado())
+			disponible=true;
+		return disponible;
+	}
 }

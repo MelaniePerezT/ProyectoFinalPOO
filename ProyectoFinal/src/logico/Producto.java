@@ -8,7 +8,6 @@ public class Producto {
 	protected boolean estado;
 	protected String marca;
 	protected float precio;
-	protected float descuentoPro;
 	public String getId() {
 		return id;
 	}
@@ -53,22 +52,7 @@ public class Producto {
 		this.marca = marca;
 		this.precio = precio;
 	}
+	
 
-	public float precioVenta() {
-		float totalPrecio=0;
-		if(descuentoPro>0)
-		{
-			totalPrecio=precio*(descuentoPro/100);
-			
-		}
-		else
-		{
-			totalPrecio=precio;
-		}
-		return (float)totalPrecio;
-	}
-	
-	
-	
 
 }

@@ -33,7 +33,7 @@ public class Factura {
 	{
 		float precio=0;
 		for (Producto producto : productosFacturados) {
-			precio+=producto.precioVenta();
+			precio+=producto.getPrecio();
 		}
 		return precio;
 	}
