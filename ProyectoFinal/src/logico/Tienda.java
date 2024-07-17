@@ -324,7 +324,39 @@ public class Tienda {
 	{
 		float total=0;
 		for (Factura fat : listaFacturas) {
-			total+=fat.precioTotal();
+			if(fat instanceof FacturaVenta)
+			{
+				total+=fat.precioTotal();
+			}
+			
+		}
+		return total;
+	}
+	public float totalCompra()
+	{
+		float total=0;
+		for (Factura fat : listaFacturas) {
+			if(fat instanceof FacturaCompra)
+			{
+				total+=fat.precioTotal();
+			}
+			
+		}
+		return total;
+	}
+	public float totalGanancias()
+	{
+		float total=0;
+		for (Factura fat : listaFacturas) {
+			if(fat instanceof FacturaVenta)
+			{
+				total+=fat.precioTotal();
+			}
+			if(fat instanceof FacturaCompra)
+			{
+				total-=fat.precioTotal();
+			}
+			
 		}
 		return total;
 	}
