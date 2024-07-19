@@ -12,8 +12,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import com.sun.javafx.beans.IDProperty;
-
 import logico.Cliente;
 import logico.Persona;
 import logico.Tienda;
@@ -153,12 +151,19 @@ public class ListaClientes extends JDialog {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
             String idCliente = (String) tableModel.getValueAt(selectedRow, 0);
-            Tienda.getInstance().eliminarPersona(idCliente);
-            tableModel.removeRow(selectedRow);
-            JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
+            
+            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este cliente?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                Tienda.getInstance().eliminarPersona(idCliente);
+                tableModel.removeRow(selectedRow);
+                JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Eliminación cancelada.");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
         }
     }
+
 
 }

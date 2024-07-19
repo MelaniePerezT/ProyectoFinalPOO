@@ -68,31 +68,31 @@ public class RegistrarEmpleado extends JDialog {
         }
         {
             JLabel idTxt = new JLabel("ID: ");
-            idTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+            idTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
             idTxt.setBounds(29, 82, 46, 14);
             contentPanel.add(idTxt);
         }
         {
             JLabel nombreTxt = new JLabel("Nombre:");
-            nombreTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+            nombreTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
             nombreTxt.setBounds(29, 120, 57, 14);
             contentPanel.add(nombreTxt);
         }
         {
             JLabel cedulaTxt = new JLabel("Cedula:");
-            cedulaTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+            cedulaTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
             cedulaTxt.setBounds(29, 151, 57, 14);
             contentPanel.add(cedulaTxt);
         }
         {
             JLabel correoTxt = new JLabel("Correo:");
-            correoTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+            correoTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
             correoTxt.setBounds(29, 180, 57, 14);
             contentPanel.add(correoTxt);
         }
         {
             JLabel edadTxt = new JLabel("Edad:");
-            edadTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+            edadTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
             edadTxt.setBounds(235, 82, 46, 14);
             contentPanel.add(edadTxt);
         }
@@ -130,7 +130,7 @@ public class RegistrarEmpleado extends JDialog {
         contentPanel.add(edadSpinner);
         
         JLabel comisionTxt = new JLabel("Comision por venta:");
-        comisionTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+        comisionTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
         comisionTxt.setBounds(54, 209, 149, 16);
         contentPanel.add(comisionTxt);
         

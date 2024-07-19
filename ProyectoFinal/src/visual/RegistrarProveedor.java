@@ -61,7 +61,7 @@ public class RegistrarProveedor extends JDialog {
 		contentPanel.add(label);
 		
 		JLabel idTxt = new JLabel("ID: ");
-		idTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		idTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		idTxt.setBounds(37, 53, 46, 14);
 		contentPanel.add(idTxt);
 		
@@ -73,7 +73,7 @@ public class RegistrarProveedor extends JDialog {
 		contentPanel.add(idField);
 		
 		JLabel edadTxt = new JLabel("Edad:");
-		edadTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		edadTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		edadTxt.setBounds(230, 49, 46, 20);
 		contentPanel.add(edadTxt);
 		
@@ -83,7 +83,7 @@ public class RegistrarProveedor extends JDialog {
 		contentPanel.add(EdadSpinner);
 		
 		JLabel nombreTxt = new JLabel("Nombre:");
-		nombreTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		nombreTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		nombreTxt.setBounds(37, 84, 57, 14);
 		contentPanel.add(nombreTxt);
 		
@@ -100,12 +100,12 @@ public class RegistrarProveedor extends JDialog {
 		contentPanel.add(cedulaField);
 		
 		JLabel cedulaTxt = new JLabel("Cedula:");
-		cedulaTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		cedulaTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		cedulaTxt.setBounds(37, 115, 57, 14);
 		contentPanel.add(cedulaTxt);
 		
 		JLabel correoTxt = new JLabel("Correo:");
-		correoTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		correoTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		correoTxt.setBounds(37, 144, 57, 14);
 		contentPanel.add(correoTxt);
 		
@@ -116,7 +116,7 @@ public class RegistrarProveedor extends JDialog {
 		contentPanel.add(correoField);
 		
 		JLabel empresaTxt = new JLabel("Empresa:");
-		empresaTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		empresaTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		empresaTxt.setBounds(37, 168, 82, 25);
 		contentPanel.add(empresaTxt);
 		

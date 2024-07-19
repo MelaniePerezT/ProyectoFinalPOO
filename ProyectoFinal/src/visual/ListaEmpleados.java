@@ -127,16 +127,23 @@ public class ListaEmpleados extends JDialog {
 	}
 
 	private void eliminarEmpleadoSeleccionado() {
-		int selectedRow = table.getSelectedRow();
-		if (selectedRow >= 0) {
-			String idEmpleado = (String) tableModel.getValueAt(selectedRow, 0);
-			Tienda.getInstance().eliminarPersona(idEmpleado);
-			tableModel.removeRow(selectedRow);
-			JOptionPane.showMessageDialog(this, "Empleado eliminado correctamente.");
-		} else {
-			JOptionPane.showMessageDialog(this, "Por favor, seleccione un empleado para eliminar.");
-		}
+	    int selectedRow = table.getSelectedRow();
+	    if (selectedRow >= 0) {
+	        String idEmpleado = (String) tableModel.getValueAt(selectedRow, 0);
+	        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estas seguro de que deseas eliminar este empleado?","Confirmacion de eliminacion",JOptionPane.YES_NO_OPTION);
+
+	        if (confirmacion == JOptionPane.YES_OPTION) {
+	            Tienda.getInstance().eliminarPersona(idEmpleado);
+	            tableModel.removeRow(selectedRow);
+	            JOptionPane.showMessageDialog(this, "Empleado eliminado correctamente.");
+	        } else {
+	            JOptionPane.showMessageDialog(this, "Eliminacion cancelada.");
+	        }
+	    } else {
+	        JOptionPane.showMessageDialog(this, "Por favor, seleccione un empleado para eliminar.");
+	    }
 	}
+
 	
 	private void actualizarTabla() {
         tableModel.setRowCount(0); 

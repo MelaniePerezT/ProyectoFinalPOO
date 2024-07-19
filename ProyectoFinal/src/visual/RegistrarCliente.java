@@ -51,7 +51,7 @@ public class RegistrarCliente extends JDialog {
         this.cliente = cliente; 
         
         setTitle("Registrar Cliente");
-        setBounds(100, 100, 447, 320);
+        setBounds(100, 100, 447, 264);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -66,65 +66,65 @@ public class RegistrarCliente extends JDialog {
         }
         {
             JLabel idTxt = new JLabel("ID: ");
-            idTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-            idTxt.setBounds(29, 82, 46, 14);
+            idTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+            idTxt.setBounds(35, 51, 46, 14);
             contentPanel.add(idTxt);
         }
         {
             JLabel nombreTxt = new JLabel("Nombre:");
-            nombreTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-            nombreTxt.setBounds(29, 120, 57, 14);
+            nombreTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+            nombreTxt.setBounds(35, 89, 57, 14);
             contentPanel.add(nombreTxt);
         }
         {
             JLabel cedulaTxt = new JLabel("Cedula:");
-            cedulaTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-            cedulaTxt.setBounds(29, 151, 57, 14);
+            cedulaTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+            cedulaTxt.setBounds(35, 120, 57, 14);
             contentPanel.add(cedulaTxt);
         }
         {
             JLabel correoTxt = new JLabel("Correo:");
-            correoTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-            correoTxt.setBounds(29, 180, 57, 14);
+            correoTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+            correoTxt.setBounds(35, 149, 57, 14);
             contentPanel.add(correoTxt);
         }
         {
             JLabel edadTxt = new JLabel("Edad:");
-            edadTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-            edadTxt.setBounds(210, 82, 46, 14);
+            edadTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+            edadTxt.setBounds(216, 51, 46, 14);
             contentPanel.add(edadTxt);
         }
         
         idField = new JTextField();
         idField.setEditable(false);
         idField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        idField.setBounds(72, 78, 86, 20);
+        idField.setBounds(78, 47, 86, 20);
         contentPanel.add(idField);
         idField.setColumns(10);
         
         nombreField = new JTextField();
         nombreField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         nombreField.setColumns(10);
-        nombreField.setBounds(121, 114, 247, 20);
+        nombreField.setBounds(127, 83, 247, 20);
         contentPanel.add(nombreField);
         {
             cedulaField = new JTextField();
             cedulaField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
             cedulaField.setColumns(10);
-            cedulaField.setBounds(121, 145, 247, 20);
+            cedulaField.setBounds(127, 114, 247, 20);
             contentPanel.add(cedulaField);
         }
         {
             correoField = new JTextField();
             correoField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
             correoField.setColumns(10);
-            correoField.setBounds(121, 174, 247, 20);
+            correoField.setBounds(127, 143, 247, 20);
             contentPanel.add(correoField);
         }
         
         edadSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1)); 
         edadSpinner.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        edadSpinner.setBounds(266, 78, 86, 20);
+        edadSpinner.setBounds(272, 47, 86, 20);
         contentPanel.add(edadSpinner);
         
         {
