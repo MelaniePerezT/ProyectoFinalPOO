@@ -130,6 +130,12 @@ public class Principal extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Registrar");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RegistrarProducto registrarProducto = new RegistrarProducto(null);
+				registrarProducto.setVisible(true);
+			}
+		});
 		mntmNewMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mnNewMenu.add(mntmNewMenuItem);
 		
