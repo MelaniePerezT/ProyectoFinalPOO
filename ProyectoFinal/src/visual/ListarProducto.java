@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import logico.Producto;
 import logico.Tienda;
+import java.awt.Font;
 
 public class ListarProducto extends JDialog {
 
@@ -32,6 +33,7 @@ public class ListarProducto extends JDialog {
 	private JTable table;
 	private  Object[] rows;
 	private Producto produc=null;
+	private JButton btnMasInformacion;
 
 
 	/**
@@ -78,6 +80,7 @@ public class ListarProducto extends JDialog {
 						int i = table.getSelectedRow();
 						if(i >-1){
 							btnEliminar.setEnabled(true);
+							btnMasInformacion.setEnabled(true);
 							produc = Tienda.getInstance().buscarProductoId(table.getValueAt(i, 0).toString());
 						}
 					}
@@ -91,6 +94,7 @@ public class ListarProducto extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnEliminar = new JButton("Eliminar");
+				btnEliminar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 				btnEliminar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int op= JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar el producto con codigo: "+ produc.getId(), "Eliminar", JOptionPane.WARNING_MESSAGE);
@@ -101,6 +105,18 @@ public class ListarProducto extends JDialog {
 						}
 					}
 				});
+				
+				btnMasInformacion = new JButton("Mas informacion");
+				btnMasInformacion.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						MasInformacionProducto masIn= new MasInformacionProducto(produc);
+						masIn.setModal(true);
+						masIn.setVisible(true);
+					}
+				});
+				btnMasInformacion.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+				btnMasInformacion.setEnabled(false);
+				buttonPane.add(btnMasInformacion);
 				btnEliminar.setEnabled(false);
 				btnEliminar.setActionCommand("OK");
 				buttonPane.add(btnEliminar);
@@ -108,6 +124,7 @@ public class ListarProducto extends JDialog {
 			}
 			{
 				btnCancelar = new JButton("Cancelar");
+				btnCancelar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 				btnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
@@ -133,6 +150,5 @@ public class ListarProducto extends JDialog {
 		}
 		
 	}
-
 }
 
