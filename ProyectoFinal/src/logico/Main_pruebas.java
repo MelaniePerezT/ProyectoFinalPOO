@@ -10,7 +10,7 @@ public class Main_pruebas {
 	        miTienda.RegistrarPersona(cliente1);
 	        Persona empleado1 = new Empleado("Luis Reynaldo", 18, "40245484712", "reynaldo@gmail.com", (float) 0.25);
 	        miTienda.RegistrarPersona(empleado1);
-	        Persona proveedor1 = new Proveedor("Melanie Perez", 19, "40154874693", "melanie@gmail.com", "NVIDIA", null);
+	        Persona proveedor1 = new Proveedor("Melanie Perez", 19, "40154874693", "melanie@gmail.com", "NVIDIA");
 	        miTienda.RegistrarPersona(proveedor1);
 	        for (Persona persona : miTienda.getListaPersonas()) {
 	            System.out.println(persona.id +" "+ persona.nombre);

@@ -12,20 +12,16 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import com.sun.javafx.beans.IDProperty;
-
-import logico.Cliente;
 import logico.Persona;
+import logico.Proveedor;
 import logico.Tienda;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 
-public class ListaClientes extends JDialog {
+public class ListaProveedores extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
     private JTable table;
@@ -36,7 +32,7 @@ public class ListaClientes extends JDialog {
      */
     public static void main(String[] args) {
         try {
-            ListaClientes dialog = new ListaClientes();
+            ListaProveedores dialog = new ListaProveedores();
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
         } catch (Exception e) {
@@ -47,9 +43,9 @@ public class ListaClientes extends JDialog {
     /**
      * Create the dialog.
      */
-    public ListaClientes() {
+    public ListaProveedores() {
     	setFont(new Font("Bahnschrift", Font.PLAIN, 13));
-        setTitle("Lista de Clientes");
+        setTitle("Lista de Proveedores");
         setBounds(100, 100, 600, 400);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,7 +53,7 @@ public class ListaClientes extends JDialog {
         contentPanel.setLayout(new BorderLayout(0, 0));
         setLocationRelativeTo(null); /*Poner en el centro*/
 
-        String[] columnas = {"ID", "Nombre", "Cedula", "Correo", "Clasificacion"};
+        String[] columnas = {"ID", "Nombre", "Cedula", "Correo", "Empresa"};
         tableModel = new DefaultTableModel(columnas, 0);
         table = new JTable(tableModel);
         table.setBorder(null);
@@ -73,7 +69,7 @@ public class ListaClientes extends JDialog {
 
         JScrollPane scrollPane = new JScrollPane(table);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
-        cargarDatosCliente();
+        cargarDatosProveedor();
 
         {
             JPanel buttonPane = new JPanel();
@@ -84,14 +80,14 @@ public class ListaClientes extends JDialog {
                 bottonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
                 bottonActualizar.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                    	int selectedRow = table.getSelectedRow();
+                        int selectedRow = table.getSelectedRow();
                         if (selectedRow != -1) {
                             String id = (String) tableModel.getValueAt(selectedRow, 0);
-                            Cliente cliente = (Cliente) Tienda.getInstance().buscarPersonaId(id);
-                            if (cliente != null) {
-                                RegistrarCliente registrarClienteDialog = new RegistrarCliente(cliente);
-                                registrarClienteDialog.setModal(true);
-                                registrarClienteDialog.setVisible(true);
+                            Proveedor proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(id);
+                            if (proveedor != null) {
+                                RegistrarProveedor registrarProveedorDialog = new RegistrarProveedor(proveedor);
+                                registrarProveedorDialog.setModal(true);
+                                registrarProveedorDialog.setVisible(true);
                                 
                                 actualizarTabla();
                             }
@@ -106,7 +102,7 @@ public class ListaClientes extends JDialog {
                 			int selectedRow = table.getSelectedRow();
                             if (selectedRow != -1) {
                                 String id = (String) tableModel.getValueAt(selectedRow, 0);
-                                eliminarClienteSeleccionado();
+                                eliminarProveedorSeleccionado();
                                 actualizarTabla();
                             }
                 		}
@@ -127,17 +123,17 @@ public class ListaClientes extends JDialog {
         }
     }
 
-    private void cargarDatosCliente() {
+    private void cargarDatosProveedor() {
         ArrayList<Persona> listaPersonas = Tienda.getInstance().getListaPersonas();
         for (Persona persona : listaPersonas) {
-            if (persona instanceof Cliente) {
-                Cliente cliente = (Cliente) persona;
+            if (persona instanceof Proveedor) {
+                Proveedor proveedor = (Proveedor) persona;
                 Object[] row = {
-                    cliente.getId(),
-                    cliente.getNombre(),
-                    cliente.getCedula(),
-                    cliente.getCorreo(),
-                    cliente.getClasificacion()
+                    proveedor.getId(),
+                    proveedor.getNombre(),
+                    proveedor.getCedula(),
+                    proveedor.getCorreo(),
+                    proveedor.getEmpresa()
                 };
                 tableModel.addRow(row);
             }
@@ -146,18 +142,18 @@ public class ListaClientes extends JDialog {
 
     private void actualizarTabla() {
         tableModel.setRowCount(0); 
-        cargarDatosCliente(); 
+        cargarDatosProveedor(); 
     }
     
-    private void eliminarClienteSeleccionado() {
+    private void eliminarProveedorSeleccionado() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
-            String idCliente = (String) tableModel.getValueAt(selectedRow, 0);
-            Tienda.getInstance().eliminarPersona(idCliente);
+            String idProveedor = (String) tableModel.getValueAt(selectedRow, 0);
+            Tienda.getInstance().eliminarPersona(idProveedor);
             tableModel.removeRow(selectedRow);
-            JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
+            JOptionPane.showMessageDialog(this, "Proveedor eliminado correctamente.");
         } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor para eliminar.");
         }
     }
 

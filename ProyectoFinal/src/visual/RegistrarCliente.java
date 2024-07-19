@@ -67,7 +67,7 @@ public class RegistrarCliente extends JDialog {
         {
             JLabel idTxt = new JLabel("ID: ");
             idTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-            idTxt.setBounds(29, 84, 46, 14);
+            idTxt.setBounds(29, 82, 46, 14);
             contentPanel.add(idTxt);
         }
         {
@@ -91,14 +91,14 @@ public class RegistrarCliente extends JDialog {
         {
             JLabel edadTxt = new JLabel("Edad:");
             edadTxt.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-            edadTxt.setBounds(190, 85, 46, 14);
+            edadTxt.setBounds(210, 82, 46, 14);
             contentPanel.add(edadTxt);
         }
         
         idField = new JTextField();
         idField.setEditable(false);
         idField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        idField.setBounds(92, 78, 86, 20);
+        idField.setBounds(72, 78, 86, 20);
         contentPanel.add(idField);
         idField.setColumns(10);
         
@@ -163,7 +163,7 @@ public class RegistrarCliente extends JDialog {
                 getRootPane().setDefaultButton(okButton);
             }
             {
-                JButton cancelButton = new JButton("Cancel");
+                JButton cancelButton = new JButton("Cancelar");
                 cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
                 cancelButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {

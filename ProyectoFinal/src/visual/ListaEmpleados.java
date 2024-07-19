@@ -42,7 +42,7 @@ public class ListaEmpleados extends JDialog {
 	 */
 	public ListaEmpleados() {
 		setTitle("Lista de Empleados");
-		setBounds(100, 100, 752, 400);
+		setBounds(100, 100, 919, 505);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

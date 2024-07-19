@@ -98,6 +98,32 @@ public class Principal extends JFrame {
 		});
 		menubuttonListaEMpleado.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		menuEmpleado.add(menubuttonListaEMpleado);
+		
+		JMenu menuProveedor = new JMenu("Proveedores");
+		menuProveedor.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		menuBar.add(menuProveedor);
+		
+		JMenuItem menuRegistrarProveedor = new JMenuItem("Registrar");
+		menuRegistrarProveedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RegistrarProveedor ventanita = new RegistrarProveedor(null);
+				ventanita.setModal(true);
+				ventanita.setVisible(true);
+			}
+		});
+		menuRegistrarProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		menuProveedor.add(menuRegistrarProveedor);
+		
+		JMenuItem menuListaProveedor = new JMenuItem("Lista ");
+		menuListaProveedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaProveedores ventanita = new ListaProveedores();
+				ventanita.setModal(true);
+				ventanita.setVisible(true);
+			}
+		});
+		menuListaProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		menuProveedor.add(menuListaProveedor);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
