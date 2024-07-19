@@ -114,7 +114,7 @@ public class Principal extends JFrame {
 		menuRegistrarProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		menuProveedor.add(menuRegistrarProveedor);
 		
-		JMenuItem menuListaProveedor = new JMenuItem("Lista ");
+		JMenuItem menuListaProveedor = new JMenuItem("Lista");
 		menuListaProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaProveedores ventanita = new ListaProveedores();
@@ -124,6 +124,25 @@ public class Principal extends JFrame {
 		});
 		menuListaProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		menuProveedor.add(menuListaProveedor);
+		
+		JMenu mnNewMenu = new JMenu("Producto");
+		mnNewMenu.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Registrar");
+		mntmNewMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mnNewMenu.add(mntmNewMenuItem);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Lista");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListarProducto lista= new ListarProducto();
+				lista.setModal(true);
+				lista.setVisible(true);
+			}
+		});
+		mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mnNewMenu.add(mntmNewMenuItem_1);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
