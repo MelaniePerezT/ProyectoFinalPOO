@@ -1,40 +1,36 @@
 package visual;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+
+import logico.Empleado;
+import logico.Persona;
 import logico.Producto;
 import logico.Tienda;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class ListarProducto extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JButton btnEliminar;
-	private JButton btnCancelar;
-	private  DefaultTableModel model;
 	private JTable table;
+	private DefaultTableModel tableModel;
 	private  Object[] rows;
-	private Producto produc=null;
-	private JButton btnMasInformacion;
-
+	private JButton btnVerMas;
+	private JButton botonActualizar;
 
 	/**
 	 * Launch the application.
@@ -53,92 +49,101 @@ public class ListarProducto extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListarProducto() {
-		setBounds(100, 100, 450, 300);
+		setTitle("Lista de Productos");
+		setBounds(100, 100, 919, 505);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
-		setLocationRelativeTo(null);
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Lista de Producto", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(10, 8, 414, 217);
-		contentPanel.add(panel);
-		panel.setLayout(null);
+		contentPanel.setLayout(new BorderLayout(0, 0));
+		setLocationRelativeTo(null); /*Poner en el centro*/
+
+		String[] columnas = {"ID","NO. Serie","Cantidad","Proovedor","Precio"};
+		tableModel = new DefaultTableModel(columnas, 0);
+		table = new JTable(tableModel);
+		table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		table.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		table.setPreferredScrollableViewportSize(table.getPreferredSize());
+		table.setFillsViewportHeight(true);
+		
+		table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int i = table.getSelectedRow();
+                if (i >= 0) {
+                    btnVerMas.setEnabled(true);
+                    botonActualizar.setEnabled(true);
+                }
+            }
+        });
+
+		JScrollPane scrollPane = new JScrollPane(table);
+		contentPanel.add(scrollPane, BorderLayout.CENTER);
+		
+
 		{
-			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 15, 404, 183);
-			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			panel.add(scrollPane);
-			{
-				String headers[]= {"ID","NO. Serie","Cantidad","Proovedor", "Precio"};
-				model = new DefaultTableModel();
-				model.setColumnIdentifiers(headers);
-				table = new JTable();
-				table.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						int i = table.getSelectedRow();
-						if(i >-1){
-							btnEliminar.setEnabled(true);
-							btnMasInformacion.setEnabled(true);
-							produc = Tienda.getInstance().buscarProductoId(table.getValueAt(i, 0).toString());
-						}
-					}
-				});
-				table.setModel(model);
-				scrollPane.setViewportView(table);
-				
-			}
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				btnEliminar = new JButton("Eliminar");
-				btnEliminar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				btnEliminar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						int op= JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar el producto con codigo: "+ produc.getId(), "Eliminar", JOptionPane.WARNING_MESSAGE);
-						if(op==JOptionPane.YES_OPTION)
-						{
-							Tienda.getInstance().eliminarProducto(produc.getId());
-							cargarProducto();
-						}
-					}
-				});
 				
-				btnMasInformacion = new JButton("Mas informacion");
-				btnMasInformacion.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						MasInformacionProducto masIn= new MasInformacionProducto(produc);
-						masIn.setModal(true);
-						masIn.setVisible(true);
-					}
-				});
-				btnMasInformacion.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				btnMasInformacion.setEnabled(false);
-				buttonPane.add(btnMasInformacion);
-				btnEliminar.setEnabled(false);
-				btnEliminar.setActionCommand("OK");
-				buttonPane.add(btnEliminar);
-				getRootPane().setDefaultButton(btnEliminar);
 			}
 			{
-				btnCancelar = new JButton("Cancelar");
-				btnCancelar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				btnCancelar.addActionListener(new ActionListener() {
+				botonActualizar = new JButton("Actualizar");
+				botonActualizar.setEnabled(false);
+				botonActualizar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();
+						int selectedRow = table.getSelectedRow();
+                        if (selectedRow != -1) {
+                            String id = (String) tableModel.getValueAt(selectedRow, 0);
+                            Producto pro = (Producto) Tienda.getInstance().buscarProductoId(id);
+                            if (pro != null) {
+                                RegistrarProducto act = new RegistrarProducto(pro);
+                                act.setModal(true);
+                                act.setVisible(true);
+                                
+                                cargarProducto();
+                            }
+                        }
 					}
 				});
-				btnCancelar.setActionCommand("Cancel");
-				buttonPane.add(btnCancelar);
+				{
+					btnVerMas = new JButton("Mas Informacion");
+					btnVerMas.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							int selectedRow = table.getSelectedRow();
+							if (selectedRow != -1) {
+								String id = (String) tableModel.getValueAt(selectedRow, 0);
+								Producto pro = (Producto) Tienda.getInstance().buscarProductoId(id);
+								MasInformacionProducto mas = new MasInformacionProducto(pro);
+								mas.setModal(true);
+								mas.setVisible(true);
+								dispose();
+							}
+						}
+					});
+					btnVerMas.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+					btnVerMas.setEnabled(false);
+					buttonPane.add(btnVerMas);
+				}
+				botonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+				botonActualizar.setActionCommand("OK");
+				buttonPane.add(botonActualizar);
+				getRootPane().setDefaultButton(botonActualizar);
+			}
+			{
+				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+				cancelButton.setActionCommand("Cancel");
+				cancelButton.addActionListener(e -> dispose());
+				buttonPane.add(cancelButton);
 			}
 		}
 		cargarProducto();
 	}
+
 	public void cargarProducto() {
-		model.setRowCount(0);
-		rows = new Object[model.getColumnCount()];
+		tableModel.setRowCount(0);
+		rows = new Object[tableModel.getColumnCount()];
 		int cant = Tienda.getInstance().getListaProductos().size();
 		for (int i = 0; i < cant; i++) {
 			rows[0] = Tienda.getInstance().getListaProductos().get(i).getId();
@@ -146,9 +151,8 @@ public class ListarProducto extends JDialog {
 			rows[2] = Tienda.getInstance().getListaProductos().get(i).getCantDisponible();
 			rows[3]=Tienda.getInstance().getListaProductos().get(i).getProveedor();
 			rows[4]=Tienda.getInstance().getListaProductos().get(i).getPrecio();
-			model.addRow(rows);
+			tableModel.addRow(rows);
 		}
 		
 	}
 }
-

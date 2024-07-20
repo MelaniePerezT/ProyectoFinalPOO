@@ -378,6 +378,7 @@ public class MasInformacionProducto extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						VisualizarProducto visualiza =new VisualizarProducto(producto);
 						visualiza.setVisible(true);
+						dispose();
 					}
 				});
 				btnVisualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
