@@ -115,6 +115,7 @@ public class RegistrarProducto extends JDialog {
 			panel_1.add(lblId);
 
 			txtId = new JTextField();
+			txtId.setEditable(false);
 			txtId.setBounds(85, 25, 140, 22);
 			panel_1.add(txtId);
 			txtId.setColumns(10);
@@ -462,13 +463,27 @@ public class RegistrarProducto extends JDialog {
 				}
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						
+						int cantProveedores = 0;	
+						for (Persona persona : Tienda.getInstance().getListaPersonas()) {
+							if (persona instanceof Proveedor) {
+								cantProveedores++;
+							}
+						}	
+						if (cantProveedores == 0) {
+							JOptionPane.showMessageDialog(null, "Operación errónea. Debe haber por lo menos un proveedor registrado!", "Error", JOptionPane.WARNING_MESSAGE);
+							return;
+						}
+						
 						String id = txtId.getText();
 						String numSerie = txtNumSerie.getText();
 						String marca = txtMarca.getText();
 
 						int cantidad = new Integer(spnCantidad.getValue().toString());
 						float precio = new Float(spnPrecio.getValue().toString());
+						
 						Proveedor proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(cbxProveedor.getSelectedItem().toString());
+
 
 						if (producto == null) {
 							Producto producto = null;
@@ -629,7 +644,7 @@ public class RegistrarProducto extends JDialog {
 				cbxMBTipoRam.setSelectedIndex(buscarIndiceSeleccionado(cbxMBTipoRam, ((MotherBoard) producto).getTipoRam()));
 			}
 
-			else if (producto instanceof MemoriaRam) {
+			if (producto instanceof MemoriaRam) {
 				rbtnMotherBoard.setSelected(false);
 				rbtnMemoriaRAM.setSelected(true);
 				rbtnMicroprocesador.setSelected(false);
@@ -708,6 +723,9 @@ public class RegistrarProducto extends JDialog {
 			}
 
 		}
+		else {
+			txtId.setText(Tienda.getInstance().generarIdCliente());
+		}
 
 	}
 
@@ -715,7 +733,7 @@ public class RegistrarProducto extends JDialog {
 		txtId.setText(Tienda.getInstance().generarIdProducto());
 		txtNumSerie.setText("");
 		txtMarca.setText("");
-		cbxProveedor.setSelectedIndex(-1);
+		cbxProveedor.setSelectedIndex(0);
 		spnCantidad.setValue(new Integer(1));
 		spnPrecio.setValue(new Float(0));
 		rbtnMotherBoard.setSelected(true);
@@ -728,17 +746,17 @@ public class RegistrarProducto extends JDialog {
 		pnlDiscoDuro.setVisible(false);
 		txtMBModelo.setText("");
 		txtMBSocket.setText("");
-		cbxMBTipoRam.setSelectedIndex(-1);
+		cbxMBTipoRam.setSelectedIndex(0);
 		spnMRCantidad.setValue(new Integer(0));
-		cbxMRTipo.setSelectedIndex(-1);
+		cbxMRTipo.setSelectedIndex(0);
 		txtMPModelo.setText("");
 		txtMPSocket.setText("");
 		spnMPVelocidadProcesamiento.setValue(new Integer(0));
 		txtDDModelo.setText("");
-		cbxDDTipoConexion.setSelectedIndex(-1);
+		cbxDDTipoConexion.setSelectedIndex(0);
 		spnDDCapacidadAlmacenamiento.setValue(new Integer(0));
 	}
-	
+
 	private int buscarIndiceSeleccionado(JComboBox<String> aux, String item) {
 		// Para marcar seleccionado el proveedor que posee el producto
 		int i = 0;
