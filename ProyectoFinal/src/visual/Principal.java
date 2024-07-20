@@ -8,11 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import logico.Persona;
+import logico.Proveedor;
 import logico.Tienda;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -132,8 +135,20 @@ public class Principal extends JFrame {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Registrar");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				RegistrarProducto registrarProducto = new RegistrarProducto(null);
-				registrarProducto.setVisible(true);
+				int cantProveedores = 0;	
+				for (Persona persona : Tienda.getInstance().getListaPersonas()) {
+					if (persona instanceof Proveedor) {
+						cantProveedores++;
+					}
+				}	
+				if (cantProveedores == 0) {
+					JOptionPane.showMessageDialog(null, "Operación errónea. Debe haber por lo menos un proveedor registrado!", "Error", JOptionPane.WARNING_MESSAGE);
+					return;
+				} else {
+					RegistrarProducto registrarProducto = new RegistrarProducto(null);
+					registrarProducto.setVisible(true);	
+				}
+				
 			}
 		});
 		mntmNewMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
