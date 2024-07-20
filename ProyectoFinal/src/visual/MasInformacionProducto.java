@@ -67,7 +67,7 @@ public class MasInformacionProducto extends JDialog {
 	 */
 	public MasInformacionProducto(Producto producto) {
 		if (producto != null) {
-			setTitle("Información - "+producto.getId());			
+			setTitle("Información: "+producto.getId());			
 		}
 		setBounds(100, 100, 500, 310);
 		setLocationRelativeTo(null);
