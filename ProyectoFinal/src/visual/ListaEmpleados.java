@@ -66,17 +66,8 @@ public class ListaEmpleados extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton btnEliminar = new JButton("Eliminar");
-				btnEliminar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				btnEliminar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						eliminarEmpleadoSeleccionado();
-					}
-				});
-				buttonPane.add(btnEliminar);
-			}
-			{
 				JButton botonActualizar = new JButton("Actualizar");
+				botonActualizar.setEnabled(false);
 				botonActualizar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int selectedRow = table.getSelectedRow();
@@ -103,6 +94,17 @@ public class ListaEmpleados extends JDialog {
 				cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 				cancelButton.setActionCommand("Cancel");
 				cancelButton.addActionListener(e -> dispose());
+				{
+					JButton btnEliminar = new JButton("Eliminar");
+					btnEliminar.setEnabled(false);
+					btnEliminar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+					btnEliminar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							eliminarEmpleadoSeleccionado();
+						}
+					});
+					buttonPane.add(btnEliminar);
+				}
 				buttonPane.add(cancelButton);
 			}
 		}

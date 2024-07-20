@@ -40,6 +40,7 @@ public class VisualizarProducto extends JFrame {
 	 * Create the frame.
 	 */
 	public VisualizarProducto(Producto producto) {
+		setTitle(producto.getId());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 607, 439);
 		contentPane = new JPanel();
@@ -47,6 +48,7 @@ public class VisualizarProducto extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 595, 400);

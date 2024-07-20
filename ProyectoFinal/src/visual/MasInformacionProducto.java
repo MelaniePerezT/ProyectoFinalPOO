@@ -66,304 +66,282 @@ public class MasInformacionProducto extends JDialog {
 	 * @param producto 
 	 */
 	public MasInformacionProducto(Producto producto) {
-		setTitle("Mas informacion");
-		setBounds(100, 100, 449, 298);
+		if (producto != null) {
+			setTitle("Información - "+producto.getId());			
+		}
+		setBounds(100, 100, 500, 310);
+		setLocationRelativeTo(null);
+		setModal(true);
+		setResizable(false);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPanel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JPanel panel = new JPanel();
-			panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panel.setBounds(10, 11, 414, 120);
+			panel.setBorder(new TitledBorder(null, "Información General", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panel.setBounds(4, 4, 474, 120);
 			contentPanel.add(panel);
 			panel.setLayout(null);
 			{
-				JLabel lblNewLabel = new JLabel("Datos Generales");
-				lblNewLabel.setFont(new Font("Bahnschrift", Font.PLAIN, 16));
-				lblNewLabel.setBounds(135, 7, 192, 14);
-				panel.add(lblNewLabel);
-			}
-			{
 				JLabel lblNewLabel_1 = new JLabel("ID:");
 				lblNewLabel_1.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_1.setBounds(10, 33, 46, 14);
+				lblNewLabel_1.setBounds(15, 28, 46, 22);
 				panel.add(lblNewLabel_1);
 			}
 			{
 				txtID = new JTextField();
-				txtID.setEnabled(false);
-				txtID.setBounds(76, 32, 86, 20);
+				txtID.setEditable(false);
+				txtID.setBounds(80, 25, 148, 20);
 				panel.add(txtID);
 				txtID.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_2 = new JLabel("Num. Serie:");
 				lblNewLabel_2.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_2.setBounds(172, 31, 97, 19);
+				lblNewLabel_2.setBounds(247, 24, 97, 22);
 				panel.add(lblNewLabel_2);
 			}
 			{
 				txtNumSerie = new JTextField();
-				txtNumSerie.setEnabled(false);
-				txtNumSerie.setBounds(257, 32, 147, 20);
+				txtNumSerie.setEditable(false);
+				txtNumSerie.setBounds(330, 25, 132, 20);
 				panel.add(txtNumSerie);
 				txtNumSerie.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_3 = new JLabel("Marca:");
 				lblNewLabel_3.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_3.setBounds(10, 64, 46, 14);
+				lblNewLabel_3.setBounds(15, 60, 46, 22);
 				panel.add(lblNewLabel_3);
 			}
 			{
 				txtMarca = new JTextField();
-				txtMarca.setEnabled(false);
-				txtMarca.setBounds(76, 61, 86, 20);
+				txtMarca.setEditable(false);
+				txtMarca.setBounds(80, 57, 148, 20);
 				panel.add(txtMarca);
 				txtMarca.setColumns(10);
 			}
 			{
-				JLabel lblNewLabel_4 = new JLabel("Prooverdor");
+				JLabel lblNewLabel_4 = new JLabel("Proveedor:");
 				lblNewLabel_4.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_4.setBounds(172, 64, 87, 14);
+				lblNewLabel_4.setBounds(247, 56, 87, 22);
 				panel.add(lblNewLabel_4);
 			}
 			{
 				txtProovedor = new JTextField();
-				txtProovedor.setEnabled(false);
-				txtProovedor.setBounds(258, 61, 146, 20);
+				txtProovedor.setEditable(false);
+				txtProovedor.setBounds(330, 57, 132, 20);
 				panel.add(txtProovedor);
 				txtProovedor.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_5 = new JLabel("Cantidad:");
 				lblNewLabel_5.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_5.setBounds(10, 90, 69, 14);
+				lblNewLabel_5.setBounds(15, 88, 69, 22);
 				panel.add(lblNewLabel_5);
 			}
 			{
 				txtCantidad = new JTextField();
-				txtCantidad.setEnabled(false);
-				txtCantidad.setBounds(76, 92, 86, 20);
+				txtCantidad.setEditable(false);
+				txtCantidad.setBounds(80, 89, 148, 20);
 				panel.add(txtCantidad);
 				txtCantidad.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_6 = new JLabel("Precio:");
 				lblNewLabel_6.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_6.setBounds(172, 97, 46, 14);
+				lblNewLabel_6.setBounds(247, 88, 59, 22);
 				panel.add(lblNewLabel_6);
 			}
 			{
 				txtPrecio = new JTextField();
-				txtPrecio.setEnabled(false);
-				txtPrecio.setBounds(258, 92, 146, 20);
+				txtPrecio.setEditable(false);
+				txtPrecio.setBounds(329, 89, 132, 20);
 				panel.add(txtPrecio);
 				txtPrecio.setColumns(10);
 			}
 		}
 		{
 			pnlMicro = new JPanel();
-			pnlMicro.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			pnlMicro.setBounds(10, 142, 415, 79);
+			pnlMicro.setBorder(new TitledBorder(null, "Microprocesador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			pnlMicro.setBounds(4, 125, 474, 90);
 			contentPanel.add(pnlMicro);
 			pnlMicro.setLayout(null);
 			{
-				JLabel lblNewLabel_7 = new JLabel("Datos Microprocesador");
-				lblNewLabel_7.setFont(new Font("Bahnschrift", Font.PLAIN, 16));
-				lblNewLabel_7.setBounds(124, 8, 192, 14);
-				pnlMicro.add(lblNewLabel_7);
-			}
-			{
 				JLabel lblNewLabel_8 = new JLabel("Modelo:");
 				lblNewLabel_8.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_8.setBounds(20, 31, 60, 14);
+				lblNewLabel_8.setBounds(15, 29, 60, 14);
 				pnlMicro.add(lblNewLabel_8);
 			}
 			{
 				txtModeloMicro = new JTextField();
 				txtModeloMicro.setEnabled(false);
-				txtModeloMicro.setBounds(87, 30, 123, 20);
+				txtModeloMicro.setBounds(80, 25, 145, 20);
 				pnlMicro.add(txtModeloMicro);
 				txtModeloMicro.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_9 = new JLabel("Socket:");
 				lblNewLabel_9.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_9.setBounds(220, 33, 60, 14);
+				lblNewLabel_9.setBounds(260, 29, 60, 14);
 				pnlMicro.add(lblNewLabel_9);
 			}
 			{
 				txtSocketMicro = new JTextField();
 				txtSocketMicro.setEnabled(false);
-				txtSocketMicro.setBounds(282, 30, 123, 20);
+				txtSocketMicro.setBounds(317, 25, 145, 20);
 				pnlMicro.add(txtSocketMicro);
 				txtSocketMicro.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_10 = new JLabel("Velocidad de Procesamiento:");
 				lblNewLabel_10.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_10.setBounds(20, 54, 200, 14);
+				lblNewLabel_10.setBounds(15, 60, 200, 14);
 				pnlMicro.add(lblNewLabel_10);
 			}
 			{
 				txtVeProMicro = new JTextField();
 				txtVeProMicro.setEnabled(false);
-				txtVeProMicro.setBounds(218, 53, 187, 20);
+				txtVeProMicro.setBounds(215, 57, 187, 20);
 				pnlMicro.add(txtVeProMicro);
 				txtVeProMicro.setColumns(10);
 			}
 		}
 		{
 			pnlMother = new JPanel();
-			pnlMother.setBounds(10, 142, 415, 79);
+			pnlMother.setBorder(new TitledBorder(null, "MotherBoard", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			pnlMother.setBounds(4, 125, 474, 90);
 			contentPanel.add(pnlMother);
 			pnlMother.setLayout(null);
 			{
-				JLabel lblNewLabel_11 = new JLabel("Datos Motherboard");
-				lblNewLabel_11.setFont(new Font("Bahnschrift", Font.PLAIN, 16));
-				lblNewLabel_11.setBounds(119, 5, 200, 14);
-				pnlMother.add(lblNewLabel_11);
-			}
-			{
 				JLabel lblNewLabel_12 = new JLabel("Modelo:");
 				lblNewLabel_12.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_12.setBounds(20, 28, 60, 14);
+				lblNewLabel_12.setBounds(15, 28, 60, 14);
 				pnlMother.add(lblNewLabel_12);
 			}
 			{
 				txtModeloMother = new JTextField();
-				txtModeloMother.setEnabled(false);
-				txtModeloMother.setBounds(87, 25, 123, 20);
+				txtModeloMother.setEditable(false);
+				txtModeloMother.setBounds(87, 25, 141, 20);
 				pnlMother.add(txtModeloMother);
 				txtModeloMother.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_13 = new JLabel("Tipo Ram:");
 				lblNewLabel_13.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_13.setBounds(20, 54, 86, 14);
+				lblNewLabel_13.setBounds(15, 60, 86, 14);
 				pnlMother.add(lblNewLabel_13);
 			}
 			{
 				txtTipoRamMother = new JTextField();
-				txtTipoRamMother.setEnabled(false);
-				txtTipoRamMother.setBounds(87, 51, 86, 20);
+				txtTipoRamMother.setEditable(false);
+				txtTipoRamMother.setBounds(87, 57, 105, 20);
 				pnlMother.add(txtTipoRamMother);
 				txtTipoRamMother.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_14 = new JLabel("Socket:");
 				lblNewLabel_14.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_14.setBounds(220, 30, 60, 14);
+				lblNewLabel_14.setBounds(260, 28, 60, 14);
 				pnlMother.add(lblNewLabel_14);
 			}
 			{
 				txtSocketMother = new JTextField();
-				txtSocketMother.setEnabled(false);
-				txtSocketMother.setBounds(290, 27, 115, 20);
+				txtSocketMother.setEditable(false);
+				txtSocketMother.setBounds(317, 25, 145, 20);
 				pnlMother.add(txtSocketMother);
 				txtSocketMother.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_15 = new JLabel("Discos Aceptados:");
 				lblNewLabel_15.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_15.setBounds(180, 56, 118, 14);
+				lblNewLabel_15.setBounds(215, 60, 118, 14);
 				pnlMother.add(lblNewLabel_15);
 			}
 			{
 				txtDiscoMother = new JTextField();
-				txtDiscoMother.setEnabled(false);
-				txtDiscoMother.setBounds(300, 51, 105, 20);
+				txtDiscoMother.setEditable(false);
+				txtDiscoMother.setBounds(344, 57, 118, 20);
 				pnlMother.add(txtDiscoMother);
 				txtDiscoMother.setColumns(10);
 			}
 		}
 		{
 			pnlRam = new JPanel();
-			pnlRam.setBounds(10, 142, 415, 79);
+			pnlRam.setBorder(new TitledBorder(null, "Memoria RAM", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			pnlRam.setBounds(4, 125, 474, 60);
 			contentPanel.add(pnlRam);
 			pnlRam.setLayout(null);
 			{
-				JLabel lblNewLabel_16 = new JLabel("Datos Memoria RAM");
-				lblNewLabel_16.setFont(new Font("Bahnschrift", Font.PLAIN, 16));
-				lblNewLabel_16.setBounds(131, 5, 200, 14);
-				pnlRam.add(lblNewLabel_16);
-			}
-			{
 				JLabel lblNewLabel_17 = new JLabel("Cantidad:");
 				lblNewLabel_17.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_17.setBounds(10, 36, 65, 14);
+				lblNewLabel_17.setBounds(10, 28, 65, 14);
 				pnlRam.add(lblNewLabel_17);
 			}
 			{
 				txtCantRam = new JTextField();
-				txtCantRam.setEnabled(false);
-				txtCantRam.setBounds(85, 33, 86, 20);
+				txtCantRam.setEditable(false);
+				txtCantRam.setBounds(85, 25, 146, 20);
 				pnlRam.add(txtCantRam);
 				txtCantRam.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_18 = new JLabel("Tipo:");
 				lblNewLabel_18.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_18.setBounds(243, 36, 46, 14);
+				lblNewLabel_18.setBounds(255, 28, 46, 14);
 				pnlRam.add(lblNewLabel_18);
 			}
 			{
 				txtTipoRam = new JTextField();
-				txtTipoRam.setEnabled(false);
-				txtTipoRam.setBounds(299, 33, 86, 20);
+				txtTipoRam.setEditable(false);
+				txtTipoRam.setBounds(299, 25, 163, 20);
 				pnlRam.add(txtTipoRam);
 				txtTipoRam.setColumns(10);
 			}
 		}
 		{
 			pnlDisco = new JPanel();
-			pnlDisco.setBounds(10, 142, 415, 79);
+			pnlDisco.setBorder(new TitledBorder(null, "Disco Duro", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			pnlDisco.setBounds(4, 125, 474, 90);
 			contentPanel.add(pnlDisco);
 			pnlDisco.setLayout(null);
 			{
-				JLabel lblNewLabel_19 = new JLabel("Datos Disco Duro");
-				lblNewLabel_19.setFont(new Font("Bahnschrift", Font.PLAIN, 16));
-				lblNewLabel_19.setBounds(126, 5, 200, 14);
-				pnlDisco.add(lblNewLabel_19);
-			}
-			{
 				JLabel lblNewLabel_20 = new JLabel("Modelo:");
 				lblNewLabel_20.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_20.setBounds(20, 27, 100, 14);
+				lblNewLabel_20.setBounds(10, 28, 55, 14);
 				pnlDisco.add(lblNewLabel_20);
 			}
 			{
 				JLabel lblNewLabel_21 = new JLabel("Tipo Conexion:");
 				lblNewLabel_21.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_21.setBounds(220, 27, 100, 14);
+				lblNewLabel_21.setBounds(245, 28, 100, 14);
 				pnlDisco.add(lblNewLabel_21);
 			}
 			{
 				JLabel lblNewLabel_22 = new JLabel("Capacidad de Almacenamiento:");
 				lblNewLabel_22.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-				lblNewLabel_22.setBounds(20, 54, 200, 14);
+				lblNewLabel_22.setBounds(10, 60, 200, 14);
 				pnlDisco.add(lblNewLabel_22);
 			}
 			{
 				txtConexionDisco = new JTextField();
 				txtConexionDisco.setEnabled(false);
-				txtConexionDisco.setBounds(319, 26, 86, 20);
+				txtConexionDisco.setBounds(350, 24, 112, 20);
 				pnlDisco.add(txtConexionDisco);
 				txtConexionDisco.setColumns(10);
 			}
 			{
 				txtModeloDisco = new JTextField();
 				txtModeloDisco.setEnabled(false);
-				txtModeloDisco.setBounds(87, 26, 123, 20);
+				txtModeloDisco.setBounds(77, 25, 149, 20);
 				pnlDisco.add(txtModeloDisco);
 				txtModeloDisco.setColumns(10);
 			}
 			{
 				txtCapAlmDisco = new JTextField();
 				txtCapAlmDisco.setEnabled(false);
-				txtCapAlmDisco.setBounds(230, 53, 175, 20);
+				txtCapAlmDisco.setBounds(225, 57, 237, 20);
 				pnlDisco.add(txtCapAlmDisco);
 				txtCapAlmDisco.setColumns(10);
 			}

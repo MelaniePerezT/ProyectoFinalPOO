@@ -76,26 +76,9 @@ public class ListaProveedores extends JDialog {
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
-                JButton bottonActualizar = new JButton("Actualizar");
-                bottonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-                bottonActualizar.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        int selectedRow = table.getSelectedRow();
-                        if (selectedRow != -1) {
-                            String id = (String) tableModel.getValueAt(selectedRow, 0);
-                            Proveedor proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(id);
-                            if (proveedor != null) {
-                                RegistrarProveedor registrarProveedorDialog = new RegistrarProveedor(proveedor);
-                                registrarProveedorDialog.setModal(true);
-                                registrarProveedorDialog.setVisible(true);
-                                
-                                actualizarTabla();
-                            }
-                        }
-                    }
-                });
                 {
                 	JButton eliminarbotton = new JButton("Eliminar");
+                	eliminarbotton.setEnabled(false);
                 	eliminarbotton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
                 	eliminarbotton.addActionListener(new ActionListener() {
                 		public void actionPerformed(ActionEvent e) {
@@ -107,11 +90,30 @@ public class ListaProveedores extends JDialog {
                             }
                 		}
                 	});
+                	JButton bottonActualizar = new JButton("Actualizar");
+                	bottonActualizar.setEnabled(false);
+                	bottonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+                	bottonActualizar.addActionListener(new ActionListener() {
+                	    public void actionPerformed(ActionEvent e) {
+                	        int selectedRow = table.getSelectedRow();
+                	        if (selectedRow != -1) {
+                	            String id = (String) tableModel.getValueAt(selectedRow, 0);
+                	            Proveedor proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(id);
+                	            if (proveedor != null) {
+                	                RegistrarProveedor registrarProveedorDialog = new RegistrarProveedor(proveedor);
+                	                registrarProveedorDialog.setModal(true);
+                	                registrarProveedorDialog.setVisible(true);
+                	                
+                	                actualizarTabla();
+                	            }
+                	        }
+                	    }
+                	});
+                	bottonActualizar.setActionCommand("OK");
+                	buttonPane.add(bottonActualizar);
+                	getRootPane().setDefaultButton(bottonActualizar);
                 	buttonPane.add(eliminarbotton);
                 }
-                bottonActualizar.setActionCommand("OK");
-                buttonPane.add(bottonActualizar);
-                getRootPane().setDefaultButton(bottonActualizar);
             }
             {
                 JButton cancelButton = new JButton("Cancelar");

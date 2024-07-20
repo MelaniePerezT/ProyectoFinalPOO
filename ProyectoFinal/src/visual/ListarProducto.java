@@ -11,7 +11,11 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import logico.DiscoDuro;
 import logico.Empleado;
+import logico.MemoriaRam;
+import logico.Microprocesador;
+import logico.MotherBoard;
 import logico.Persona;
 import logico.Producto;
 import logico.Tienda;
@@ -52,13 +56,16 @@ public class ListarProducto extends JDialog {
 	public ListarProducto() {
 		setTitle("Lista de Productos");
 		setBounds(100, 100, 919, 505);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		setLocationRelativeTo(null); /*Poner en el centro*/
 
-		String[] columnas = {"ID","NO. Serie","Cantidad","Proovedor","Precio"};
+		String[] columnas = {"ID","NO. Serie","Tipo","Cantidad","Proovedor","Precio"};
 		tableModel = new DefaultTableModel(columnas, 0);
 		table = new JTable(tableModel);
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -177,13 +184,27 @@ public class ListarProducto extends JDialog {
 		for (int i = 0; i < cant; i++) {
 			rows[0] = Tienda.getInstance().getListaProductos().get(i).getId();
 			rows[1] = Tienda.getInstance().getListaProductos().get(i).getNumSerie();
-			rows[2] = Tienda.getInstance().getListaProductos().get(i).getCantDisponible();
-			if (Tienda.getInstance().getListaProductos().get(i).getProveedor() != null) {
-				rows[3]= Tienda.getInstance().getListaProductos().get(i).getProveedor().getId();
-			} else {
-				rows[3] = "Vacío";
+			
+			if (Tienda.getInstance().getListaProductos().get(i) instanceof MotherBoard) {
+				rows[2] = "MotherBoard";
 			}
-			rows[4]=Tienda.getInstance().getListaProductos().get(i).getPrecio();
+			if (Tienda.getInstance().getListaProductos().get(i) instanceof MemoriaRam) {
+				rows[2] = "Memoria RAM";				
+			}
+			if (Tienda.getInstance().getListaProductos().get(i) instanceof Microprocesador) {
+				rows[2] = "Microprocesador";				
+			}
+			if (Tienda.getInstance().getListaProductos().get(i) instanceof DiscoDuro) {
+					rows[2] = "Disco Duro";				
+			}
+			
+			rows[3] = Tienda.getInstance().getListaProductos().get(i).getCantDisponible();
+			if (Tienda.getInstance().getListaProductos().get(i).getProveedor() != null) {
+				rows[4]= Tienda.getInstance().getListaProductos().get(i).getProveedor().getId();
+			} else {
+				rows[4] = "Vacío";
+			}
+			rows[5]=Tienda.getInstance().getListaProductos().get(i).getPrecio();
 			tableModel.addRow(rows);
 		}
 
