@@ -20,16 +20,16 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class ListaClientes extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
     private JTable table;
     private DefaultTableModel tableModel;
+    private JButton botonActualizar;
+    private JButton botonEliminar;
 
     /**
      * Launch the application.
@@ -48,7 +48,7 @@ public class ListaClientes extends JDialog {
      * Create the dialog.
      */
     public ListaClientes() {
-    	setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+        setFont(new Font("Bahnschrift", Font.PLAIN, 13));
         setTitle("Lista de Clientes");
         setBounds(100, 100, 600, 400);
         getContentPane().setLayout(new BorderLayout());
@@ -71,6 +71,19 @@ public class ListaClientes extends JDialog {
         table.setPreferredScrollableViewportSize(new Dimension(500, 300));
         table.setFillsViewportHeight(true);
 
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1) {
+                    botonActualizar.setEnabled(true);
+                    botonEliminar.setEnabled(true);
+                } else {
+                    botonActualizar.setEnabled(false);
+                    botonEliminar.setEnabled(false);
+                }
+            }
+        });
+
         JScrollPane scrollPane = new JScrollPane(table);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
         cargarDatosCliente();
@@ -80,41 +93,40 @@ public class ListaClientes extends JDialog {
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
-                {
-                	JButton botonEliminar = new JButton("Eliminar");
-                	botonEliminar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-                	botonEliminar.addActionListener(new ActionListener() {
-                		public void actionPerformed(ActionEvent e) {
-                			int selectedRow = table.getSelectedRow();
-                            if (selectedRow != -1) {
-                                String id = (String) tableModel.getValueAt(selectedRow, 0);
-                                eliminarClienteSeleccionado();
+                botonEliminar = new JButton("Eliminar");
+                botonEliminar.setEnabled(false);
+                botonEliminar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+                botonEliminar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRow = table.getSelectedRow();
+                        if (selectedRow != -1) {
+                            eliminarClienteSeleccionado();
+                            actualizarTabla();
+                        }
+                    }
+                });
+                botonActualizar = new JButton("Actualizar");
+                botonActualizar.setEnabled(false);
+                botonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+                botonActualizar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRow = table.getSelectedRow();
+                        if (selectedRow != -1) {
+                            String id = (String) tableModel.getValueAt(selectedRow, 0);
+                            Cliente cliente = (Cliente) Tienda.getInstance().buscarPersonaId(id);
+                            if (cliente != null) {
+                                RegistrarCliente registrarClienteDialog = new RegistrarCliente(cliente);
+                                registrarClienteDialog.setModal(true);
+                                registrarClienteDialog.setVisible(true);
                                 actualizarTabla();
                             }
-                		}
-                	});
-                	JButton botonActualizar = new JButton("Actualizar");
-                	botonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-                	botonActualizar.addActionListener(new ActionListener() {
-                	    public void actionPerformed(ActionEvent e) {
-                	    	int selectedRow = table.getSelectedRow();
-                	        if (selectedRow != -1) {
-                	        	String id = (String) tableModel.getValueAt(selectedRow, 0);
-                	            Cliente cliente = (Cliente) Tienda.getInstance().buscarPersonaId(id);
-                	            if (cliente != null) {
-                	                RegistrarCliente registrarClienteDialog = new RegistrarCliente(cliente);
-                	                registrarClienteDialog.setModal(true);
-                	                registrarClienteDialog.setVisible(true);
-                	                actualizarTabla();
-                	            }
-                	        }
-                	    }
-                	});
-                	botonActualizar.setActionCommand("OK");
-                	buttonPane.add(botonActualizar);
-                	getRootPane().setDefaultButton(botonActualizar);
-                	buttonPane.add(botonEliminar);
-                }
+                        }
+                    }
+                });
+                botonActualizar.setActionCommand("OK");
+                buttonPane.add(botonActualizar);
+                getRootPane().setDefaultButton(botonActualizar);
+                buttonPane.add(botonEliminar);
             }
             {
                 JButton cancelButton = new JButton("Cancelar");
@@ -152,7 +164,6 @@ public class ListaClientes extends JDialog {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
             String idCliente = (String) tableModel.getValueAt(selectedRow, 0);
-            
             int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este cliente?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
             if (confirmacion == JOptionPane.YES_OPTION) {
                 Tienda.getInstance().eliminarPersona(idCliente);
@@ -165,6 +176,4 @@ public class ListaClientes extends JDialog {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
         }
     }
-
-
 }

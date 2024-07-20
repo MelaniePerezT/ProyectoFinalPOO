@@ -7,6 +7,8 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -26,6 +28,8 @@ public class ListaProveedores extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JTable table;
     private DefaultTableModel tableModel;
+    private JButton bottonActualizar;
+    private JButton eliminarbotton;
 
     /**
      * Launch the application.
@@ -44,7 +48,7 @@ public class ListaProveedores extends JDialog {
      * Create the dialog.
      */
     public ListaProveedores() {
-    	setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+        setFont(new Font("Bahnschrift", Font.PLAIN, 13));
         setTitle("Lista de Proveedores");
         setBounds(100, 100, 600, 400);
         getContentPane().setLayout(new BorderLayout());
@@ -67,6 +71,19 @@ public class ListaProveedores extends JDialog {
         table.setPreferredScrollableViewportSize(new Dimension(500, 300));
         table.setFillsViewportHeight(true);
 
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1) {
+                    bottonActualizar.setEnabled(true);
+                    eliminarbotton.setEnabled(true);
+                } else {
+                    bottonActualizar.setEnabled(false);
+                    eliminarbotton.setEnabled(false);
+                }
+            }
+        });
+
         JScrollPane scrollPane = new JScrollPane(table);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
         cargarDatosProveedor();
@@ -76,44 +93,41 @@ public class ListaProveedores extends JDialog {
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
-                {
-                	JButton eliminarbotton = new JButton("Eliminar");
-                	eliminarbotton.setEnabled(false);
-                	eliminarbotton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-                	eliminarbotton.addActionListener(new ActionListener() {
-                		public void actionPerformed(ActionEvent e) {
-                			int selectedRow = table.getSelectedRow();
-                            if (selectedRow != -1) {
-                                String id = (String) tableModel.getValueAt(selectedRow, 0);
-                                eliminarProveedorSeleccionado();
+                eliminarbotton = new JButton("Eliminar");
+                eliminarbotton.setEnabled(false);
+                eliminarbotton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+                eliminarbotton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRow = table.getSelectedRow();
+                        if (selectedRow != -1) {
+                            eliminarProveedorSeleccionado();
+                            actualizarTabla();
+                        }
+                    }
+                });
+                bottonActualizar = new JButton("Actualizar");
+                bottonActualizar.setEnabled(false);
+                bottonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+                bottonActualizar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRow = table.getSelectedRow();
+                        if (selectedRow != -1) {
+                            String id = (String) tableModel.getValueAt(selectedRow, 0);
+                            Proveedor proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(id);
+                            if (proveedor != null) {
+                                RegistrarProveedor registrarProveedorDialog = new RegistrarProveedor(proveedor);
+                                registrarProveedorDialog.setModal(true);
+                                registrarProveedorDialog.setVisible(true);
+                                
                                 actualizarTabla();
                             }
-                		}
-                	});
-                	JButton bottonActualizar = new JButton("Actualizar");
-                	bottonActualizar.setEnabled(false);
-                	bottonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-                	bottonActualizar.addActionListener(new ActionListener() {
-                	    public void actionPerformed(ActionEvent e) {
-                	        int selectedRow = table.getSelectedRow();
-                	        if (selectedRow != -1) {
-                	            String id = (String) tableModel.getValueAt(selectedRow, 0);
-                	            Proveedor proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(id);
-                	            if (proveedor != null) {
-                	                RegistrarProveedor registrarProveedorDialog = new RegistrarProveedor(proveedor);
-                	                registrarProveedorDialog.setModal(true);
-                	                registrarProveedorDialog.setVisible(true);
-                	                
-                	                actualizarTabla();
-                	            }
-                	        }
-                	    }
-                	});
-                	bottonActualizar.setActionCommand("OK");
-                	buttonPane.add(bottonActualizar);
-                	getRootPane().setDefaultButton(bottonActualizar);
-                	buttonPane.add(eliminarbotton);
-                }
+                        }
+                    }
+                });
+                bottonActualizar.setActionCommand("OK");
+                buttonPane.add(bottonActualizar);
+                getRootPane().setDefaultButton(bottonActualizar);
+                buttonPane.add(eliminarbotton);
             }
             {
                 JButton cancelButton = new JButton("Cancelar");
@@ -151,7 +165,7 @@ public class ListaProveedores extends JDialog {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
             String idProveedor = (String) tableModel.getValueAt(selectedRow, 0);
-            int confirmacion = JOptionPane.showConfirmDialog(this,"¿Estas seguro de que deseas eliminar este proveedor?","Confirmacion de eliminacion",JOptionPane.YES_NO_OPTION);
+            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estas seguro de que deseas eliminar este proveedor?", "Confirmacion de eliminacion", JOptionPane.YES_NO_OPTION);
             if (confirmacion == JOptionPane.YES_OPTION) {
                 Tienda.getInstance().eliminarPersona(idProveedor);
                 tableModel.removeRow(selectedRow);
@@ -163,6 +177,4 @@ public class ListaProveedores extends JDialog {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor para eliminar.");
         }
     }
-
-
 }
