@@ -124,7 +124,7 @@ public class RegistrarEmpleado extends JDialog {
             contentPanel.add(correoField);
         }
         
-        edadSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1)); 
+        edadSpinner = new JSpinner(new SpinnerNumberModel(18, 18, 100, 1)); 
         edadSpinner.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         edadSpinner.setBounds(294, 78, 86, 20);
         contentPanel.add(edadSpinner);
@@ -149,6 +149,11 @@ public class RegistrarEmpleado extends JDialog {
                 okButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         
+						if (nombreField.getText().isEmpty() || cedulaField.getText().isEmpty() || correoField.getText().isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
+							return;
+						}
+                    	
                         String nombreApellido = nombreField.getText();
                         String cedula = cedulaField.getText();
                         String correo = correoField.getText();
@@ -209,7 +214,7 @@ public class RegistrarEmpleado extends JDialog {
         nombreField.setText("");
         cedulaField.setText("");
         correoField.setText("");
-        edadSpinner.setValue(0);
+        edadSpinner.setValue(18);
         Comsionspinner.setValue(0);
     }
 }

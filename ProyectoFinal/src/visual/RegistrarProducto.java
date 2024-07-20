@@ -136,6 +136,7 @@ public class RegistrarProducto extends JDialog {
 			panel_1.add(lblCantidad);
 
 			spnCantidad = new JSpinner();
+			spnCantidad.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 			spnCantidad.setBounds(85, 89, 140, 22);
 			panel_1.add(spnCantidad);
 
@@ -360,6 +361,7 @@ public class RegistrarProducto extends JDialog {
 			pnlMemoriaRAM.setBorder(new TitledBorder(null, "Memoria RAM", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlMemoriaRAM.setBounds(4, 204, 534, 63);
 			panel.add(pnlMemoriaRAM);
+			pnlMemoriaRAM.setVisible(false);
 
 			JLabel lblMRCantidad = new JLabel("Cantidad Memoria:");
 			lblMRCantidad.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
@@ -386,6 +388,7 @@ public class RegistrarProducto extends JDialog {
 			pnlMicroprocesador.setBorder(new TitledBorder(null, "Microprocesador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlMicroprocesador.setBounds(4, 204, 534, 93);
 			panel.add(pnlMicroprocesador);
+			pnlMicroprocesador.setVisible(false);
 
 			JLabel lblMPModelo = new JLabel("Modelo:");
 			lblMPModelo.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
@@ -421,6 +424,7 @@ public class RegistrarProducto extends JDialog {
 			pnlDiscoDuro.setBorder(new TitledBorder(null, "Disco Duro", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlDiscoDuro.setBounds(4, 204, 534, 93);
 			panel.add(pnlDiscoDuro);
+			pnlDiscoDuro.setVisible(false);
 
 			JLabel label = new JLabel("Modelo:");
 			label.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
@@ -463,31 +467,28 @@ public class RegistrarProducto extends JDialog {
 				}
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
-						int cantProveedores = 0;	
-						for (Persona persona : Tienda.getInstance().getListaPersonas()) {
-							if (persona instanceof Proveedor) {
-								cantProveedores++;
-							}
-						}	
-						if (cantProveedores == 0) {
-							JOptionPane.showMessageDialog(null, "Operación errónea. Debe haber por lo menos un proveedor registrado!", "Error", JOptionPane.WARNING_MESSAGE);
-							return;
-						}
-						
+
 						String id = txtId.getText();
 						String numSerie = txtNumSerie.getText();
 						String marca = txtMarca.getText();
 
 						int cantidad = new Integer(spnCantidad.getValue().toString());
 						float precio = new Float(spnPrecio.getValue().toString());
-						
-						Proveedor proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(cbxProveedor.getSelectedItem().toString());
+
+						Proveedor proveedor = null;
+						if (cbxProveedor.getSelectedItem() != null && cbxProveedor.getSelectedItem().toString().equalsIgnoreCase("")) {
+							proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(cbxProveedor.getSelectedItem().toString());
+						}
 
 
 						if (producto == null) {
 							Producto producto = null;
 
+							if (id.isEmpty() || numSerie.isEmpty() || cantidad == 0) {
+								JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
+								return;
+							}
+							
 							if (rbtnMotherBoard.isSelected()) {
 								if (txtMBModelo.getText().isEmpty() || txtMBSocket.getText().isEmpty() || "<Seleccione uno>".equalsIgnoreCase(cbxMBTipoRam.getSelectedItem().toString())) {
 									JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
@@ -611,8 +612,6 @@ public class RegistrarProducto extends JDialog {
 			txtId.setText(producto.getId());
 			txtNumSerie.setText(producto.getNumSerie());
 			txtMarca.setText(producto.getMarca());
-
-			cbxProveedor.setSelectedIndex(buscarIndiceSeleccionado(cbxProveedor, producto.getProveedor().getId()));
 			spnCantidad.setValue(producto.getCantDisponible());
 			spnPrecio.setValue(producto.getPrecio());
 
@@ -724,16 +723,25 @@ public class RegistrarProducto extends JDialog {
 
 		}
 		else {
-			txtId.setText(Tienda.getInstance().generarIdCliente());
+			txtId.setText("Producto - "+Tienda.getInstance().numProducto);
 		}
 
 	}
 
 	public void clean() {
-		txtId.setText(Tienda.getInstance().generarIdProducto());
+		txtId.setText("Producto - "+Tienda.getInstance().numProducto);
 		txtNumSerie.setText("");
 		txtMarca.setText("");
-		cbxProveedor.setSelectedIndex(0);
+		int cantProveedores = 0;	
+		for (Persona persona : Tienda.getInstance().getListaPersonas()) {
+			if (persona instanceof Proveedor) {
+				cantProveedores++;
+			}
+		}	
+		if (cantProveedores > 0) {
+			cbxProveedor.setSelectedIndex(0);
+		}
+
 		spnCantidad.setValue(new Integer(1));
 		spnPrecio.setValue(new Float(0));
 		rbtnMotherBoard.setSelected(true);
@@ -758,19 +766,16 @@ public class RegistrarProducto extends JDialog {
 	}
 
 	private int buscarIndiceSeleccionado(JComboBox<String> aux, String item) {
-		// Para marcar seleccionado el proveedor que posee el producto
 		int i = 0;
-		int indice = -1;
 		boolean encontrado = false;
 		while (!encontrado && i < aux.getItemCount()) {
-			if (item.equalsIgnoreCase(aux.getItemAt(i).toString()))
+			if (item.equalsIgnoreCase(aux.getItemAt(i)))
 			{
-				indice = i;
-				encontrado = true;
+				return i; 
 			}
 			i++;
 		}
 
-		return indice;
+		return 0;
 	}
 }
