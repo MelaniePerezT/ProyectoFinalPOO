@@ -325,10 +325,11 @@ public class Tienda {
 	public float totalVentas()
 	{
 		float total=0;
-		for (Factura fat : listaFacturas) {
-			if(fat instanceof FacturaVenta)
+		for (Factura factu : listaFacturas) {
+			if(factu instanceof FacturaVenta)
 			{
-				total+=fat.precioTotal();
+				total+=calculaPrecioProducto(factu.getProductosFacturados(), ((FacturaVenta) factu).getCliente().getId(), factu.isEsCombo());
+	        
 			}
 			
 		}
@@ -341,29 +342,27 @@ public class Tienda {
 		for (Factura fat : listaFacturas) {
 			if(fat instanceof FacturaCompra)
 			{
-				total+=fat.precioTotal();
+				total+=calculaPrecioProducto(fat.getProductosFacturados(), "",fat.isEsCombo());
 			}
 			
 		}
 		return total;
 	}
 	//Nota: el total de las ganacias producida por la tienda
-	public float totalGanancias()
-	{
-		float total=0;
-		for (Factura fat : listaFacturas) {
-			if(fat instanceof FacturaVenta)
-			{
-				total+=fat.precioTotal();
-			}
-			if(fat instanceof FacturaCompra)
-			{
-				total-=fat.precioTotal();
-			}
-			
-		}
-		return total;
+	public float totalGanancias() {
+	    float total = 0;
+	    for (Factura fat : listaFacturas) {
+	        if (fat instanceof FacturaVenta) {
+	            FacturaVenta factu = (FacturaVenta) fat;
+	            total += calculaPrecioProducto(factu.getProductosFacturados(), factu.getCliente().getId(), factu.isEsCombo());
+	        } else if (fat instanceof FacturaCompra) {
+	            FacturaCompra fact = (FacturaCompra) fat;
+	            total -= calculaPrecioProducto(fact.getProductosFacturados(), " ", fat.isEsCombo());
+	        }
+	    }
+	    return total;
 	}
+
 	// Nota: esta dice el producto favorito
 	public Producto productoFavorito()
 	{
@@ -425,5 +424,31 @@ public class Tienda {
 		if(producto.isEstado())
 			disponible=true;
 		return disponible;
+	}
+	//Nota: Calcula el descuento a aplicarse
+	public float descuentoAplicado(String idCliente,boolean esCombo)
+	{
+		float descuento=0;
+		Cliente clien=(Cliente)buscarPersonaId(idCliente);
+		if(clien.getClasificacion()=='V')
+		{
+			descuento+=5;
+		}
+		if(esCombo)
+		{
+			descuento+=10;
+		}
+		return descuento;
+	}
+	//Nota: Calcula el precio de la factura
+	public float calculaPrecioProducto(ArrayList<Producto> productos, String idClient, boolean esCombo)
+	{
+		float precio=0;
+		for (Producto producto : productos) {
+			precio= producto.getPrecio();
+		}
+		float descuento=descuentoAplicado(idClient, esCombo);
+		precio=precio*(descuento/100);
+		return precio;
 	}
 }

@@ -7,6 +7,7 @@ public class Factura {
 	protected String id;
 	protected LocalDate fechaFactura;
 	protected ArrayList <Producto> productosFacturados;
+	private boolean esCombo;
 	public String getId() {
 		return id;
 	}
@@ -27,14 +28,14 @@ public class Factura {
 		this.id = Tienda.getInstance().generarIdFactura();
 		this.fechaFactura = fechaFactura;
 		this.productosFacturados = productosFacturados;
+		this.esCombo=false;
+	}
+	public boolean isEsCombo() {
+		return esCombo;
+	}
+	public void setEsCombo(boolean esCombo) {
+		this.esCombo = esCombo;
 	}
 
-	public float precioTotal()
-	{
-		float precio=0;
-		for (Producto producto : productosFacturados) {
-			precio+=producto.getPrecio();
-		}
-		return precio;
-	}
+	
 }

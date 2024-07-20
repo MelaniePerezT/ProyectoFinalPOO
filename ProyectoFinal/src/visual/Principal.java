@@ -7,7 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import logico.Cliente;
+import logico.DiscoDuro;
+import logico.Microprocesador;
+import logico.MotherBoard;
 import logico.Persona;
+import logico.Producto;
 import logico.Proveedor;
 import logico.Tienda;
 
@@ -164,10 +169,97 @@ public class Principal extends JFrame {
 		});
 		mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mnNewMenu.add(mntmNewMenuItem_1);
+		
+		JMenu mnNewMenu_1 = new JMenu("Administracion");
+		mnNewMenu_1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		menuBar.add(mnNewMenu_1);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Sobre nosotros");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String mensaje = "Ambar Nicole Torres Viamonte, Luis Reynaldo Colon Garcia y Melanie Perez Trinidad";
+				   JOptionPane.showMessageDialog(null, mensaje, "Desarrolladores", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Producto Favorito");
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Producto pro=Tienda.getInstance().productoFavorito();
+				String tipo;
+				if(pro instanceof MotherBoard)
+					tipo="MotherBoard";
+				else if(pro instanceof Microprocesador)
+					tipo="Microprocesador";
+				else if(pro instanceof DiscoDuro)
+					tipo="DiscoDuro";
+				else
+					tipo="Memoria Ram";
+				String cad = "ID" + pro.getId()+ ", Tipo: " + tipo;
+				
+				JOptionPane.showMessageDialog(null,cad , "Producto mas vendido", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		mntmNewMenuItem_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mnNewMenu_1.add(mntmNewMenuItem_5);
+		
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Disponibilidad");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  String cad = (String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto:", "Mensaje", JOptionPane.QUESTION_MESSAGE);
+                  if (cad != null) {
+                	  boolean hay=Tienda.getInstance().disponibleProducto(cad);
+                  	
+                	  if(hay)
+                		  JOptionPane.showMessageDialog(null, "Quedan ejemplares disponibles", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                	  else
+                		  JOptionPane.showMessageDialog(null, "No quedan ejemplares disponibles", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                	  
+                  } 
+			}
+		});
+		mntmNewMenuItem_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mnNewMenu_1.add(mntmNewMenuItem_3);
+		
+		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Cantidad de un producto");
+		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 String cad = (String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto:", "Mensaje", JOptionPane.QUESTION_MESSAGE);
+                 if (cad != null) {
+               	  Producto pro=Tienda.getInstance().buscarProductoId(cad);
+                 	
+               	  if(pro!=null)
+               		  JOptionPane.showMessageDialog(null, "Quedan "+pro.getCantDisponible(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+               	  else
+               		  JOptionPane.showMessageDialog(null, "El producto no existe", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+               	  
+                 } 
+				
+			}
+		});
+		mntmNewMenuItem_6.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mnNewMenu_1.add(mntmNewMenuItem_6);
+		
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Inventario general");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				int [] array =new int[4];
+				array=Tienda.getInstance().cantInventario();
+				String pres = "MotherBoard: " + array[0] + ", DiscoDuro: " + array[1] + ", MemoriaRam: " + array[2]+ ", Microprocesador: " + array[3];
+				JOptionPane.showMessageDialog(null,pres , "Inventario", JOptionPane.INFORMATION_MESSAGE);
+
+
+			}
+		});
+		mntmNewMenuItem_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mnNewMenu_1.add(mntmNewMenuItem_4);
+		mntmNewMenuItem_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mnNewMenu_1.add(mntmNewMenuItem_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(null);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 }

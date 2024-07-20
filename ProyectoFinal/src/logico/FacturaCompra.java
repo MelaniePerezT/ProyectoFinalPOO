@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class FacturaCompra extends Factura {
 	
 	private Proveedor proveedor;
+	
 
 	public Proveedor getProveedor() {
 		return proveedor;
@@ -19,7 +20,10 @@ public class FacturaCompra extends Factura {
 			Proveedor proveedor) {
 		super(id, fechaFactura, productosFacturados);
 		this.proveedor = proveedor;
+	
 	}
+
+	
 	
 
 }

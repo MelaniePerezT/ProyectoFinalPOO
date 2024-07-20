@@ -7,6 +7,7 @@ public class FacturaVenta extends Factura {
 	
 	private Cliente cliente;
 	private Empleado vendedor;
+	
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -24,7 +25,9 @@ public class FacturaVenta extends Factura {
 		super(id, fechaFactura, productosFacturados);
 		this.cliente = cliente;
 		this.vendedor = vendedor;
+		
 	}
+	
 	
 	
 
