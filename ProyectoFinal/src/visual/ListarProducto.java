@@ -11,7 +11,6 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-
 import logico.Empleado;
 import logico.Persona;
 import logico.Producto;
@@ -31,6 +30,8 @@ public class ListarProducto extends JDialog {
 	private  Object[] rows;
 	private JButton btnVerMas;
 	private JButton botonActualizar;
+	private JButton botonEliminar;
+	private String codigo = "";
 
 	/**
 	 * Launch the application.
@@ -64,46 +65,47 @@ public class ListarProducto extends JDialog {
 		table.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 		table.setFillsViewportHeight(true);
-		
+
 		table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int i = table.getSelectedRow();
-                if (i >= 0) {
-                    btnVerMas.setEnabled(true);
-                    botonActualizar.setEnabled(true);
-                }
-            }
-        });
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int index = table.getSelectedRow();
+				if (index >= 0) {
+					codigo = new String(table.getValueAt(index, 0).toString());
+					btnVerMas.setEnabled(true);
+					botonEliminar.setEnabled(true);
+					botonActualizar.setEnabled(true);
+				}
+			}
+		});
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		contentPanel.add(scrollPane, BorderLayout.CENTER);
-		
+
 
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				
+
 			}
 			{
 				botonActualizar = new JButton("Actualizar");
 				botonActualizar.setEnabled(false);
 				botonActualizar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						int selectedRow = table.getSelectedRow();
-                        if (selectedRow != -1) {
-                            String id = (String) tableModel.getValueAt(selectedRow, 0);
-                            Producto pro = (Producto) Tienda.getInstance().buscarProductoId(id);
-                            if (pro != null) {
-                                RegistrarProducto act = new RegistrarProducto(pro);
-                                act.setModal(true);
-                                act.setVisible(true);
-                                
-                                cargarProducto();
-                            }
-                        }
+						if(!codigo.equalsIgnoreCase("")){
+							Producto aux = Tienda.getInstance().buscarProductoId(codigo);
+							if(aux!= null){
+								RegistrarProducto updatePublicacion = new RegistrarProducto(aux);
+								updatePublicacion.setVisible(true);
+								cargarProducto();
+								btnVerMas.setEnabled(false);
+								botonActualizar.setEnabled(false);
+								botonEliminar.setEnabled(false);
+							}
+						}
 					}
 				});
 				{
@@ -135,6 +137,33 @@ public class ListarProducto extends JDialog {
 				cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 				cancelButton.setActionCommand("Cancel");
 				cancelButton.addActionListener(e -> dispose());
+				{
+					botonEliminar = new JButton("Eliminar");
+					botonEliminar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							if(codigo != ""){
+
+								// HAY QUE HACER UNA VALIDACIÓN DE QUE SI SE HA VENDIDO ALGO DE ELLA, YA NO PUEDE SER ELIMINADA
+								/*if (Tienda.getInstance().busca(codigo)) {
+									JOptionPane.showMessageDialog(null, "Operación errónea. El producto seleccionado no puede ser eliminado, al menos un ejemplar de este ha sido vendido!", "Error", JOptionPane.WARNING_MESSAGE);
+									return;
+								} else {*/
+								int option = JOptionPane.showConfirmDialog(null, "Seguro desea eliminar el producto con código: "+codigo, "Confirmación", JOptionPane.WARNING_MESSAGE);
+								if(option == JOptionPane.YES_OPTION){
+									Tienda.getInstance().eliminarProducto(codigo);
+									btnVerMas.setEnabled(false);
+									botonEliminar.setEnabled(false);
+									botonActualizar.setEnabled(false);
+									JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Eliminación", JOptionPane.INFORMATION_MESSAGE);
+									cargarProducto();
+									//}
+								}
+							}							
+						}
+					});
+					botonEliminar.setEnabled(false);
+					buttonPane.add(botonEliminar);
+				}
 				buttonPane.add(cancelButton);
 			}
 		}
@@ -149,10 +178,14 @@ public class ListarProducto extends JDialog {
 			rows[0] = Tienda.getInstance().getListaProductos().get(i).getId();
 			rows[1] = Tienda.getInstance().getListaProductos().get(i).getNumSerie();
 			rows[2] = Tienda.getInstance().getListaProductos().get(i).getCantDisponible();
-			rows[3]=Tienda.getInstance().getListaProductos().get(i).getProveedor();
+			if (Tienda.getInstance().getListaProductos().get(i).getProveedor() != null) {
+				rows[3]= Tienda.getInstance().getListaProductos().get(i).getProveedor().getId();
+			} else {
+				rows[3] = "Vacío";
+			}
 			rows[4]=Tienda.getInstance().getListaProductos().get(i).getPrecio();
 			tableModel.addRow(rows);
 		}
-		
+
 	}
 }

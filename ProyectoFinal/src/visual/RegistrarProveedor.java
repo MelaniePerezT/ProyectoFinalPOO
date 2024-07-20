@@ -199,6 +199,6 @@ public class RegistrarProveedor extends JDialog {
         cedulaField.setText("");
         correoField.setText("");
         empresaField.setText("");
-        EdadSpinner.setValue(0);
+        EdadSpinner.setValue(18);
     }
 }

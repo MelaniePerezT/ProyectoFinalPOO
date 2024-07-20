@@ -476,7 +476,7 @@ public class RegistrarProducto extends JDialog {
 						float precio = new Float(spnPrecio.getValue().toString());
 
 						Proveedor proveedor = null;
-						if (cbxProveedor.getSelectedItem() != null && cbxProveedor.getSelectedItem().toString().equalsIgnoreCase("")) {
+						if (cbxProveedor.getSelectedItem() != null) {
 							proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(cbxProveedor.getSelectedItem().toString());
 						}
 
@@ -578,9 +578,13 @@ public class RegistrarProducto extends JDialog {
 								((DiscoDuro)producto).setCapacidad(new Integer(spnDDCapacidadAlmacenamiento.getValue().toString()));
 							}
 
-							Tienda.getInstance().updateProducto(producto);;
-							//ListarProducto.loadProductos();
-							dispose();
+							int option = JOptionPane.showConfirmDialog(null, "Seguro que desea realizar la modificación al producto: "+producto.getId()+"?", "Confirmación", JOptionPane.WARNING_MESSAGE);
+							if(option == JOptionPane.YES_OPTION){
+								Tienda.getInstance().updateProducto(producto);
+								JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Modificación", JOptionPane.INFORMATION_MESSAGE);
+								dispose();
+							}	
+
 						}
 
 
@@ -594,10 +598,19 @@ public class RegistrarProducto extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						int option = JOptionPane.showConfirmDialog(null, "Seguro que desea cancelar el registro?", "Confirmación", JOptionPane.WARNING_MESSAGE);
-						if(option == JOptionPane.YES_OPTION){
-							dispose();
+						if (producto == null) {
+							int option = JOptionPane.showConfirmDialog(null, "Seguro que desea cancelar el registro?", "Confirmación", JOptionPane.WARNING_MESSAGE);
+							if(option == JOptionPane.YES_OPTION){
+								dispose();
+							}				
 						}
+						else {
+							int option = JOptionPane.showConfirmDialog(null, "Seguro que desea cancelar la modificación?", "Confirmación", JOptionPane.WARNING_MESSAGE);
+							if(option == JOptionPane.YES_OPTION){
+								dispose();
+							}
+						}
+
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
