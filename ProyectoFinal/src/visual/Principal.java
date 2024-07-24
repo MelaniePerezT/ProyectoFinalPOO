@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.ImageIcon;
 
 public class Principal extends JFrame {
 
@@ -60,6 +61,7 @@ public class Principal extends JFrame {
 		menuBar.add(clientesMenu);
 		
 		JMenuItem buttonRegistrarCliente = new JMenuItem("Registrar");
+		buttonRegistrarCliente.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/ClienteRegistrar1.png")));
 		buttonRegistrarCliente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		buttonRegistrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -70,7 +72,8 @@ public class Principal extends JFrame {
 		});
 		clientesMenu.add(buttonRegistrarCliente);
 		
-		JMenuItem muenoListaClientes = new JMenuItem("Lista ");
+		JMenuItem muenoListaClientes = new JMenuItem("Lista Clientes");
+		muenoListaClientes.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		muenoListaClientes.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		muenoListaClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,6 +89,7 @@ public class Principal extends JFrame {
 		menuBar.add(menuEmpleado);
 		
 		JMenuItem menubuttonRegistrarEmpleado = new JMenuItem("Registrar");
+		menubuttonRegistrarEmpleado.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/EmpleadoRegistrar.png")));
 		menubuttonRegistrarEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				RegistrarEmpleado ventanita = new RegistrarEmpleado(null);
@@ -96,7 +100,8 @@ public class Principal extends JFrame {
 		menubuttonRegistrarEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		menuEmpleado.add(menubuttonRegistrarEmpleado);
 		
-		JMenuItem menubuttonListaEMpleado = new JMenuItem("Lista ");
+		JMenuItem menubuttonListaEMpleado = new JMenuItem("Lista Empleados");
+		menubuttonListaEMpleado.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		menubuttonListaEMpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaEmpleados ventanita = new ListaEmpleados();
@@ -112,6 +117,7 @@ public class Principal extends JFrame {
 		menuBar.add(menuProveedor);
 		
 		JMenuItem menuRegistrarProveedor = new JMenuItem("Registrar");
+		menuRegistrarProveedor.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/supplier2.png")));
 		menuRegistrarProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				RegistrarProveedor ventanita = new RegistrarProveedor(null);
@@ -122,7 +128,8 @@ public class Principal extends JFrame {
 		menuRegistrarProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		menuProveedor.add(menuRegistrarProveedor);
 		
-		JMenuItem menuListaProveedor = new JMenuItem("Lista");
+		JMenuItem menuListaProveedor = new JMenuItem("Lista Proveedores");
+		menuListaProveedor.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		menuListaProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaProveedores ventanita = new ListaProveedores();

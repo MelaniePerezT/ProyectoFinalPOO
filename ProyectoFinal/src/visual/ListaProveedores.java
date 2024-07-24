@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -52,14 +53,21 @@ public class ListaProveedores extends JDialog {
         setTitle("Lista de Proveedores");
         setBounds(100, 100, 600, 400);
         getContentPane().setLayout(new BorderLayout());
+        contentPanel.setBackground(new Color(240, 255, 240));
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new BorderLayout(0, 0));
         setLocationRelativeTo(null); /*Poner en el centro*/
+        
+        Color CyanOscuro = new Color(70, 133, 133);
+		Color CyanMid = new Color(80, 180, 152);
+		Color CyanClaro =  new Color (222, 249, 196);
+		Color FondoClarito = new Color(240, 255, 240);
 
         String[] columnas = {"ID", "Nombre", "Cedula", "Correo", "Empresa"};
         tableModel = new DefaultTableModel(columnas, 0);
         table = new JTable(tableModel);
+        table.setBackground(new Color(240, 255, 240));
         table.setBorder(null);
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setFont(new Font("Bahnschrift", Font.BOLD, 14));
@@ -67,7 +75,7 @@ public class ListaProveedores extends JDialog {
             table.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
 
-        table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        table.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
         table.setPreferredScrollableViewportSize(new Dimension(500, 300));
         table.setFillsViewportHeight(true);
 
@@ -90,12 +98,15 @@ public class ListaProveedores extends JDialog {
 
         {
             JPanel buttonPane = new JPanel();
+            buttonPane.setBackground(new Color(240, 255, 240));
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
                 eliminarbotton = new JButton("Eliminar");
+                eliminarbotton.setForeground(new Color(255, 255, 255));
                 eliminarbotton.setEnabled(false);
                 eliminarbotton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+                eliminarbotton.setBackground(new Color(250, 128, 114));
                 eliminarbotton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         int selectedRow = table.getSelectedRow();
@@ -106,8 +117,10 @@ public class ListaProveedores extends JDialog {
                     }
                 });
                 bottonActualizar = new JButton("Actualizar");
+                bottonActualizar.setForeground(new Color(255, 255, 255));
                 bottonActualizar.setEnabled(false);
                 bottonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+                bottonActualizar.setBackground(CyanMid);
                 bottonActualizar.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         int selectedRow = table.getSelectedRow();
@@ -131,8 +144,14 @@ public class ListaProveedores extends JDialog {
             }
             {
                 JButton cancelButton = new JButton("Cancelar");
+                cancelButton.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent e) {
+                		dispose();
+                	}
+                });
+                cancelButton.setForeground(new Color(255, 255, 255));
                 cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-                cancelButton.addActionListener(e -> dispose());
+                cancelButton.setBackground(CyanMid);
                 cancelButton.setActionCommand("Cancel");
                 buttonPane.add(cancelButton);
             }
