@@ -25,6 +25,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.ImageIcon;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class Principal extends JFrame {
 
@@ -50,6 +56,24 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				FileOutputStream empresa2;
+				ObjectOutputStream empresaWrite;
+				try {
+					empresa2 = new FileOutputStream("tienda.dat");
+					empresaWrite = new ObjectOutputStream(empresa2);
+					empresaWrite.writeObject(Tienda.getInstance());
+					empresa2.close();
+					empresaWrite.close();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -282,10 +306,35 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_4);
 		mntmNewMenuItem_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mnNewMenu_1.add(mntmNewMenuItem_2);
+		
+		JMenu mnNewMenu_3 = new JMenu("Usuarios");
+		mnNewMenu_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mnNewMenu_1.add(mnNewMenu_3);
+		
+		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Registro");
+		mntmNewMenuItem_10.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mntmNewMenuItem_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RegUser regUser = new RegUser(null);
+				regUser.setVisible(true);
+			}
+		});
+		mnNewMenu_3.add(mntmNewMenuItem_10);
+		
+		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Listado");
+		mntmNewMenuItem_9.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mntmNewMenuItem_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListadoUsuarios listadoUsuarios = new ListadoUsuarios();
+				listadoUsuarios.setVisible(true);
+			}
+		});
+		mnNewMenu_3.add(mntmNewMenuItem_9);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
 	}
 }

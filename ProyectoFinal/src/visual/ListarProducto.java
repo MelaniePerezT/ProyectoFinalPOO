@@ -31,7 +31,7 @@ public class ListarProducto extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private  Object[] rows;
+	private Object[] rows;
 	private JButton btnVerMas;
 	private JButton botonActualizar;
 	private JButton botonEliminar;

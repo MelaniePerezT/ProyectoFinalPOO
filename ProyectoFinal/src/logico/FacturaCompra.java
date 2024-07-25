@@ -1,13 +1,14 @@
 package logico;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class FacturaCompra extends Factura {
+public class FacturaCompra extends Factura implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private Proveedor proveedor;
 	
-
 	public Proveedor getProveedor() {
 		return proveedor;
 	}
@@ -22,8 +23,5 @@ public class FacturaCompra extends Factura {
 		this.proveedor = proveedor;
 	
 	}
-
-	
-	
 
 }

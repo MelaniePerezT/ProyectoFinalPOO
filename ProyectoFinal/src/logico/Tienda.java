@@ -1,19 +1,24 @@
 package logico;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 
 
-public class Tienda {
+public class Tienda implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	public static int numCliente = 1;
 	public static int numEmpleado = 1;
 	public static int numProveedor = 1;
 	public static int numProducto = 1;
 	public static int numFactura =1;
 	
+	private ArrayList<User> misUsers;
+	private static User loginUser;
+
 	
 	private ArrayList <Persona> listaPersonas;
 	private ArrayList <Producto> listaProductos;
@@ -27,6 +32,14 @@ public class Tienda {
 		if(miTienda == null){
 			miTienda = new Tienda();
 		}return miTienda;
+	}
+	
+	public static Tienda getMiTienda() {
+		return miTienda;
+	}
+
+	public static void setMiTienda(Tienda miTienda) {
+		Tienda.miTienda = miTienda;
 	}
 	
 	public String generarIdProducto() {		
@@ -103,6 +116,22 @@ public class Tienda {
 	public static void setNumFactura(int numFactura) {
 		Tienda.numFactura = numFactura;
 	}
+	
+	public ArrayList<User> getMisUsers() {
+		return misUsers;
+	}
+
+	public void setMisUsers(ArrayList<User> misUsers) {
+		this.misUsers = misUsers;
+	}
+
+	public static User getLoginUser() {
+		return loginUser;
+	}
+
+	public static void setLoginUser(User loginUser) {
+		Tienda.loginUser = loginUser;
+	}
 
 	public ArrayList<Persona> getListaPersonas() {
 		return listaPersonas;
@@ -134,7 +163,67 @@ public class Tienda {
 		this.listaProductos = new ArrayList<>();
 		this.listaFacturas = new ArrayList<>();
 		this.listaCombos= new ArrayList<>();
+		this.misUsers = new ArrayList<>();
 	}
+	
+	public void generarIds() {
+		ArrayList<Cliente> auxClien = new ArrayList<>();
+		ArrayList<Empleado> auxEmpl = new ArrayList<>();
+		ArrayList<Proveedor> auxProv = new ArrayList<>();
+		
+		// PARA ANALIZAR LOS PRODUCTOS
+		if (!getListaProductos().isEmpty()) {
+			numProducto = Integer.parseInt(getListaProductos().get(getListaProductos().size() - 1).getId().substring(11)) + 1;
+		} else {
+			numProducto = 1;
+		}
+			
+		// PARA ANALIZAR LAS PERSONAS
+		if (!getListaPersonas().isEmpty()) {
+			for (Persona persona : getListaPersonas()) {
+				if (persona instanceof Cliente) {
+					auxClien.add((Cliente) persona);
+				}
+				
+				if (persona instanceof Empleado) {
+					auxEmpl.add((Empleado) persona);
+				}
+				if (persona instanceof Proveedor) {
+					auxProv.add((Proveedor) persona);
+				}
+				
+				if (!auxClien.isEmpty()) {
+					numCliente = Integer.parseInt(auxClien.get((auxClien.size()-1)).getId().substring(10)) + 1;
+				} else {
+					numCliente = 1;
+				}
+
+				if (!auxEmpl.isEmpty()) {
+					numEmpleado = Integer.parseInt(auxEmpl.get((auxEmpl.size()-1)).getId().substring(11)) + 1;
+				} else {
+					numEmpleado = 1;
+				}
+
+				if (!auxProv.isEmpty()) {
+					numProveedor = Integer.parseInt(auxProv.get((auxProv.size() - 1)).getId().substring(12)) + 1;
+				}
+				numProveedor = 1;
+
+			}
+		} else {
+			numCliente = 1;
+			numEmpleado = 1;
+			numProveedor = 1;
+		}
+		
+		// PARA ANALIZAR LAS FACTURAS
+		if (!getListaFacturas().isEmpty()) {
+			numFactura = Integer.parseInt(getListaFacturas().get((getListaFacturas().size() - 1)).getId().substring(10)) + 1;
+		} else {
+			numFactura = 1;
+		}
+	}
+
 	
 	public boolean RegistrarPersona(Persona newPersona) {
 		listaPersonas.add(newPersona);
@@ -492,6 +581,7 @@ public class Tienda {
 		}
 		return noSeleccionadoArrayList;
 	}
+	
 	public ArrayList<Combo> getListaCombos() {
 		return listaCombos;
 	}
@@ -499,4 +589,65 @@ public class Tienda {
 	public void setListaCombos(ArrayList<Combo> listaCombos) {
 		this.listaCombos = listaCombos;
 	}
+	
+	public void RegistrarUser(User user) {
+		misUsers.add(user);
+	}
+
+	//Nota: Verifica que el login sea legítimo
+	public boolean confirmLogin(String text, String text2) {
+		boolean login = false;
+		for (User user : misUsers) {
+			if(user.getUserName().equals(text) && user.getPass().equals(text2)){
+				loginUser = user;
+				login = true;
+			}
+		}
+		return login;
+	}
+	
+	// Funciones para los Usuarios
+	public int buscarUsuarioByIdgetIndex(String nombreUsuario) {
+		int index = -1;
+		boolean encontrado = false;
+		int i = 0;
+		while (!encontrado && i < listaProductos.size()) {
+			if (misUsers.get(i).getUserName().equalsIgnoreCase(nombreUsuario)) {
+				index = i;
+				encontrado = true;
+			}
+			i++;
+		}
+		return index;
+	}
+	
+	public User buscarUsuarioNombre(String nombreUsuario) {
+		User usuario = null;
+		boolean encontrado = false;
+		int i = 0;
+		while (!encontrado && i < misUsers.size()) {
+			if(misUsers.get(i).getUserName().equalsIgnoreCase(nombreUsuario)){
+				encontrado = true;
+				usuario = misUsers.get(i);
+			}
+			i++;
+		}
+
+		return usuario;
+	}
+
+	public void updateUsuario(User usuario) {
+		int index = buscarUsuarioByIdgetIndex(usuario.getUserName());
+		if (index != -1) {
+			misUsers.set(index, usuario);
+		}
+	}
+
+	public void eliminarUsuario(String nombreUsuario) {
+		User aux = buscarUsuarioNombre(nombreUsuario);
+		if (aux != null) {
+			misUsers.remove(aux);
+		}
+	}
+
 }

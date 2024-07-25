@@ -1,6 +1,10 @@
 package logico;
 
-public class Microprocesador extends Producto {
+import java.io.Serializable;
+
+public class Microprocesador extends Producto implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private String modelo;
 	private String socket;
 	private int velocidadProcesamiento;
