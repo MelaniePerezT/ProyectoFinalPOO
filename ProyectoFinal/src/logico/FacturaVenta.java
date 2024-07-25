@@ -21,8 +21,8 @@ public class FacturaVenta extends Factura {
 		this.vendedor = vendedor;
 	}
 	public FacturaVenta(String id, LocalDate fechaFactura, ArrayList<Producto> productosFacturados, Cliente cliente,
-			Empleado vendedor) {
-		super(id, fechaFactura, productosFacturados);
+			Empleado vendedor,int CantidadxProducto) {
+		super(id, fechaFactura, productosFacturados,CantidadxProducto);
 		this.cliente = cliente;
 		this.vendedor = vendedor;
 		

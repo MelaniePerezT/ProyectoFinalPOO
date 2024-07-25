@@ -9,6 +9,7 @@ public class Producto {
 	protected boolean estado;
 	protected String marca;
 	protected float precio;
+	protected boolean seleccionado;
 	
 	public String getId() {
 		return id;
@@ -71,6 +72,15 @@ public class Producto {
 		this.estado = true;
 		this.marca = marca;
 		this.precio = precio;
+		this.seleccionado=false;
+	}
+
+	public boolean isSeleccionado() {
+		return seleccionado;
+	}
+
+	public void setSeleccionado(boolean seleccionado) {
+		this.seleccionado = seleccionado;
 	}
 	
 

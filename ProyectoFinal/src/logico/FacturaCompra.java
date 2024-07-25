@@ -17,8 +17,8 @@ public class FacturaCompra extends Factura {
 	}
 
 	public FacturaCompra(String id, LocalDate fechaFactura, ArrayList<Producto> productosFacturados,
-			Proveedor proveedor) {
-		super(id, fechaFactura, productosFacturados);
+			Proveedor proveedor,int CantidadxProducto) {
+		super(id, fechaFactura, productosFacturados,CantidadxProducto);
 		this.proveedor = proveedor;
 	
 	}

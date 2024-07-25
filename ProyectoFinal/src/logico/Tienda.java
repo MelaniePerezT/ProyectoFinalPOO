@@ -18,7 +18,7 @@ public class Tienda {
 	private ArrayList <Persona> listaPersonas;
 	private ArrayList <Producto> listaProductos;
 	private ArrayList <Factura> listaFacturas;
-	private ArrayList <ArrayList<String>> listaCombos= new ArrayList<>();
+	private ArrayList <Combo> listaCombos;
 	
 	private static Tienda miTienda = null;
 
@@ -133,6 +133,7 @@ public class Tienda {
 		this.listaPersonas = new ArrayList<>();
 		this.listaProductos = new ArrayList<>();
 		this.listaFacturas = new ArrayList<>();
+		this.listaCombos= new ArrayList<>();
 	}
 	
 	public boolean RegistrarPersona(Persona newPersona) {
@@ -405,15 +406,8 @@ public class Tienda {
 		return array;
 	}
 	//Nota: esta funcion me crea un combo y me lo agrega en una lista de combos
-	public void creacionCombos(String... ids)
+	public void creacionCombos( Combo combos)
 	{
-		ArrayList<String> combos= new ArrayList<>();
-		  for (String id : ids) {
-		        Producto producto = buscarProductoId(id);
-		        if (producto != null) {
-		            combos.add(producto.getId());
-		        } 
-		    }
 		 listaCombos.add(combos);
 	}
 	//Nota: Esta funcion te dice si el producto esta disponible o no
@@ -450,5 +444,59 @@ public class Tienda {
 		float descuento=descuentoAplicado(idClient, esCombo);
 		precio=precio*(descuento/100);
 		return precio;
+	}
+
+	public ArrayList<Producto> getProductoNoSeleccionados() {
+		ArrayList<Producto> noSeleccionadoArrayList =new ArrayList<>();
+		for (Producto pro : listaProductos) {
+			if(!pro.isSeleccionado())
+			{
+				noSeleccionadoArrayList.add(pro);
+			}
+			
+		}
+		return noSeleccionadoArrayList;
+	}
+
+	public ArrayList<Producto> getProductosSeleccionados() {
+		ArrayList<Producto> SeleccionadoArrayList =new ArrayList<>();
+		for (Producto produ : listaProductos) {
+			if(produ.isSeleccionado())
+			{
+				SeleccionadoArrayList.add(produ);
+			}
+			
+		}
+		return SeleccionadoArrayList;
+	}
+	public ArrayList<Combo> getCombosSeleccionados() {
+		ArrayList<Combo> SeleccionadoArrayList =new ArrayList<>();
+		for (Combo combo : listaCombos) {
+			if(combo.isSeleccionado())
+			{
+				SeleccionadoArrayList.add(combo);
+			}
+			
+		}
+		return SeleccionadoArrayList;
+	}
+	
+	public ArrayList<Combo> getCombosNoSeleccionados() {
+		ArrayList<Combo> noSeleccionadoArrayList =new ArrayList<>();
+		for (Combo combo : listaCombos) {
+			if(!combo.isSeleccionado())
+			{
+				noSeleccionadoArrayList.add(combo);
+			}
+			
+		}
+		return noSeleccionadoArrayList;
+	}
+	public ArrayList<Combo> getListaCombos() {
+		return listaCombos;
+	}
+
+	public void setListaCombos(ArrayList<Combo> listaCombos) {
+		this.listaCombos = listaCombos;
 	}
 }

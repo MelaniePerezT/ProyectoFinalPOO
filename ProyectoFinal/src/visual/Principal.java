@@ -177,6 +177,25 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
+		JMenu mnNewMenu_2 = new JMenu("Facturas");
+		mnNewMenu_2.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		menuBar.add(mnNewMenu_2);
+		
+		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Registrar");
+		mntmNewMenuItem_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TipoFactura tipo= new TipoFactura();
+				tipo.setModal(true);
+				tipo.setVisible(true);
+			}
+		});
+		mntmNewMenuItem_7.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mnNewMenu_2.add(mntmNewMenuItem_7);
+		
+		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Lista");
+		mntmNewMenuItem_8.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		mnNewMenu_2.add(mntmNewMenuItem_8);
+		
 		JMenu mnNewMenu_1 = new JMenu("Administracion");
 		mnNewMenu_1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		menuBar.add(mnNewMenu_1);
