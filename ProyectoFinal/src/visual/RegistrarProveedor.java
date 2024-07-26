@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -171,6 +172,10 @@ public class RegistrarProveedor extends JDialog {
 					
 					if (nombreField.getText().isEmpty() || cedulaField.getText().isEmpty() || correoField.getText().isEmpty() || empresaField.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
+						ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+						MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de\nestar llenos!");
+						mensajito.setModal(true);
+						mensajito.setVisible(true);
 						return;
 					}
 					
@@ -183,7 +188,13 @@ public class RegistrarProveedor extends JDialog {
                     if (proveedor == null) {
                         Proveedor newProveedor = new Proveedor(nombreApellido, edad, cedula, correo, empresa);
                         Tienda.getInstance().RegistrarPersona(newProveedor);
-                        JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Proveedor Creado", JOptionPane.INFORMATION_MESSAGE);
+                        //JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Proveedor Creado", JOptionPane.INFORMATION_MESSAGE);
+                        
+                        ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+						MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProveedor Creado");
+						mensajito.setModal(true);
+						mensajito.setVisible(true);
+						
                         clear();
                     } else {
                     	proveedor.setNombre(nombreApellido);

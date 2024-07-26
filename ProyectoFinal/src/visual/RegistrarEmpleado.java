@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -189,7 +190,12 @@ public class RegistrarEmpleado extends JDialog {
                     public void actionPerformed(ActionEvent e) {
                         
 						if (nombreField.getText().isEmpty() || cedulaField.getText().isEmpty() || correoField.getText().isEmpty()) {
-							JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
+							//JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
+							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de\nestar llenos!");
+							mensajito.setModal(true);
+							mensajito.setVisible(true);
+							
 							return;
 						}
                     	
@@ -202,7 +208,12 @@ public class RegistrarEmpleado extends JDialog {
                         if (empleado ==  null) {
                         	Empleado newEmpleado = new Empleado(nombreApellido, edad, cedula, correo, (float) (comision / 100.0));
                             Tienda.getInstance().RegistrarPersona(newEmpleado);
-                            JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Empleado Creado", JOptionPane.INFORMATION_MESSAGE);
+                            //JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Empleado Creado", JOptionPane.INFORMATION_MESSAGE);
+                            ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nEmpleado Creado");
+							mensajito.setModal(true);
+							mensajito.setVisible(true);
+							
                             clear();
                         } else {
                         	empleado.setNombre(nombreApellido);

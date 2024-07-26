@@ -3,6 +3,8 @@ package visual;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -188,12 +190,24 @@ public class ListaProveedores extends JDialog {
             if (confirmacion == JOptionPane.YES_OPTION) {
                 Tienda.getInstance().eliminarPersona(idProveedor);
                 tableModel.removeRow(selectedRow);
-                JOptionPane.showMessageDialog(this, "Proveedor eliminado correctamente.");
+                //JOptionPane.showMessageDialog(this, "Proveedor eliminado correctamente.");
+                ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+    			MensajeAlerta mensajito = new MensajeAlerta(iconito, "Proveedor eliminado correctamente.");
+    			mensajito.setModal(true);
+    			mensajito.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(this, "Eliminacion cancelada.");
+                //JOptionPane.showMessageDialog(this, "Eliminacion cancelada.");
+            	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+    			MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminacion cancelada.");
+    			mensajito.setModal(true);
+    			mensajito.setVisible(true);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor para eliminar.");
+            //JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor para eliminar.");
+        	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+			MensajeAlerta mensajito = new MensajeAlerta(iconito, "Por favor, seleccione un proveedor para eliminar.");
+			mensajito.setModal(true);
+			mensajito.setVisible(true);
         }
     }
 }

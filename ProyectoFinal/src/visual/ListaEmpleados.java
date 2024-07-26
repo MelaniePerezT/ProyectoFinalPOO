@@ -3,6 +3,8 @@ package visual;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -127,11 +129,16 @@ public class ListaEmpleados extends JDialog {
             }
             {
                 JButton cancelButton = new JButton("Cancelar");
+                cancelButton.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent arg0) {
+                		dispose();
+                	}
+                });
                 cancelButton.setForeground(new Color(255, 255, 255));
                 cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
                 cancelButton.setActionCommand("Cancel");
                 cancelButton.setBackground(CyanMid);
-                cancelButton.addActionListener(e -> dispose());
+                
                 {
                     btnEliminar = new JButton("Eliminar");
                     btnEliminar.setForeground(new Color(255, 255, 255));
@@ -177,12 +184,24 @@ public class ListaEmpleados extends JDialog {
             if (confirmacion == JOptionPane.YES_OPTION) {
                 Tienda.getInstance().eliminarPersona(idEmpleado);
                 tableModel.removeRow(selectedRow);
-                JOptionPane.showMessageDialog(this, "Empleado eliminado correctamente.");
+                //JOptionPane.showMessageDialog(this, "Empleado eliminado correctamente.");
+                ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Empleado eliminado correctamente");
+				mensajito.setModal(true);
+				mensajito.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(this, "Eliminación cancelada.");
+                //JOptionPane.showMessageDialog(this, "Eliminación cancelada.");
+            	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminación cancelada.");
+				mensajito.setModal(true);
+				mensajito.setVisible(true);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un empleado para eliminar.");
+            //JOptionPane.showMessageDialog(this, "Por favor, seleccione un empleado para eliminar.");
+        	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+			MensajeAlerta mensajito = new MensajeAlerta(iconito, "Por favor, seleccione un empleado para eliminar.");
+			mensajito.setModal(true);
+			mensajito.setVisible(true);
         }
     }
 

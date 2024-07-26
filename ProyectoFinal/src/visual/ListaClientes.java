@@ -2,6 +2,8 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -188,12 +190,25 @@ public class ListaClientes extends JDialog {
             if (confirmacion == JOptionPane.YES_OPTION) {
                 Tienda.getInstance().eliminarPersona(idCliente);
                 tableModel.removeRow(selectedRow);
-                JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
+                //JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
+                ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Cliente eliminado correctamente.");
+				mensajito.setModal(true);
+				mensajito.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(this, "Eliminación cancelada.");
+                //JOptionPane.showMessageDialog(this, "Eliminación cancelada.");
+            	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminacion cancelada");
+				mensajito.setModal(true);
+				mensajito.setVisible(true);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
+            //JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
+            ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+			MensajeAlerta mensajito = new MensajeAlerta(iconito, "Por favor, seleccione un cliente para eliminar.");
+			mensajito.setModal(true);
+			mensajito.setVisible(true);
+        
         }
     }
 }
