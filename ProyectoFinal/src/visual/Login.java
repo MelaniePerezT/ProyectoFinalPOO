@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +13,7 @@ import java.io.ObjectOutputStream;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import logico.Tienda;
 import logico.User;
@@ -22,6 +24,10 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 
 public class Login extends JFrame {
 
@@ -82,39 +88,61 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		setLocationRelativeTo(null);
+		Color CyanOscuro = new Color(70, 133, 133);
+		Color CyanMid = new Color(80, 180, 152);
+		Color CyanClaro =  new Color (222, 249, 196);
+		Color FondoClarito = new Color(240, 255, 240);
+		Color Rojito = new Color (250, 128, 114);
+		MatteBorder bottomBorder = new MatteBorder(0, 0, 2, 0, CyanOscuro);
+		
+		setTitle("Bienvenido");
 		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 420, 253);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(32, 178, 170));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
+		
 		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(240, 255, 240));
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(39, 39, 72, 14);
+		lblUsuario.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		lblUsuario.setBounds(37, 28, 72, 14);
 		panel.add(lblUsuario);
 		
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
-		lblContrasea.setBounds(39, 98, 105, 14);
+		lblContrasea.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		lblContrasea.setBounds(37, 87, 105, 14);
 		panel.add(lblContrasea);
 		
 		textField = new JTextField();
-		textField.setBounds(39, 64, 191, 20);
+		textField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		textField.setBounds(37, 53, 191, 20);
 		panel.add(textField);
 		textField.setColumns(10);
+		textField.setBorder(bottomBorder);
+		textField.setBackground(CyanClaro);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(39, 128, 191, 20);
+		textField_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		textField_1.setBounds(37, 117, 191, 20);
 		panel.add(textField_1);
+		textField_1.setBorder(bottomBorder);
+		textField_1.setBackground(CyanClaro);
 		textField_1.setColumns(10);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.setForeground(new Color(255, 255, 255));
+		btnLogin.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		btnLogin.setActionCommand("OK");
+		btnLogin.setBackground(CyanMid);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Tienda.getInstance().confirmLogin(textField.getText(),textField_1.getText())){
@@ -123,14 +151,39 @@ public class Login extends JFrame {
 					frame.setVisible(true);
 				}
 				else {
-				   	JOptionPane.showMessageDialog(null, "Operación errónea. Los datos ingresados no son válidos.", "Error", JOptionPane.WARNING_MESSAGE);
-				   	textField.setText("");
+				   	//JOptionPane.showMessageDialog(null, "Operación errónea. Los datos ingresados no son válidos.", "Error", JOptionPane.WARNING_MESSAGE);
+					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+	                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nLos datos ingresados no son válidos.");
+	                mensajito.setModal(true);
+	                mensajito.setVisible(true);
+					textField.setText("");
 				   	textField_1.setText("");
 				};
 				
 			}
 		});
-		btnLogin.setBounds(37, 175, 89, 23);
+		btnLogin.setBounds(94, 158, 89, 34);
 		panel.add(btnLogin);
+		
+		JLabel iconoP = new JLabel(new ImageIcon(
+			    new ImageIcon(getClass().getResource("/Imagenes/loginprincipal.png")).getImage()
+			    .getScaledInstance(90, 90, Image.SCALE_SMOOTH))
+			);
+		iconoP.setBounds(252, 44, 119, 103);
+		panel.add(iconoP);
+		
+		JButton cancelbutton = new JButton("Cancelar");
+		cancelbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		cancelbutton.setForeground(new Color(255, 255, 255));
+		cancelbutton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		cancelbutton.setActionCommand("OK");
+		cancelbutton.setBackground(Rojito);
+		cancelbutton.setBounds(220, 158, 98, 34);
+		
+		panel.add(cancelbutton);
 	}
 }

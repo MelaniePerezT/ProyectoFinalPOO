@@ -263,7 +263,7 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_3.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/disponibilidad.png")));
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				  String cad = (String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto:", "Mensaje", JOptionPane.QUESTION_MESSAGE);
+				  /*String cad = (String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto:", "Mensaje", JOptionPane.QUESTION_MESSAGE);
                   if (cad != null) {
                 	  boolean hay=Tienda.getInstance().disponibleProducto(cad);
                   	
@@ -272,7 +272,11 @@ public class Principal extends JFrame {
                 	  else
                 		  JOptionPane.showMessageDialog(null, "No quedan ejemplares disponibles", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                 	  
-                  } 
+                  } */
+				Disponibilidad ventanita = new Disponibilidad();
+				ventanita.setModal(true);
+				ventanita.setVisible(true);
+				
 			}
 		});
 		mntmNewMenuItem_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -282,7 +286,7 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_6.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/cantproducto.png")));
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 String cad = (String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto:", "Mensaje", JOptionPane.QUESTION_MESSAGE);
+				 /*String cad = (String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto:", "Mensaje", JOptionPane.QUESTION_MESSAGE);
                  if (cad != null) {
                	  Producto pro=Tienda.getInstance().buscarProductoId(cad);
                  	
@@ -291,7 +295,12 @@ public class Principal extends JFrame {
                	  else
                		  JOptionPane.showMessageDialog(null, "El producto no existe", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                	  
-                 } 
+                 } */
+				
+				CantidadProducto ventanita = new CantidadProducto();
+				ventanita.setModal(true);
+				ventanita.setVisible(true);
+				
 				
 			}
 		});

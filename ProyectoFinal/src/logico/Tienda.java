@@ -505,8 +505,8 @@ public class Tienda implements Serializable {
 	{
 		boolean disponible=false;
 		Producto producto= buscarProductoId(id);
-		if(producto.isEstado())
-			disponible=true;
+		if(producto != null && producto.isEstado()) {
+			disponible=true;}
 		return disponible;
 	}
 	//Nota: Calcula el descuento a aplicarse
