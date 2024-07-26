@@ -514,9 +514,12 @@ public class Tienda implements Serializable {
 	{
 		float descuento=0;
 		Cliente clien=(Cliente)buscarPersonaId(idCliente);
-		if(clien.getClasificacion()=='V')
+		if(clien!=null)
 		{
-			descuento+=5;
+			if(clien.getClasificacion()=='V')
+			{
+				descuento+=5;
+			}
 		}
 		if(esCombo)
 		{
@@ -535,6 +538,21 @@ public class Tienda implements Serializable {
 		precio=precio*(descuento/100);
 		return precio;
 	}
+	// Nota: Calcula el precio de la factura con combos
+	public float calculaPrecioProductoCombos(ArrayList<Combo> combos, String idClient, boolean esCombo) {
+	    float precio = 0;
+	    for (Combo combo : combos) {
+	        for (Producto producto : combo.getMisProductos()) {  
+	            precio += producto.getPrecio();  
+	        }
+	    }
+	    float descuento = descuentoAplicado(idClient, esCombo);
+	    if (descuento > 0) {
+	        precio = precio - (precio * (descuento / 100));  
+	    }
+	    return precio;
+	}
+
 
 	public ArrayList<Producto> getProductoNoSeleccionados() {
 		ArrayList<Producto> noSeleccionadoArrayList =new ArrayList<>();
