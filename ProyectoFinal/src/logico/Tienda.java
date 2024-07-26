@@ -166,6 +166,7 @@ public class Tienda implements Serializable {
 		this.misUsers = new ArrayList<>();
 	}
 	
+	// Funcion que genera los IDs
 	public void generarIds() {
 		ArrayList<Cliente> auxClien = new ArrayList<>();
 		ArrayList<Empleado> auxEmpl = new ArrayList<>();
