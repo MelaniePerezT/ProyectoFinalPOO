@@ -169,6 +169,7 @@ public class Principal extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Registrar");
+		mntmNewMenuItem.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/producto.png")));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int cantProveedores = 0;	
@@ -191,6 +192,7 @@ public class Principal extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Lista");
+		mntmNewMenuItem_1.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListarProducto lista= new ListarProducto();
@@ -206,6 +208,7 @@ public class Principal extends JFrame {
 		menuBar.add(mnNewMenu_2);
 		
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Registrar");
+		mntmNewMenuItem_7.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/factura.png")));
 		mntmNewMenuItem_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TipoFactura tipo= new TipoFactura();
@@ -217,6 +220,7 @@ public class Principal extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_7);
 		
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Lista");
+		mntmNewMenuItem_8.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		mntmNewMenuItem_8.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mnNewMenu_2.add(mntmNewMenuItem_8);
 		
@@ -225,6 +229,7 @@ public class Principal extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Sobre nosotros");
+		mntmNewMenuItem_2.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/aboutus.png")));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String mensaje = "Ambar Nicole Torres Viamonte, Luis Reynaldo Colon Garcia y Melanie Perez Trinidad";
@@ -233,6 +238,7 @@ public class Principal extends JFrame {
 		});
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Producto Favorito");
+		mntmNewMenuItem_5.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/favorite.png")));
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Producto pro=Tienda.getInstance().productoFavorito();
@@ -254,6 +260,7 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_5);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Disponibilidad");
+		mntmNewMenuItem_3.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/disponibilidad.png")));
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				  String cad = (String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto:", "Mensaje", JOptionPane.QUESTION_MESSAGE);
@@ -272,6 +279,7 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Cantidad de un producto");
+		mntmNewMenuItem_6.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/cantproducto.png")));
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 String cad = (String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto:", "Mensaje", JOptionPane.QUESTION_MESSAGE);
@@ -291,6 +299,7 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_6);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Inventario general");
+		mntmNewMenuItem_4.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/inventariogeneral.png")));
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -308,10 +317,12 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
 		JMenu mnNewMenu_3 = new JMenu("Usuarios");
+		mnNewMenu_3.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/user.png")));
 		mnNewMenu_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mnNewMenu_1.add(mnNewMenu_3);
 		
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Registro");
+		mntmNewMenuItem_10.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/ClienteRegistrar1.png")));
 		mntmNewMenuItem_10.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mntmNewMenuItem_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -322,6 +333,7 @@ public class Principal extends JFrame {
 		mnNewMenu_3.add(mntmNewMenuItem_10);
 		
 		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Listado");
+		mntmNewMenuItem_9.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		mntmNewMenuItem_9.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mntmNewMenuItem_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
