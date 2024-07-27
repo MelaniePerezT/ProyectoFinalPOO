@@ -171,9 +171,8 @@ public class RegistrarProveedor extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 					
 					if (nombreField.getText().isEmpty() || cedulaField.getText().isEmpty() || correoField.getText().isEmpty() || empresaField.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
 						ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
-						MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de\nestar llenos!");
+						MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de estar llenos!");
 						mensajito.setModal(true);
 						mensajito.setVisible(true);
 						return;
@@ -188,10 +187,9 @@ public class RegistrarProveedor extends JDialog {
                     if (proveedor == null) {
                         Proveedor newProveedor = new Proveedor(nombreApellido, edad, cedula, correo, empresa);
                         Tienda.getInstance().RegistrarPersona(newProveedor);
-                        //JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Proveedor Creado", JOptionPane.INFORMATION_MESSAGE);
                         
                         ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
-						MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProveedor Creado");
+						MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProveedor registrado!");
 						mensajito.setModal(true);
 						mensajito.setVisible(true);
 						
@@ -203,6 +201,10 @@ public class RegistrarProveedor extends JDialog {
                     	proveedor.setEdad(edad);
                     	proveedor.setEmpresa(empresa);
                         Tienda.getInstance().updatePersona(proveedor);
+                        ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+						MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProveedor modificado!");
+						mensajito.setModal(true);
+						mensajito.setVisible(true);
                         dispose();
                     }
 				}

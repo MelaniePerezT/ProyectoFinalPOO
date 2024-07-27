@@ -191,11 +191,10 @@ public class RegistrarEmpleado extends JDialog {
                         
 						if (nombreField.getText().isEmpty() || cedulaField.getText().isEmpty() || correoField.getText().isEmpty()) {
 							//JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
-							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
-							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de\nestar llenos!");
+							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de estar llenos!");
 							mensajito.setModal(true);
 							mensajito.setVisible(true);
-							
 							return;
 						}
                     	
@@ -210,7 +209,7 @@ public class RegistrarEmpleado extends JDialog {
                             Tienda.getInstance().RegistrarPersona(newEmpleado);
                             //JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Empleado Creado", JOptionPane.INFORMATION_MESSAGE);
                             ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
-							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nEmpleado Creado");
+							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nEmpleado registrado!");
 							mensajito.setModal(true);
 							mensajito.setVisible(true);
 							
@@ -222,6 +221,10 @@ public class RegistrarEmpleado extends JDialog {
                         	empleado.setEdad(edad);
                         	empleado.setComisionVentas((float) (comision / 100.0));
                             Tienda.getInstance().updatePersona(empleado);
+							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+			                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nEmpleado modificado!");
+			                mensajito.setModal(true);
+			                mensajito.setVisible(true);
                             dispose();
                         }
                     }

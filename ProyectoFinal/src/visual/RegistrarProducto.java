@@ -31,6 +31,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JRadioButton;
 import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
@@ -542,7 +543,10 @@ public class RegistrarProducto extends JDialog {
 								}
 							}
 							Tienda.getInstance().RegistrarProducto(producto);
-							JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Registro", JOptionPane.INFORMATION_MESSAGE);
+							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+			                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Producto registrado correctamente.");
+			                mensajito.setModal(true);
+			                mensajito.setVisible(true);
 							clean();
 						}
 
@@ -581,7 +585,10 @@ public class RegistrarProducto extends JDialog {
 							int option = JOptionPane.showConfirmDialog(null, "Seguro que desea realizar la modificación al producto: "+producto.getId()+"?", "Confirmación", JOptionPane.WARNING_MESSAGE);
 							if(option == JOptionPane.YES_OPTION){
 								Tienda.getInstance().updateProducto(producto);
-								JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Modificación", JOptionPane.INFORMATION_MESSAGE);
+								ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+				                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProducto modificado!");
+				                mensajito.setModal(true);
+				                mensajito.setVisible(true);
 								dispose();
 							}	
 

@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -107,13 +109,19 @@ public class RegUser extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if (!textField_1.getText().toString().equalsIgnoreCase(textField_2.getText().toString())) {
-							JOptionPane.showMessageDialog(null, "Operación errónea. La contraseña confirmada no coincide con la contraseña ingresada!", "Error", JOptionPane.WARNING_MESSAGE);	
+	                        ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nLas contraseñas no coinciden!");
+							mensajito.setModal(true);
+							mensajito.setVisible(true);
 							return;
 						} else {
 							if (usuario == null) {
 								User user = new User(comboBox.getSelectedItem().toString(),textField.getText(),textField_1.getText());
 								Tienda.getInstance().RegistrarUser(user);
-								JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Registro", JOptionPane.INFORMATION_MESSAGE);		
+		                        ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+								MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nUsuario registrado!");
+								mensajito.setModal(true);
+								mensajito.setVisible(true);
 								clean();
 							} else {
 								usuario.setUserName(textField.getText());
@@ -123,7 +131,10 @@ public class RegUser extends JDialog {
 								int option = JOptionPane.showConfirmDialog(null, "Seguro que desea realizar la modificación al usuario: " + codigo, "Confirmación", JOptionPane.WARNING_MESSAGE);
 								if(option == JOptionPane.YES_OPTION){
 									Tienda.getInstance().updateUsuario(usuario);
-									JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Modificación", JOptionPane.INFORMATION_MESSAGE);
+			                        ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nUsuario modificado!");
+									mensajito.setModal(true);
+									mensajito.setVisible(true);
 									dispose();
 								}
 							}
