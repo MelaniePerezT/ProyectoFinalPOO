@@ -1,21 +1,33 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Cliente;
 import logico.Combo;
 import logico.DiscoDuro;
+import logico.FacturaCompra;
+import logico.FacturaVenta;
 import logico.Microprocesador;
 import logico.MotherBoard;
+import logico.Persona;
 import logico.Producto;
+import logico.Proveedor;
 import logico.Tienda;
+import logico.User;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -26,6 +38,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.nio.file.attribute.UserPrincipalLookupService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,6 +54,7 @@ public class RegistrarFactura extends JDialog {
     private DefaultTableModel modeloProCarri = new DefaultTableModel();
     private DefaultTableModel modeloCom = new DefaultTableModel();
     private DefaultTableModel modeloComCarri = new DefaultTableModel();
+    private DefaultComboBoxModel<Proveedor> proveedoresRegistrados = new DefaultComboBoxModel<Proveedor>();
     private Object[] dispProRows;
     private Object[] caProRows;
     private Object[] dispComRows;
@@ -66,6 +80,12 @@ public class RegistrarFactura extends JDialog {
     private JTextField txtEmpleado;
     private JPanel pnlVenta;
     private JTextField txtHora;
+    private JPanel pnlProDisponible;
+    private JPanel pnlProCarrito;
+    private JPanel pnlComDisponible;
+    private JPanel pnlComCarrito;
+    private JComboBox cbxProveedor;
+    private JButton btnBuscarCliente;
 
     /**
      * Launch the application.
@@ -85,6 +105,11 @@ public class RegistrarFactura extends JDialog {
      */
     public RegistrarFactura(boolean esCV) {
     	
+    	Color CyanOscuro = new Color(70, 133, 133);
+		Color CyanMid = new Color(80, 180, 152);
+		Color CyanClaro =  new Color (222, 249, 196);
+		Color FondoClarito = new Color(240, 255, 240);
+		MatteBorder bottomBorder = new MatteBorder(0, 0, 2, 0, CyanOscuro);
     	
         setTitle("Registrar Factura");
         setBounds(100, 100, 750, 500);
@@ -92,6 +117,8 @@ public class RegistrarFactura extends JDialog {
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
+        setLocationRelativeTo(null);
+        contentPanel.setBackground(FondoClarito);
         
 
         JPanel panel = new JPanel();
@@ -103,26 +130,33 @@ public class RegistrarFactura extends JDialog {
         lblNewLabel.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
         lblNewLabel.setBounds(10, 13, 71, 14);
         panel.add(lblNewLabel);
+        panel.setBackground(FondoClarito);
 
         txtID = new JTextField();
-        txtID.setBounds(60, 10, 86, 20);
+        txtID.setText(Tienda.getInstance().generarIdFactura());
+        txtID.setEditable(false);
+        txtID.setBounds(60, 10, 133, 20);
+        txtID.setBorder(bottomBorder);
+		txtID.setBackground(CyanClaro);
         panel.add(txtID);
         txtID.setColumns(10);
 
         JLabel lblNewLabel_1 = new JLabel("Fecha:");
         lblNewLabel_1.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-        lblNewLabel_1.setBounds(185, 13, 65, 14);
+        lblNewLabel_1.setBounds(203, 13, 65, 14);
         panel.add(lblNewLabel_1);
 
         txtFecha = new JTextField();
-        txtFecha.setEnabled(false);
-        txtFecha.setBounds(254, 10, 83, 20);
+        txtFecha.setEditable(false);
+        txtFecha.setBounds(278, 10, 138, 20);
         LocalDate hoy= LocalDate.now();
         txtFecha.setText(hoy.toString());
+        txtFecha.setBorder(bottomBorder);
+		txtFecha.setBackground(CyanClaro);
         panel.add(txtFecha);
         txtFecha.setColumns(10);
      // Panel y tabla de productos disponibles
-        JPanel pnlProDisponible = new JPanel();
+        pnlProDisponible = new JPanel();
         pnlProDisponible.setBorder(new EmptyBorder(5, 5, 5, 5));
         pnlProDisponible.setBounds(10, 165, 300, 200);
         panel.add(pnlProDisponible);
@@ -135,6 +169,8 @@ public class RegistrarFactura extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 indexProDisponible = tableProDisponible.getSelectedRow();
+                btnAgregarPro.setEnabled(true);
+                btnQuitarPro.setEnabled(true);
             }
         });
 
@@ -142,7 +178,7 @@ public class RegistrarFactura extends JDialog {
         pnlProDisponible.add(scrollProDisponible, BorderLayout.CENTER);
 
         // Panel y tabla de productos en carrito
-        JPanel pnlProCarrito = new JPanel();
+        pnlProCarrito = new JPanel();
         pnlProCarrito.setBorder(new EmptyBorder(5, 5, 5, 5));
         pnlProCarrito.setBounds(400, 165, 300, 200);
         panel.add(pnlProCarrito);
@@ -154,6 +190,8 @@ public class RegistrarFactura extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 indexProCarrito = tableProCarrito.getSelectedRow();
+                btnAgregarPro.setEnabled(true);
+                btnQuitarPro.setEnabled(true);
                 
             }
         });
@@ -162,7 +200,7 @@ public class RegistrarFactura extends JDialog {
         pnlProCarrito.add(scrollProCarrito, BorderLayout.CENTER);
 
         // Panel y tabla de combos disponibles
-        JPanel pnlComDisponible = new JPanel();
+        pnlComDisponible = new JPanel();
         pnlComDisponible.setBorder(new EmptyBorder(5, 5, 5, 5));
         pnlComDisponible.setBounds(10, 165, 300, 200);
         panel.add(pnlComDisponible);
@@ -175,6 +213,8 @@ public class RegistrarFactura extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 indexComDisponible = tableComDisponible.getSelectedRow();
+                btnAgregarPro.setEnabled(true);
+                btnQuitarPro.setEnabled(true);
             }
         });
 
@@ -182,7 +222,7 @@ public class RegistrarFactura extends JDialog {
         pnlComDisponible.add(scrollComDisponible, BorderLayout.CENTER);
 
         // Panel y tabla de combos en carrito
-        JPanel pnlComCarrito = new JPanel();
+        pnlComCarrito = new JPanel();
         pnlComCarrito.setBorder(new EmptyBorder(5, 5, 5, 5));
         pnlComCarrito.setBounds(400, 165, 300, 200);
         panel.add(pnlComCarrito);
@@ -207,6 +247,9 @@ public class RegistrarFactura extends JDialog {
 
         // Botones de agregar y quitar productos y combos
         btnAgregarPro = new JButton("Agregar ");
+        btnAgregarPro.setForeground(new Color(255, 255, 255));
+        btnAgregarPro.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+        btnAgregarPro.setBackground(CyanMid);
         btnAgregarPro.setEnabled(false);
         btnAgregarPro.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
         btnAgregarPro.setBounds(307, 220, 97, 25);
@@ -223,9 +266,12 @@ public class RegistrarFactura extends JDialog {
         panel.add(btnAgregarPro);
 
         btnQuitarPro = new JButton("Quitar");
+        btnQuitarPro.setSize(97, 25);
+        btnQuitarPro.setLocation(307, 260);
         btnQuitarPro.setEnabled(false);
+        btnQuitarPro.setBackground(new Color(250, 128, 114));
+        btnQuitarPro.setForeground(new Color(255, 255, 255));
         btnQuitarPro.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-        btnQuitarPro.setBounds(307, 256, 97, 25);
         btnQuitarPro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (indexProCarrito >= 0) {
@@ -247,14 +293,34 @@ public class RegistrarFactura extends JDialog {
         lblNewLabel_4.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
         lblNewLabel_4.setBounds(10, 11, 89, 14);
         pnlCompra.add(lblNewLabel_4);
+
+		for (Persona persona : Tienda.getInstance().getListaPersonas()) {
+			if (persona instanceof Proveedor) {
+				proveedoresRegistrados.addElement((Proveedor) persona);
+			}
+		}
         
-        JComboBox comboBox = new JComboBox();
-        comboBox.setBounds(109, 10, 134, 20);
-        pnlCompra.add(comboBox);
+        cbxProveedor = new JComboBox();
+        cbxProveedor.setBounds(94, 10, 161, 20);
+        pnlCompra.add(cbxProveedor);
+        Component editor = cbxProveedor.getEditor().getEditorComponent();
+        if (editor instanceof JTextField) {
+         JTextField textFieldEditor = (JTextField) editor;
+         textFieldEditor.setBackground(CyanClaro); 
+     }
+        cbxProveedor.setEditable(true);
+        
         
         btnProducto = new JButton("Productos");
+        btnProducto.setEnabled(false);
+        btnProducto.setForeground(new Color(255, 255, 255));
+        btnProducto.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+        btnProducto.setBackground(CyanMid);
         btnProducto.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+
+        		btnCombos.setEnabled(true);
+        		btnProducto.setEnabled(false);
         		pnlComCarrito.setVisible(false);
         		pnlComDisponible.setVisible(false);
         		pnlProCarrito.setVisible(true);
@@ -267,8 +333,13 @@ public class RegistrarFactura extends JDialog {
         panel.add(btnProducto);
         
         btnCombos = new JButton("Combos");
+        btnCombos.setForeground(new Color(255, 255, 255));
+        btnCombos.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+        btnCombos.setBackground(CyanMid);
         btnCombos.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		btnProducto.setEnabled(true);
+        		btnCombos.setEnabled(false);
         		pnlComCarrito.setVisible(true);
         		pnlComDisponible.setVisible(true);
         		pnlProCarrito.setVisible(false);
@@ -280,19 +351,27 @@ public class RegistrarFactura extends JDialog {
         panel.add(btnCombos);
         
         txtTotal = new JTextField();
-        txtTotal.setEnabled(false);
-        txtTotal.setBounds(307, 134, 86, 20);
+        txtTotal.setEditable(false);
+        txtTotal.setText("0.0");
+        txtTotal.setBounds(310, 134, 86, 20);
+        txtTotal.setBackground(CyanClaro);
+        txtTotal.setBorder(bottomBorder);
         panel.add(txtTotal);
         txtTotal.setColumns(10);
-        
-        JLabel lblNewLabel_2 = new JLabel("Total:");
-        lblNewLabel_2.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-        lblNewLabel_2.setBounds(230, 135, 65, 14);
-        panel.add(lblNewLabel_2);
-        
+
+
+
+    JLabel lblNewLabel_2 = new JLabel("Total:");
+    lblNewLabel_2.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+    lblNewLabel_2.setBounds(230, 135, 65, 14);
+    panel.add(lblNewLabel_2);
+
         txtDescuento = new JTextField();
-        txtDescuento.setEnabled(false);
+        txtDescuento.setEditable(false);
+        txtDescuento.setText("0");
         txtDescuento.setBounds(312, 190, 86, 20);
+        txtDescuento.setBackground(CyanClaro);
+        txtDescuento.setBorder(bottomBorder);
         panel.add(txtDescuento);
         txtDescuento.setColumns(10);
         
@@ -313,10 +392,15 @@ public class RegistrarFactura extends JDialog {
         
         txtIdCliente = new JTextField();
         txtIdCliente.setBounds(89, 10, 86, 20);
+        txtIdCliente.setBackground(CyanClaro);
+        txtIdCliente.setBorder(bottomBorder);
         pnlVenta.add(txtIdCliente);
         txtIdCliente.setColumns(10);
         
-        JButton btnBuscarCliente = new JButton("Buscar");
+        btnBuscarCliente = new JButton("Buscar");
+        btnBuscarCliente.setForeground(new Color(255, 255, 255));
+        btnBuscarCliente.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+        btnBuscarCliente.setBackground(CyanMid);
         btnBuscarCliente.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		
@@ -324,6 +408,7 @@ public class RegistrarFactura extends JDialog {
 				Cliente client= (Cliente) Tienda.getInstance().buscarPersonaId(txtIdCliente.getText());
 				if(client==null)
 				{
+					
 					opcion = JOptionPane.showConfirmDialog(null, "Cliente no encontrado, ¿Desea registrar el cliente?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				}
 				if(opcion==JOptionPane.YES_OPTION)
@@ -332,10 +417,16 @@ public class RegistrarFactura extends JDialog {
 					RegistrarCliente reg = new RegistrarCliente(null);
 					reg.setModal(true);
 					reg.setVisible(true);
+					txtIdCliente.setText("Cliente - " + (Tienda.getInstance().numCliente - 1));
 				}
 				else if(client!=null)
 				{
 					txtIdCliente.setText(client.getId());
+					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+	                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Busqueda exitosa.");
+	                mensajito.setModal(true);
+	                mensajito.setVisible(true);
+	                btnBuscarCliente.setEnabled(false);
 				}
 
         	}
@@ -346,26 +437,31 @@ public class RegistrarFactura extends JDialog {
         
         JLabel lblNewLabel_6 = new JLabel("Empleado:");
         lblNewLabel_6.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-        lblNewLabel_6.setBounds(348, 13, 73, 14);
+        lblNewLabel_6.setBounds(365, 11, 73, 14);
         pnlVenta.add(lblNewLabel_6);
         
         txtEmpleado = new JTextField();
         txtEmpleado.setEnabled(false);
-        txtEmpleado.setBounds(435, 10, 86, 20);
+        txtEmpleado.setBounds(450, 10, 134, 20);
+        
+        txtEmpleado.setBackground(CyanClaro);
+        txtEmpleado.setBorder(bottomBorder);
         pnlVenta.add(txtEmpleado);
         txtEmpleado.setColumns(10);
         
         JLabel lblNewLabel_7 = new JLabel("Hora:");
         lblNewLabel_7.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-        lblNewLabel_7.setBounds(388, 13, 46, 14);
+        lblNewLabel_7.setBounds(446, 13, 46, 14);
         panel.add(lblNewLabel_7);
         
         txtHora = new JTextField();
-        txtHora.setEnabled(false);
+        txtHora.setEditable(false);
         LocalDateTime ahora = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         txtHora.setText(ahora.format(formatter)); 
-        txtHora.setBounds(432, 12, 86, 20);
+        txtHora.setBounds(502, 12, 153, 20);
+        txtHora.setBackground(CyanClaro);
+        txtHora.setBorder(bottomBorder);
         panel.add(txtHora);
         txtHora.setColumns(10);
 
@@ -375,12 +471,62 @@ public class RegistrarFactura extends JDialog {
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
         JButton btnRegistrarFactura = new JButton("Registrar Factura");
+        btnRegistrarFactura.setForeground(new Color(255, 255, 255));
+        btnRegistrarFactura.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+        btnRegistrarFactura.setBackground(CyanMid);
+        btnRegistrarFactura.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if (txtID.getText().isEmpty() || txtIdCliente.getText().isEmpty() ) {
+					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+					MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de\nestar llenos!");
+					mensajito.setModal(true);
+					mensajito.setVisible(true);
+					return;
+				}
+        		ArrayList<Producto> productos=Tienda.getInstance().getProductosSeleccionados();
+    			ArrayList<Combo> combos=Tienda.getInstance().getCombosSeleccionados();
+    			for (Producto prod : productos) {
+    			    ProductosComprados.add(prod);
+    			}
+
+    			for (Combo combo : combos) {
+    			    for (Producto prod : combo.getMisProductos()) {
+    			        ProductosComprados.add(prod);
+    			    }
+    			}
+    			LocalDate hoy= LocalDate.now();
+        		if(esCV)
+        		{
+        			Proveedor proveedor = null;
+					if (cbxProveedor.getSelectedItem() != null) {
+						proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(cbxProveedor.getSelectedItem().toString());
+					}
+
+        			FacturaCompra compra = new FacturaCompra(txtID.getText(), hoy,ProductosComprados,proveedor,(Tienda.getInstance().getCantProductos() + Tienda.getInstance().getCantCombos()) );
+        		 clean();
+        		}
+        		else
+        		{
+        			Cliente clien = (Cliente) Tienda.getInstance().buscarPersonaId(txtIdCliente.getText());
+        			 FacturaVenta venta = new FacturaVenta( txtID.getText(), hoy, ProductosComprados,  clien, (Tienda.getInstance().getCantProductos() + Tienda.getInstance().getCantCombos()) );
+        			clean();
+        	
+        		}
+        		ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Factura registrada correctamente.");
+				mensajito.setModal(true);
+				mensajito.setVisible(true);
+        		
+        	}
+        });
         btnRegistrarFactura.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
         btnRegistrarFactura.setActionCommand("OK");
         buttonPane.add(btnRegistrarFactura);
         getRootPane().setDefaultButton(btnRegistrarFactura);
 
         JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBackground(new Color(250, 128, 114));
+        btnCancelar.setForeground(new Color(255, 255, 255));
         btnCancelar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		dispose();
@@ -388,21 +534,41 @@ public class RegistrarFactura extends JDialog {
         });
         btnCancelar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
         btnCancelar.setActionCommand("Cancel");
+        btnCancelar.setBackground(new Color(250, 128, 114));
+        btnCancelar.setForeground(new Color(255, 255, 255));
+        btnCancelar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
         buttonPane.add(btnCancelar);
         if(esCV)
     	{
     		pnlVenta.setVisible(false);
     		pnlCompra.setVisible(true);
+    		txtDescuento.setText(String.valueOf(Tienda.getInstance().descuentoAplicado(txtIdCliente.getText(), !btnCombos.isEnabled())));
+    		if(!btnCombos.isEnabled())
+    			txtTotal.setText(String.valueOf(Tienda.getInstance().calculaPrecioProductoCombos(Tienda.getInstance().getCombosSeleccionados(), txtIdCliente.getText(), !btnCombos.isEnabled())));
+    		else
+    			txtTotal.setText(String.valueOf(Tienda.getInstance().calculaPrecioProducto(Tienda.getInstance().getProductosSeleccionados(), txtIdCliente.getText(), !btnCombos.isEnabled())));
     	}
     	else
     	{
     		pnlVenta.setVisible(true);
     		pnlCompra.setVisible(false);
+    		txtDescuento.setText(String.valueOf(Tienda.getInstance().descuentoAplicado("", !btnCombos.isEnabled())));
+    		if(!btnCombos.isEnabled())
+    			txtTotal.setText(String.valueOf(Tienda.getInstance().calculaPrecioProductoCombos(Tienda.getInstance().getCombosSeleccionados(), "", !btnCombos.isEnabled())));
+    		else
+    			txtTotal.setText(String.valueOf(Tienda.getInstance().calculaPrecioProducto(Tienda.getInstance().getProductosSeleccionados(), "", !btnCombos.isEnabled())));
+    		
     	}
         cargaComboCarritoDisponible();
         cargaComboDisponible(); 
         cargaProCarritoDisponible();
         cargaProductoDisponible();
+        pnlComCarrito.setBackground(FondoClarito);
+        pnlComDisponible.setBackground(FondoClarito);
+        pnlCompra.setBackground(FondoClarito);
+        pnlProCarrito.setBackground(FondoClarito);
+        pnlProDisponible.setBackground(FondoClarito);
+        pnlVenta.setBackground(FondoClarito);
     }
 
     public void cargaProductoDisponible() {
@@ -475,5 +641,57 @@ public class RegistrarFactura extends JDialog {
                 modeloProCarri.addRow(caProRows);
             }
         }
+    }
+    public void clean() {
+       
+        txtID.setText("Factura -"+Tienda.numFactura);
+        LocalDate hoy= LocalDate.now();
+        txtFecha.setText(hoy.toString());
+        txtTotal.setText("0.0");
+        txtDescuento.setText("0.0");
+        txtIdCliente.setText("");
+        btnBuscarCliente.setEnabled(true);
+        
+        txtEmpleado.setText("");
+        txtHora.setText("");
+
+        
+        modeloPro.setRowCount(0);
+        modeloProCarri.setRowCount(0);
+        modeloCom.setRowCount(0);
+        modeloComCarri.setRowCount(0);
+
+        proveedoresRegistrados.removeAllElements();
+
+        dispProRows = null;
+        caProRows = null;
+        dispComRows = null;
+        caComRows = null;
+
+        indexProCarrito = 0;
+        indexProDisponible = 0;
+        indexComCarrito = 0;
+        indexComDisponible = 0;
+
+       
+        ProductosComprados.clear();
+        precioTotal = 0.0f;
+
+        btnAgregarPro.setEnabled(false);
+        btnQuitarPro.setEnabled(false);
+        btnProducto.setEnabled(false);
+        btnCombos.setEnabled(true);
+        
+        
+
+    	btnProducto.setEnabled(false);
+		btnCombos.setEnabled(true);
+		pnlComCarrito.setVisible(false);
+		pnlComDisponible.setVisible(false);
+		pnlProCarrito.setVisible(true);
+		pnlProDisponible.setVisible(true);
+
+      
+        cbxProveedor.setSelectedIndex(0);
     }
 }

@@ -566,6 +566,28 @@ public class Tienda implements Serializable {
 		return noSeleccionadoArrayList;
 	}
 
+	public int getCantProductos() {
+		int cant=0;
+		for (Producto produ : listaProductos) {
+			if(produ.isSeleccionado())
+			{
+				cant++;
+			}
+			
+		}
+		return cant;
+	}
+	public int getCantCombos() {
+		int cant=0;
+		for (Combo produ : listaCombos) {
+			if(produ.isSeleccionado())
+			{
+				cant++;
+			}
+			
+		}
+		return cant;
+	}
 	public ArrayList<Producto> getProductosSeleccionados() {
 		ArrayList<Producto> SeleccionadoArrayList =new ArrayList<>();
 		for (Producto produ : listaProductos) {

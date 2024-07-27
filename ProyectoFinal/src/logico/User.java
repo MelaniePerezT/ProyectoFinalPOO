@@ -27,8 +27,7 @@
 		public void setTipo(String tipo) {
 			this.tipo = tipo;
 		}
-
-		public String getUserName() {
+		public  String getUserName() {
 			return userName;
 		}
 
