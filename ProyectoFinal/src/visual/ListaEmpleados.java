@@ -63,6 +63,7 @@ public class ListaEmpleados extends JDialog {
         Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);
 		Color CyanClaro =  new Color (222, 249, 196);
+		Color Rojito = new Color(250, 128, 114);
 		Color FondoClarito = new Color(240, 255, 240);
 
         String[] columnas = {"ID", "Nombre", "Cedula", "Correo", "Comision por Ventas", "Empleado del Mes"};
@@ -144,7 +145,7 @@ public class ListaEmpleados extends JDialog {
                     btnEliminar.setForeground(new Color(255, 255, 255));
                     btnEliminar.setEnabled(false);
                     btnEliminar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-                    btnEliminar.setBackground(new Color(250, 128, 114));
+                    btnEliminar.setBackground(Rojito);
                     btnEliminar.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             eliminarEmpleadoSeleccionado();
@@ -179,8 +180,13 @@ public class ListaEmpleados extends JDialog {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
             String idEmpleado = (String) tableModel.getValueAt(selectedRow, 0);
-            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este empleado?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
-
+            //int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este empleado?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+            ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+            String texto = "¿Estás seguro de que deseas eliminar este empleado?";
+            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+            ventanita.setModal(true);
+            ventanita.setVisible(true);
+			int confirmacion = ventanita.getResultado();
             if (confirmacion == JOptionPane.YES_OPTION) {
                 Tienda.getInstance().eliminarPersona(idEmpleado);
                 tableModel.removeRow(selectedRow);

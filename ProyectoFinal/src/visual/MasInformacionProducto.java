@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import logico.DiscoDuro;
 import logico.MemoriaRam;
@@ -21,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class MasInformacionProducto extends JDialog {
 
@@ -66,19 +68,29 @@ public class MasInformacionProducto extends JDialog {
 	 * @param producto 
 	 */
 	public MasInformacionProducto(Producto producto) {
+		Color CyanOscuro = new Color(70, 133, 133);
+		Color CyanMid = new Color(80, 180, 152);
+		Color CyanClaro =  new Color (222, 249, 196);
+		Color Rojito = new Color(250, 128, 114);
+		MatteBorder bottomBorder = new MatteBorder(0, 0, 2, 0, CyanOscuro);
+		
+		
 		if (producto != null) {
 			setTitle("Información: "+producto.getId());			
 		}
-		setBounds(100, 100, 500, 310);
+		setBounds(100, 100, 498, 306);
 		setLocationRelativeTo(null);
 		setModal(true);
 		setResizable(false);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(new Color(240, 255, 240));
+		contentPanel.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		contentPanel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		{
 			JPanel panel = new JPanel();
+			panel.setBackground(new Color(240, 255, 240));
 			panel.setBorder(new TitledBorder(null, "Información General", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panel.setBounds(4, 4, 474, 120);
 			contentPanel.add(panel);
@@ -91,8 +103,11 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtID = new JTextField();
+				txtID.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				txtID.setEditable(false);
 				txtID.setBounds(80, 25, 148, 20);
+				txtID.setBackground(CyanClaro);
+				txtID.setBorder(bottomBorder);
 				panel.add(txtID);
 				txtID.setColumns(10);
 			}
@@ -104,8 +119,11 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtNumSerie = new JTextField();
+				txtNumSerie.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				txtNumSerie.setEditable(false);
 				txtNumSerie.setBounds(330, 25, 132, 20);
+				txtNumSerie.setBackground(CyanClaro);
+				txtNumSerie.setBorder(bottomBorder);
 				panel.add(txtNumSerie);
 				txtNumSerie.setColumns(10);
 			}
@@ -117,8 +135,11 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtMarca = new JTextField();
+				txtMarca.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				txtMarca.setEditable(false);
 				txtMarca.setBounds(80, 57, 148, 20);
+				txtMarca.setBackground(CyanClaro);
+				txtMarca.setBorder(bottomBorder);
 				panel.add(txtMarca);
 				txtMarca.setColumns(10);
 			}
@@ -130,8 +151,11 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtProovedor = new JTextField();
+				txtProovedor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				txtProovedor.setEditable(false);
 				txtProovedor.setBounds(330, 57, 132, 20);
+				txtProovedor.setBorder(bottomBorder);
+				txtProovedor.setBackground(CyanClaro);
 				panel.add(txtProovedor);
 				txtProovedor.setColumns(10);
 			}
@@ -143,8 +167,11 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtCantidad = new JTextField();
+				txtCantidad.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				txtCantidad.setEditable(false);
 				txtCantidad.setBounds(80, 89, 148, 20);
+				txtCantidad.setBackground(CyanClaro);
+				txtCantidad.setBorder(bottomBorder);
 				panel.add(txtCantidad);
 				txtCantidad.setColumns(10);
 			}
@@ -156,14 +183,18 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtPrecio = new JTextField();
+				txtPrecio.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				txtPrecio.setEditable(false);
 				txtPrecio.setBounds(329, 89, 132, 20);
+				txtPrecio.setBorder(bottomBorder);
+				txtPrecio.setBackground(CyanClaro);
 				panel.add(txtPrecio);
 				txtPrecio.setColumns(10);
 			}
 		}
 		{
 			pnlMicro = new JPanel();
+			pnlMicro.setBackground(new Color(240, 255, 240));
 			pnlMicro.setBorder(new TitledBorder(null, "Microprocesador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlMicro.setBounds(4, 125, 474, 90);
 			contentPanel.add(pnlMicro);
@@ -176,8 +207,11 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtModeloMicro = new JTextField();
+				txtModeloMicro.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				txtModeloMicro.setEnabled(false);
 				txtModeloMicro.setBounds(80, 25, 145, 20);
+				txtModeloMicro.setBackground(CyanClaro);
+				txtModeloMicro.setBorder(bottomBorder);
 				pnlMicro.add(txtModeloMicro);
 				txtModeloMicro.setColumns(10);
 			}
@@ -189,8 +223,11 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtSocketMicro = new JTextField();
+				txtSocketMicro.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				txtSocketMicro.setEnabled(false);
 				txtSocketMicro.setBounds(317, 25, 145, 20);
+				txtSocketMicro.setBackground(CyanClaro);
+				txtSocketMicro.setBorder(bottomBorder);
 				pnlMicro.add(txtSocketMicro);
 				txtSocketMicro.setColumns(10);
 			}
@@ -202,14 +239,18 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtVeProMicro = new JTextField();
+				txtVeProMicro.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 				txtVeProMicro.setEnabled(false);
 				txtVeProMicro.setBounds(215, 57, 187, 20);
+				txtVeProMicro.setBackground(CyanClaro);
+				txtVeProMicro.setBorder(bottomBorder);
 				pnlMicro.add(txtVeProMicro);
 				txtVeProMicro.setColumns(10);
 			}
 		}
 		{
 			pnlMother = new JPanel();
+			pnlMother.setBackground(new Color(240, 255, 240));
 			pnlMother.setBorder(new TitledBorder(null, "MotherBoard", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlMother.setBounds(4, 125, 474, 90);
 			contentPanel.add(pnlMother);
@@ -224,6 +265,8 @@ public class MasInformacionProducto extends JDialog {
 				txtModeloMother = new JTextField();
 				txtModeloMother.setEditable(false);
 				txtModeloMother.setBounds(87, 25, 141, 20);
+				txtModeloMother.setBackground(CyanClaro);
+				txtModeloMother.setBorder(bottomBorder);
 				pnlMother.add(txtModeloMother);
 				txtModeloMother.setColumns(10);
 			}
@@ -237,6 +280,8 @@ public class MasInformacionProducto extends JDialog {
 				txtTipoRamMother = new JTextField();
 				txtTipoRamMother.setEditable(false);
 				txtTipoRamMother.setBounds(87, 57, 105, 20);
+				txtTipoRamMother.setBackground(CyanClaro);
+				txtTipoRamMother.setBorder(bottomBorder);
 				pnlMother.add(txtTipoRamMother);
 				txtTipoRamMother.setColumns(10);
 			}
@@ -250,6 +295,8 @@ public class MasInformacionProducto extends JDialog {
 				txtSocketMother = new JTextField();
 				txtSocketMother.setEditable(false);
 				txtSocketMother.setBounds(317, 25, 145, 20);
+				txtSocketMother.setBackground(CyanClaro);
+				txtSocketMother.setBorder(bottomBorder);
 				pnlMother.add(txtSocketMother);
 				txtSocketMother.setColumns(10);
 			}
@@ -263,12 +310,15 @@ public class MasInformacionProducto extends JDialog {
 				txtDiscoMother = new JTextField();
 				txtDiscoMother.setEditable(false);
 				txtDiscoMother.setBounds(344, 57, 118, 20);
+				txtDiscoMother.setBackground(CyanClaro);
+				txtDiscoMother.setBorder(bottomBorder);
 				pnlMother.add(txtDiscoMother);
 				txtDiscoMother.setColumns(10);
 			}
 		}
 		{
 			pnlRam = new JPanel();
+			pnlRam.setBackground(new Color(240, 255, 240));
 			pnlRam.setBorder(new TitledBorder(null, "Memoria RAM", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlRam.setBounds(4, 125, 474, 60);
 			contentPanel.add(pnlRam);
@@ -283,6 +333,8 @@ public class MasInformacionProducto extends JDialog {
 				txtCantRam = new JTextField();
 				txtCantRam.setEditable(false);
 				txtCantRam.setBounds(85, 25, 146, 20);
+				txtCantRam.setBackground(CyanClaro);
+				txtCantRam.setBorder(bottomBorder);
 				pnlRam.add(txtCantRam);
 				txtCantRam.setColumns(10);
 			}
@@ -296,12 +348,15 @@ public class MasInformacionProducto extends JDialog {
 				txtTipoRam = new JTextField();
 				txtTipoRam.setEditable(false);
 				txtTipoRam.setBounds(299, 25, 163, 20);
+				txtTipoRam.setBackground(CyanClaro);
+				txtTipoRam.setBorder(bottomBorder);
 				pnlRam.add(txtTipoRam);
 				txtTipoRam.setColumns(10);
 			}
 		}
 		{
 			pnlDisco = new JPanel();
+			pnlDisco.setBackground(new Color(240, 255, 240));
 			pnlDisco.setBorder(new TitledBorder(null, "Disco Duro", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlDisco.setBounds(4, 125, 474, 90);
 			contentPanel.add(pnlDisco);
@@ -328,6 +383,8 @@ public class MasInformacionProducto extends JDialog {
 				txtConexionDisco = new JTextField();
 				txtConexionDisco.setEnabled(false);
 				txtConexionDisco.setBounds(350, 24, 112, 20);
+				txtConexionDisco.setBackground(CyanClaro);
+				txtConexionDisco.setBorder(bottomBorder);
 				pnlDisco.add(txtConexionDisco);
 				txtConexionDisco.setColumns(10);
 			}
@@ -335,6 +392,8 @@ public class MasInformacionProducto extends JDialog {
 				txtModeloDisco = new JTextField();
 				txtModeloDisco.setEnabled(false);
 				txtModeloDisco.setBounds(77, 25, 149, 20);
+				txtModeloDisco.setBackground(CyanClaro);
+				txtModeloDisco.setBorder(bottomBorder);
 				pnlDisco.add(txtModeloDisco);
 				txtModeloDisco.setColumns(10);
 			}
@@ -342,16 +401,21 @@ public class MasInformacionProducto extends JDialog {
 				txtCapAlmDisco = new JTextField();
 				txtCapAlmDisco.setEnabled(false);
 				txtCapAlmDisco.setBounds(225, 57, 237, 20);
+				txtCapAlmDisco.setBackground(CyanClaro);
+				txtCapAlmDisco.setBorder(bottomBorder);
 				pnlDisco.add(txtCapAlmDisco);
 				txtCapAlmDisco.setColumns(10);
 			}
 		}
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(new Color(240, 255, 240));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton btnVisualizar = new JButton("Visualizar el Producto");
+				btnVisualizar.setForeground(new Color(255, 255, 255));
+				btnVisualizar.setBackground(CyanMid);
 				btnVisualizar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						VisualizarProducto visualiza =new VisualizarProducto(producto);
@@ -366,6 +430,8 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.setForeground(new Color(255, 255, 255));
+				btnCancelar.setBackground(Rojito);
 				btnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

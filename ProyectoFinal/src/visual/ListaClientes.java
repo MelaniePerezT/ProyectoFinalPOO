@@ -186,7 +186,13 @@ public class ListaClientes extends JDialog {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
             String idCliente = (String) tableModel.getValueAt(selectedRow, 0);
-            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este cliente?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+            ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+            String texto = "¿Estás seguro de que deseas eliminar este cliente?";
+            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+            ventanita.setModal(true);
+            ventanita.setVisible(true);
+			int confirmacion = ventanita.getResultado();
+            //int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este cliente?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
             if (confirmacion == JOptionPane.YES_OPTION) {
                 Tienda.getInstance().eliminarPersona(idCliente);
                 tableModel.removeRow(selectedRow);

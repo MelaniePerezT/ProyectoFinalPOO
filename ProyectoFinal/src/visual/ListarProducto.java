@@ -2,6 +2,8 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -9,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import logico.DiscoDuro;
@@ -25,6 +28,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.awt.Toolkit;
+import java.awt.Color;
 
 public class ListarProducto extends JDialog {
 
@@ -54,12 +59,18 @@ public class ListarProducto extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListarProducto() {
+		Color CyanOscuro = new Color(70, 133, 133);
+		Color CyanMid = new Color(80, 180, 152);
+		Color CyanClaro =  new Color (222, 249, 196);
+		Color Rojito = new Color(250, 128, 114);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ListarProducto.class.getResource("/Imagenes/to-do-list.png")));
 		setTitle("Lista de Productos");
 		setBounds(100, 100, 919, 505);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(new Color(240, 255, 240));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
@@ -68,8 +79,14 @@ public class ListarProducto extends JDialog {
 		String[] columnas = {"ID","NO. Serie","Tipo","Cantidad","Proovedor","Precio"};
 		tableModel = new DefaultTableModel(columnas, 0);
 		table = new JTable(tableModel);
+		table.setBackground(new Color(240, 255, 240));
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		table.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		table.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+        table.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		 DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+	        for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+	            table.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+	        }
 		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 		table.setFillsViewportHeight(true);
 
@@ -92,6 +109,7 @@ public class ListarProducto extends JDialog {
 
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(new Color(240, 255, 240));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
@@ -99,6 +117,8 @@ public class ListarProducto extends JDialog {
 			}
 			{
 				botonActualizar = new JButton("Actualizar");
+				botonActualizar.setForeground(new Color(255, 255, 255));
+				botonActualizar.setBackground(CyanMid);
 				botonActualizar.setEnabled(false);
 				botonActualizar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -117,6 +137,8 @@ public class ListarProducto extends JDialog {
 				});
 				{
 					btnVerMas = new JButton("Mas Informacion");
+					btnVerMas.setForeground(new Color(255, 255, 255));
+					btnVerMas.setBackground(CyanMid);
 					btnVerMas.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							int selectedRow = table.getSelectedRow();
@@ -141,11 +163,16 @@ public class ListarProducto extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setForeground(new Color(255, 255, 255));
+				cancelButton.setBackground(CyanMid);
 				cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 				cancelButton.setActionCommand("Cancel");
 				cancelButton.addActionListener(e -> dispose());
 				{
 					botonEliminar = new JButton("Eliminar");
+					botonEliminar.setForeground(new Color(255, 255, 255));
+					botonEliminar.setBackground(Rojito);
+					botonEliminar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 					botonEliminar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							if(codigo != ""){
@@ -155,13 +182,24 @@ public class ListarProducto extends JDialog {
 									JOptionPane.showMessageDialog(null, "Operación errónea. El producto seleccionado no puede ser eliminado, al menos un ejemplar de este ha sido vendido!", "Error", JOptionPane.WARNING_MESSAGE);
 									return;
 								} else {*/
-								int option = JOptionPane.showConfirmDialog(null, "Seguro desea eliminar el producto con código: "+codigo, "Confirmación", JOptionPane.WARNING_MESSAGE);
+								//int option = JOptionPane.showConfirmDialog(null, "Seguro desea eliminar el producto con código: "+codigo, "Confirmación", JOptionPane.WARNING_MESSAGE);
+								
+								ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+					            String texto = "¿Seguro desea eliminar el producto con código: "+ codigo +"?";
+					            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+					            ventanita.setModal(true);
+					            ventanita.setVisible(true);
+								int option = ventanita.getResultado();
 								if(option == JOptionPane.YES_OPTION){
 									Tienda.getInstance().eliminarProducto(codigo);
 									btnVerMas.setEnabled(false);
 									botonEliminar.setEnabled(false);
 									botonActualizar.setEnabled(false);
-									JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Eliminación", JOptionPane.INFORMATION_MESSAGE);
+									//JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Eliminación", JOptionPane.INFORMATION_MESSAGE);
+									ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+					                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Producto eliminado correctamente.");
+					                mensajito.setModal(true);
+					                mensajito.setVisible(true);
 									cargarProducto();
 									//}
 								}

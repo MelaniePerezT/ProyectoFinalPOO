@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import logico.DiscoDuro;
@@ -26,6 +28,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Toolkit;
 
 public class ListadoUsuarios extends JDialog {
 
@@ -54,12 +58,20 @@ public class ListadoUsuarios extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoUsuarios() {
+		
+		Color CyanOscuro = new Color(70, 133, 133);
+		Color CyanMid = new Color(80, 180, 152);
+		Color CyanClaro =  new Color (222, 249, 196);
+		
+		setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoUsuarios.class.getResource("/Imagenes/clienteregistrar.png")));
 		setTitle("Listado de Usuarios");
 		setBounds(100, 100, 525, 300);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(new Color(240, 255, 240));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
@@ -75,8 +87,17 @@ public class ListadoUsuarios extends JDialog {
 			String[] columnas = {"Usuario", "Contraseña", "Tipo"};
 			tableModel = new DefaultTableModel(columnas, 0);
 			table = new JTable(tableModel);
-			table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+			table.setBorder(null);
+			table.setShowVerticalLines(false);
+			table.setShowHorizontalLines(false);
+			table.setShowGrid(false);
+			table.setBackground(new Color(240, 255, 240));
+			table.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 			table.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+			DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+	        for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+	            table.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+	        }
 			table.setPreferredScrollableViewportSize(table.getPreferredSize());
 			table.setFillsViewportHeight(true);
 
@@ -95,10 +116,14 @@ public class ListadoUsuarios extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(new Color(240, 255, 240));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				updateBtn = new JButton("Actualizar");
+				updateBtn.setForeground(Color.WHITE);
+				updateBtn.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+				updateBtn.setBackground(CyanMid);
 				updateBtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(!codigo.equalsIgnoreCase("")){
@@ -119,6 +144,9 @@ public class ListadoUsuarios extends JDialog {
 			}
 			{
 				deleteBtn = new JButton("Eliminar");
+				deleteBtn.setForeground(Color.WHITE);
+				deleteBtn.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+				deleteBtn.setBackground(new Color(250, 128, 114));
 				deleteBtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(codigo != ""){
@@ -126,7 +154,13 @@ public class ListadoUsuarios extends JDialog {
 								JOptionPane.showMessageDialog(null, "Operación errónea. El usuario [ADMIN] no puede ser eliminado!", "Error", JOptionPane.WARNING_MESSAGE);
 								return;
 							} else {
-								int option = JOptionPane.showConfirmDialog(null, "Seguro desea eliminar el usuario: "+codigo, "Confirmación", JOptionPane.WARNING_MESSAGE);
+								ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+					            String texto = "Seguro desea eliminar el usuario: "+ codigo;
+					            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+					            ventanita.setModal(true);
+					            ventanita.setVisible(true);
+								int option = ventanita.getResultado();
+								//int option = JOptionPane.showConfirmDialog(null, "Seguro desea eliminar el usuario: "+codigo, "Confirmación", JOptionPane.WARNING_MESSAGE);
 								if(option == JOptionPane.YES_OPTION){
 									Tienda.getInstance().eliminarUsuario(codigo);
 									deleteBtn.setEnabled(false);
@@ -145,6 +179,9 @@ public class ListadoUsuarios extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setForeground(Color.WHITE);
+				cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+				cancelButton.setBackground(CyanMid);
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

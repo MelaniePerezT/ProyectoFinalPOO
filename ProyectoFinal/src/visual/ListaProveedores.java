@@ -186,7 +186,14 @@ public class ListaProveedores extends JDialog {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
             String idProveedor = (String) tableModel.getValueAt(selectedRow, 0);
-            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estas seguro de que deseas eliminar este proveedor?", "Confirmacion de eliminacion", JOptionPane.YES_NO_OPTION);
+            //int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estas seguro de que deseas eliminar este proveedor?", "Confirmacion de eliminacion", JOptionPane.YES_NO_OPTION);
+            ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+            String texto = "¿Estás seguro de que deseas eliminar este proveedor?";
+            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+            ventanita.setModal(true);
+            ventanita.setVisible(true);
+			int confirmacion = ventanita.getResultado();
+            
             if (confirmacion == JOptionPane.YES_OPTION) {
                 Tienda.getInstance().eliminarPersona(idProveedor);
                 tableModel.removeRow(selectedRow);
