@@ -19,7 +19,6 @@ import logico.Tienda;
 import logico.User;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -151,8 +150,7 @@ public class Login extends JFrame {
 					frame.setVisible(true);
 				}
 				else {
-				   	//JOptionPane.showMessageDialog(null, "Operación errónea. Los datos ingresados no son válidos.", "Error", JOptionPane.WARNING_MESSAGE);
-					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
 	                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nLos datos ingresados no son válidos.");
 	                mensajito.setModal(true);
 	                mensajito.setVisible(true);

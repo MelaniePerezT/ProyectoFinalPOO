@@ -195,13 +195,16 @@ public class ListarProducto extends JDialog {
 									btnVerMas.setEnabled(false);
 									botonEliminar.setEnabled(false);
 									botonActualizar.setEnabled(false);
-									//JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Eliminación", JOptionPane.INFORMATION_MESSAGE);
 									ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
 					                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Producto eliminado correctamente.");
 					                mensajito.setModal(true);
 					                mensajito.setVisible(true);
 									cargarProducto();
-									//}
+								} else {
+					            	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminación cancelada.");
+									mensajito.setModal(true);
+									mensajito.setVisible(true);
 								}
 							}							
 						}

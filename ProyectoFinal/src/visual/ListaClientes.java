@@ -187,29 +187,25 @@ public class ListaClientes extends JDialog {
         if (selectedRow >= 0) {
             String idCliente = (String) tableModel.getValueAt(selectedRow, 0);
             ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
-            String texto = "¿Estás seguro de que deseas eliminar este cliente?";
+            String texto = "¿Estás seguro de que deseas eliminar el cliente con código: "+idCliente+"?";
             VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
             ventanita.setModal(true);
             ventanita.setVisible(true);
 			int confirmacion = ventanita.getResultado();
-            //int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este cliente?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
             if (confirmacion == JOptionPane.YES_OPTION) {
                 Tienda.getInstance().eliminarPersona(idCliente);
                 tableModel.removeRow(selectedRow);
-                //JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
-                ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+                ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
 				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Cliente eliminado correctamente.");
 				mensajito.setModal(true);
 				mensajito.setVisible(true);
             } else {
-                //JOptionPane.showMessageDialog(this, "Eliminación cancelada.");
             	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
-				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminacion cancelada");
+				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminación cancelada.");
 				mensajito.setModal(true);
 				mensajito.setVisible(true);
             }
         } else {
-            //JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
             ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
 			MensajeAlerta mensajito = new MensajeAlerta(iconito, "Por favor, seleccione un cliente para eliminar.");
 			mensajito.setModal(true);

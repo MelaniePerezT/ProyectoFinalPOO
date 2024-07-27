@@ -188,7 +188,7 @@ public class ListaProveedores extends JDialog {
             String idProveedor = (String) tableModel.getValueAt(selectedRow, 0);
             //int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estas seguro de que deseas eliminar este proveedor?", "Confirmacion de eliminacion", JOptionPane.YES_NO_OPTION);
             ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
-            String texto = "¿Estás seguro de que deseas eliminar este proveedor?";
+            String texto = "¿Estás seguro de que deseas eliminar el proveedor con código: " +idProveedor+ "?";
             VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
             ventanita.setModal(true);
             ventanita.setVisible(true);
@@ -205,7 +205,7 @@ public class ListaProveedores extends JDialog {
             } else {
                 //JOptionPane.showMessageDialog(this, "Eliminacion cancelada.");
             	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
-    			MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminacion cancelada.");
+    			MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminación cancelada.");
     			mensajito.setModal(true);
     			mensajito.setVisible(true);
             }

@@ -67,6 +67,7 @@ public class RegistrarProducto extends JDialog {
 	private JComboBox cbxMBTipoRam;
 	private JComboBox cbxDDTipoConexion;
 	private JSpinner spnDDCapacidadAlmacenamiento;
+	private String codigo = "";
 
 	/**
 	 * Launch the application.
@@ -87,8 +88,9 @@ public class RegistrarProducto extends JDialog {
 	public RegistrarProducto(Producto producto) {
 		if (producto != null) {
 			setTitle("Actualizar Producto");
+			codigo = producto.getId();
 		} else {
-			setTitle("Registro Producto");			
+			setTitle("Registrar Producto");			
 		}
 		setBounds(100, 100, 570, 400);
 		setLocationRelativeTo(null);
@@ -486,13 +488,19 @@ public class RegistrarProducto extends JDialog {
 							Producto producto = null;
 
 							if (id.isEmpty() || numSerie.isEmpty() || cantidad == 0) {
-								JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
+								ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+								MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de estar llenos!");
+								mensajito.setModal(true);
+								mensajito.setVisible(true);
 								return;
 							}
 							
 							if (rbtnMotherBoard.isSelected()) {
 								if (txtMBModelo.getText().isEmpty() || txtMBSocket.getText().isEmpty() || "<Seleccione uno>".equalsIgnoreCase(cbxMBTipoRam.getSelectedItem().toString())) {
-									JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
+									ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de estar llenos!");
+									mensajito.setModal(true);
+									mensajito.setVisible(true);
 									return;
 								} else {
 									String modelo = txtMBModelo.getText();
@@ -505,7 +513,10 @@ public class RegistrarProducto extends JDialog {
 							}
 							if (rbtnMemoriaRAM.isSelected()) {
 								if ((int) spnMRCantidad.getValue() == 0 || "<Seleccione uno>".equalsIgnoreCase(cbxMRTipo.getSelectedItem().toString())) {
-									JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
+									ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de estar llenos!");
+									mensajito.setModal(true);
+									mensajito.setVisible(true);
 									return;
 								} else {
 									int cantidadRam = new Integer(spnMRCantidad.getValue().toString());
@@ -517,7 +528,10 @@ public class RegistrarProducto extends JDialog {
 							if (rbtnMicroprocesador.isSelected()) {
 								if (txtMPModelo.getText().isEmpty() || txtMPSocket.getText().isEmpty() || (int) spnMPVelocidadProcesamiento.getValue() == 0)
 								{
-									JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
+									ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de estar llenos!");
+									mensajito.setModal(true);
+									mensajito.setVisible(true);
 									return;
 								}
 								else {
@@ -529,9 +543,12 @@ public class RegistrarProducto extends JDialog {
 								}
 							}
 							if (rbtnDiscoDuro.isSelected()) {
-								if (txtDDModelo.getText().isEmpty() || "<Seleccione uno>".equalsIgnoreCase(cbxDDTipoConexion.getSelectedItem().toString()))
+								if (txtDDModelo.getText().isEmpty() || "<Seleccione uno>".equalsIgnoreCase(cbxDDTipoConexion.getSelectedItem().toString()) || spnDDCapacidadAlmacenamiento.getValue().equals(0))
 								{
-									JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
+									ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de estar llenos!");
+									mensajito.setModal(true);
+									mensajito.setVisible(true);
 									return;
 								}
 								else {
@@ -544,7 +561,7 @@ public class RegistrarProducto extends JDialog {
 							}
 							Tienda.getInstance().RegistrarProducto(producto);
 							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
-			                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Producto registrado correctamente.");
+			                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProducto registrado!");
 			                mensajito.setModal(true);
 			                mensajito.setVisible(true);
 							clean();
@@ -581,8 +598,14 @@ public class RegistrarProducto extends JDialog {
 								((DiscoDuro)producto).setTipoConexion(cbxDDTipoConexion.getSelectedItem().toString());
 								((DiscoDuro)producto).setCapacidad(new Integer(spnDDCapacidadAlmacenamiento.getValue().toString()));
 							}
+				            
+							ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+							String texto = "¿Seguro desea modificar el producto con código: "+ codigo +"?";
+				            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+				            ventanita.setModal(true);
+				            ventanita.setVisible(true);
+							int option = ventanita.getResultado();
 
-							int option = JOptionPane.showConfirmDialog(null, "Seguro que desea realizar la modificación al producto: "+producto.getId()+"?", "Confirmación", JOptionPane.WARNING_MESSAGE);
 							if(option == JOptionPane.YES_OPTION){
 								Tienda.getInstance().updateProducto(producto);
 								ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
@@ -606,13 +629,23 @@ public class RegistrarProducto extends JDialog {
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						if (producto == null) {
-							int option = JOptionPane.showConfirmDialog(null, "Seguro que desea cancelar el registro?", "Confirmación", JOptionPane.WARNING_MESSAGE);
+							ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+							String texto = "¿Seguro desea cancelar el registro del producto en curso?";
+				            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+				            ventanita.setModal(true);
+				            ventanita.setVisible(true);
+							int option = ventanita.getResultado();			
 							if(option == JOptionPane.YES_OPTION){
 								dispose();
 							}				
 						}
 						else {
-							int option = JOptionPane.showConfirmDialog(null, "Seguro que desea cancelar la modificación?", "Confirmación", JOptionPane.WARNING_MESSAGE);
+							ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+							String texto = "¿Seguro desea cancelar la modificación del producto con código: "+ codigo +"?";
+				            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+				            ventanita.setModal(true);
+				            ventanita.setVisible(true);
+							int option = ventanita.getResultado();
 							if(option == JOptionPane.YES_OPTION){
 								dispose();
 							}

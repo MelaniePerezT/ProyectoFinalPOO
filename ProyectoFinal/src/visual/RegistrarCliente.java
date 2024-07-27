@@ -40,6 +40,7 @@ public class RegistrarCliente extends JDialog {
 	private JTextField correoField;
 	private JSpinner edadSpinner; 
 	private Cliente cliente; 
+	private String codigo = "";
 
 	/**
 	 * Launch the application.
@@ -69,7 +70,12 @@ public class RegistrarCliente extends JDialog {
 		Color FondoClarito = new Color(240, 255, 240);
 		MatteBorder bottomBorder = new MatteBorder(0, 0, 2, 0, CyanOscuro);
 
-		setTitle("Registrar Cliente");
+		if (cliente != null) {
+			setTitle("Actualizar Cliente");
+			codigo = cliente.getId();
+		} else {
+			setTitle("Registrar Cliente");			
+		}
 		setBounds(100, 100, 447, 264);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -175,6 +181,9 @@ public class RegistrarCliente extends JDialog {
 			buttonPane.setBackground(new Color(240, 255, 240));
 			{
 				JButton okButton = new JButton("Registrar");
+				if (cliente != null) {
+					okButton.setText("Actualizar");
+				}
 				okButton.setForeground(new Color(255, 255, 255));
 				okButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 				okButton.setBackground(CyanMid);
@@ -184,7 +193,7 @@ public class RegistrarCliente extends JDialog {
 						if (nombreField.getText().isEmpty() || cedulaField.getText().isEmpty() || correoField.getText().isEmpty()) {
 							//JOptionPane.showMessageDialog(null, "Operación errónea. Todos los campos deben de estar llenos!", "Error", JOptionPane.WARNING_MESSAGE);
 							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
-							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de\nestar llenos!");
+							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de estar llenos!");
 							mensajito.setModal(true);
 							mensajito.setVisible(true);
 							return;
@@ -210,8 +219,22 @@ public class RegistrarCliente extends JDialog {
 							cliente.setCedula(cedula);
 							cliente.setCorreo(correo);
 							cliente.setEdad(edad);
-							Tienda.getInstance().updatePersona(cliente);
-							dispose();
+							
+							ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+							String texto = "¿Seguro desea modificar el cliente con código: "+ codigo +"?";
+				            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+				            ventanita.setModal(true);
+				            ventanita.setVisible(true);
+							int option = ventanita.getResultado();
+
+							if(option == JOptionPane.YES_OPTION){
+								Tienda.getInstance().updatePersona(cliente);
+								ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+				                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nCliente modificado!");
+				                mensajito.setModal(true);
+				                mensajito.setVisible(true);
+								dispose();
+							}
 						}
 					}
 				});
@@ -226,7 +249,28 @@ public class RegistrarCliente extends JDialog {
 				cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();
+						if (cliente == null) {
+							ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+							String texto = "¿Seguro desea cancelar el registro del cliente en curso?";
+				            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+				            ventanita.setModal(true);
+				            ventanita.setVisible(true);
+							int option = ventanita.getResultado();			
+							if(option == JOptionPane.YES_OPTION){
+								dispose();
+							}				
+						}
+						else {
+							ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+							String texto = "¿Seguro desea cancelar la modificación del cliente con código: "+codigo+"?";
+				            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+				            ventanita.setModal(true);
+				            ventanita.setVisible(true);
+							int option = ventanita.getResultado();
+							if(option == JOptionPane.YES_OPTION){
+								dispose();
+							}
+						}
 					}
 				});
 				cancelButton.setActionCommand("Cancel");

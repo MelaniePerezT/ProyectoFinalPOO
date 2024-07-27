@@ -108,34 +108,47 @@ public class RegUser extends JDialog {
 				}
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if (!textField_1.getText().toString().equalsIgnoreCase(textField_2.getText().toString())) {
-	                        ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
-							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nLas contraseñas no coinciden!");
+						if (textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty() || "<Seleccione>".equalsIgnoreCase(comboBox.getSelectedItem().toString())) {
+							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de estar llenos!");
 							mensajito.setModal(true);
 							mensajito.setVisible(true);
 							return;
 						} else {
-							if (usuario == null) {
-								User user = new User(comboBox.getSelectedItem().toString(),textField.getText(),textField_1.getText());
-								Tienda.getInstance().RegistrarUser(user);
-		                        ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
-								MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nUsuario registrado!");
+							if (!textField_1.getText().toString().equalsIgnoreCase(textField_2.getText().toString())) {
+								ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+								MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nLas contraseñas no coinciden!");
 								mensajito.setModal(true);
 								mensajito.setVisible(true);
-								clean();
+								return;
 							} else {
-								usuario.setUserName(textField.getText());
-								usuario.setPass(textField_1.getText());
-								usuario.setTipo(comboBox.getSelectedItem().toString());
-
-								int option = JOptionPane.showConfirmDialog(null, "Seguro que desea realizar la modificación al usuario: " + codigo, "Confirmación", JOptionPane.WARNING_MESSAGE);
-								if(option == JOptionPane.YES_OPTION){
-									Tienda.getInstance().updateUsuario(usuario);
-			                        ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
-									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nUsuario modificado!");
+								if (usuario == null) {
+									User user = new User(comboBox.getSelectedItem().toString(),textField.getText(),textField_1.getText());
+									Tienda.getInstance().RegistrarUser(user);
+									ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nUsuario registrado!");
 									mensajito.setModal(true);
 									mensajito.setVisible(true);
-									dispose();
+									clean();
+								} else {
+									usuario.setUserName(textField.getText());
+									usuario.setPass(textField_1.getText());
+									usuario.setTipo(comboBox.getSelectedItem().toString());
+
+									ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+									String texto = "¿Seguro desea modificar el usuario: "+ codigo +"?";
+									VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+									ventanita.setModal(true);
+									ventanita.setVisible(true);
+									int option = ventanita.getResultado();	
+									if(option == JOptionPane.YES_OPTION){
+										Tienda.getInstance().updateUsuario(usuario);
+										ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+										MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nUsuario modificado!");
+										mensajito.setModal(true);
+										mensajito.setVisible(true);
+										dispose();
+									}
 								}
 							}
 						}
@@ -149,9 +162,27 @@ public class RegUser extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						int option = JOptionPane.showConfirmDialog(null, "Seguro que desea cancelar el registro?", "Confirmación", JOptionPane.WARNING_MESSAGE);
-						if(option == JOptionPane.YES_OPTION){
-							dispose();
+						if (usuario == null) {
+							ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+							String texto = "¿Seguro desea cancelar el registro del usuario en curso?";
+							VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+							ventanita.setModal(true);
+							ventanita.setVisible(true);
+							int option = ventanita.getResultado();			
+							if(option == JOptionPane.YES_OPTION){
+								dispose();
+							}				
+						}
+						else {
+							ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+							String texto = "¿Seguro desea cancelar la modificación del usuario: "+ codigo +"?";
+							VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+							ventanita.setModal(true);
+							ventanita.setVisible(true);
+							int option = ventanita.getResultado();
+							if(option == JOptionPane.YES_OPTION){
+								dispose();
+							}
 						}
 					}
 				});
@@ -166,10 +197,22 @@ public class RegUser extends JDialog {
 		if (user != null) {
 			textField.setText(user.getUserName());
 			textField_1.setText(user.getPass());
-			comboBox.setSelectedItem(0);			
+			
+			int i = 0;
+			boolean encontrado = false;
+			while (!encontrado && i < comboBox.getItemCount()) {
+				if (user.getTipo().equalsIgnoreCase(comboBox.getItemAt(i).toString()))
+				{
+					comboBox.setSelectedIndex(i); 
+					encontrado = true;
+				}
+				i++;
+			}
+			
+			textField_2.setText(user.getPass());
 		}
 	}
-	
+
 	private void clean() {
 		textField.setText("");
 		textField_1.setText("");

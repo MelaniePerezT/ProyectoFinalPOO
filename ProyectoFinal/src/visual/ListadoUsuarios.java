@@ -151,22 +151,32 @@ public class ListadoUsuarios extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						if(codigo != ""){
 							if (codigo.equalsIgnoreCase("Admin")) {
-								JOptionPane.showMessageDialog(null, "Operación errónea. El usuario [ADMIN] no puede ser eliminado!", "Error", JOptionPane.WARNING_MESSAGE);
+								ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+				                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea. El usuario [ADMIN] no\npuede ser eliminado!");
+				                mensajito.setModal(true);
+				                mensajito.setVisible(true);
 								return;
 							} else {
 								ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
-					            String texto = "Seguro desea eliminar el usuario: "+ codigo;
+					            String texto = "¿Seguro desea eliminar el usuario con código: "+ codigo +"?";
 					            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
 					            ventanita.setModal(true);
 					            ventanita.setVisible(true);
 								int option = ventanita.getResultado();
-								//int option = JOptionPane.showConfirmDialog(null, "Seguro desea eliminar el usuario: "+codigo, "Confirmación", JOptionPane.WARNING_MESSAGE);
 								if(option == JOptionPane.YES_OPTION){
 									Tienda.getInstance().eliminarUsuario(codigo);
 									deleteBtn.setEnabled(false);
 									updateBtn.setEnabled(false);
-									JOptionPane.showMessageDialog(null, "Operación satisfactoria", "Eliminación", JOptionPane.INFORMATION_MESSAGE);
-									cargarUsuarios();	
+									ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+					                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Usuario eliminado correctamente.");
+					                mensajito.setModal(true);
+					                mensajito.setVisible(true);
+					                cargarUsuarios();	
+								} else {
+					            	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminación cancelada.");
+									mensajito.setModal(true);
+									mensajito.setVisible(true);
 								}
 							}
 						}

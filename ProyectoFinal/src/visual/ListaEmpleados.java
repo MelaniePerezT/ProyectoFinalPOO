@@ -180,9 +180,8 @@ public class ListaEmpleados extends JDialog {
         int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
             String idEmpleado = (String) tableModel.getValueAt(selectedRow, 0);
-            //int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este empleado?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
             ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
-            String texto = "¿Estás seguro de que deseas eliminar este empleado?";
+            String texto = "¿Estás seguro de que deseas eliminar el empleado con código: "+idEmpleado+"?";
             VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
             ventanita.setModal(true);
             ventanita.setVisible(true);
@@ -190,20 +189,17 @@ public class ListaEmpleados extends JDialog {
             if (confirmacion == JOptionPane.YES_OPTION) {
                 Tienda.getInstance().eliminarPersona(idEmpleado);
                 tableModel.removeRow(selectedRow);
-                //JOptionPane.showMessageDialog(this, "Empleado eliminado correctamente.");
                 ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
-				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Empleado eliminado correctamente");
+				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Empleado eliminado correctamente.");
 				mensajito.setModal(true);
 				mensajito.setVisible(true);
             } else {
-                //JOptionPane.showMessageDialog(this, "Eliminación cancelada.");
             	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
 				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminación cancelada.");
 				mensajito.setModal(true);
 				mensajito.setVisible(true);
             }
         } else {
-            //JOptionPane.showMessageDialog(this, "Por favor, seleccione un empleado para eliminar.");
         	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
 			MensajeAlerta mensajito = new MensajeAlerta(iconito, "Por favor, seleccione un empleado para eliminar.");
 			mensajito.setModal(true);

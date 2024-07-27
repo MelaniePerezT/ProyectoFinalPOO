@@ -441,7 +441,8 @@ public class RegistrarFactura extends JDialog {
         pnlVenta.add(lblNewLabel_6);
         
         txtEmpleado = new JTextField();
-        txtEmpleado.setEnabled(false);
+        txtEmpleado.setText(Tienda.getInstance().getLoginUser().getUserName());
+        txtEmpleado.setEditable(false);
         txtEmpleado.setBounds(450, 10, 134, 20);
         
         txtEmpleado.setBackground(CyanClaro);
@@ -652,7 +653,7 @@ public class RegistrarFactura extends JDialog {
         txtIdCliente.setText("");
         btnBuscarCliente.setEnabled(true);
         
-        txtEmpleado.setText("");
+        txtEmpleado.setText(Tienda.getInstance().getLoginUser().getUserName());
         txtHora.setText("");
 
         

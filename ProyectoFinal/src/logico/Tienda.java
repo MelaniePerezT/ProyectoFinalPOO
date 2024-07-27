@@ -207,8 +207,9 @@ public class Tienda implements Serializable {
 
 				if (!auxProv.isEmpty()) {
 					numProveedor = Integer.parseInt(auxProv.get((auxProv.size() - 1)).getId().substring(12)) + 1;
+				} else {
+					numProveedor = 1;
 				}
-				numProveedor = 1;
 
 			}
 		} else {

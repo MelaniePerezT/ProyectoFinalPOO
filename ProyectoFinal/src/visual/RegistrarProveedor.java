@@ -35,6 +35,7 @@ public class RegistrarProveedor extends JDialog {
 	private JTextField empresaField;
 	private JSpinner EdadSpinner; 
 	private Proveedor proveedor;
+	private String codigo = "";
 
 	/**
 	 * Launch the application.
@@ -54,7 +55,13 @@ public class RegistrarProveedor extends JDialog {
 	 */
 	public RegistrarProveedor(Proveedor proveedor) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrarProveedor.class.getResource("/Imagenes/supplier.png")));
-		setTitle("Registrar Proveedor");
+		if (proveedor != null) {
+			setTitle("Actualizar Proveedor");
+			codigo = proveedor.getId();
+		}
+		else {
+			setTitle("Registrar Proveedor");			
+		}
 		this.proveedor = proveedor; 
 		setResizable(false);
 		
@@ -165,6 +172,9 @@ public class RegistrarProveedor extends JDialog {
 			buttonPane.setBackground(new Color(240, 255, 240));
 			
 			JButton okButton = new JButton("Registrar");
+			if (proveedor != null) {
+				okButton.setText("Actualizar");
+			}
 			okButton.setForeground(Color.WHITE);
 			okButton.setBackground(CyanMid);
 			okButton.addActionListener(new ActionListener() {
@@ -200,12 +210,22 @@ public class RegistrarProveedor extends JDialog {
                     	proveedor.setCorreo(correo);
                     	proveedor.setEdad(edad);
                     	proveedor.setEmpresa(empresa);
-                        Tienda.getInstance().updatePersona(proveedor);
-                        ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
-						MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProveedor modificado!");
-						mensajito.setModal(true);
-						mensajito.setVisible(true);
-                        dispose();
+                    	
+						ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+						String texto = "¿Seguro desea modificar el proveedor con código: "+ codigo +"?";
+			            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+			            ventanita.setModal(true);
+			            ventanita.setVisible(true);
+						int option = ventanita.getResultado();
+						
+						if (option == JOptionPane.YES_OPTION) {
+	                        Tienda.getInstance().updatePersona(proveedor);
+	                        ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProveedor modificado!");
+							mensajito.setModal(true);
+							mensajito.setVisible(true);
+	                        dispose();	
+						}
                     }
 				}
 			});
@@ -217,7 +237,28 @@ public class RegistrarProveedor extends JDialog {
 			cancelButton.setForeground(Color.WHITE);
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					dispose();
+					if (proveedor == null) {
+						ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+						String texto = "¿Seguro desea cancelar el registro del proveedor en curso?";
+			            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+			            ventanita.setModal(true);
+			            ventanita.setVisible(true);
+						int option = ventanita.getResultado();			
+						if(option == JOptionPane.YES_OPTION){
+							dispose();
+						}				
+					}
+					else {
+						ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
+						String texto = "¿Seguro desea cancelar la modificación del proveedor con código: "+ codigo +"?";
+			            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+			            ventanita.setModal(true);
+			            ventanita.setVisible(true);
+						int option = ventanita.getResultado();
+						if(option == JOptionPane.YES_OPTION){
+							dispose();
+						}
+					}
 				}
 			});
 			cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
