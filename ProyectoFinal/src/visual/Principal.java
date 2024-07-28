@@ -232,8 +232,12 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_2.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/aboutus.png")));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String mensaje = "Ambar Nicole Torres Viamonte, Luis Reynaldo Colon Garcia y Melanie Perez Trinidad";
-				   JOptionPane.showMessageDialog(null, mensaje, "Desarrolladores", JOptionPane.INFORMATION_MESSAGE);
+				/*String mensaje = "Ambar Nicole Torres Viamonte, Luis Reynaldo Colon Garcia y Melanie Perez Trinidad";
+				   JOptionPane.showMessageDialog(null, mensaje, "Desarrolladores", JOptionPane.INFORMATION_MESSAGE);*/
+				
+				SobreNosotros tipo= new SobreNosotros();
+				tipo.setVisible(true);
+				
 			}
 		});
 		
@@ -241,7 +245,7 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_5.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/favorite.png")));
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Producto pro=Tienda.getInstance().productoFavorito();
+				/*Producto pro=Tienda.getInstance().productoFavorito();
 				String tipo;
 				if(pro instanceof MotherBoard)
 					tipo="MotherBoard";
@@ -253,7 +257,11 @@ public class Principal extends JFrame {
 					tipo="Memoria Ram";
 				String cad = "ID" + pro.getId()+ ", Tipo: " + tipo;
 				
-				JOptionPane.showMessageDialog(null,cad , "Producto mas vendido", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null,cad , "Producto mas vendido", JOptionPane.INFORMATION_MESSAGE);*/
+				
+				Favoritos ventanita = new Favoritos();
+				ventanita.setModal(true);
+				ventanita.setVisible(true);
 			}
 		});
 		mntmNewMenuItem_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -312,10 +320,14 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				int [] array =new int[4];
+				/*int [] array =new int[4];
 				array=Tienda.getInstance().cantInventario();
 				String pres = "MotherBoard: " + array[0] + ", DiscoDuro: " + array[1] + ", MemoriaRam: " + array[2]+ ", Microprocesador: " + array[3];
-				JOptionPane.showMessageDialog(null,pres , "Inventario", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null,pres , "Inventario", JOptionPane.INFORMATION_MESSAGE);*/
+				
+				InventarioGeneral ventanita = new InventarioGeneral();
+				
+				ventanita.setVisible(true);
 
 
 			}

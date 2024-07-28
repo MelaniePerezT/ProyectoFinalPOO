@@ -303,12 +303,12 @@ public class RegistrarFactura extends JDialog {
         cbxProveedor = new JComboBox();
         cbxProveedor.setBounds(94, 10, 161, 20);
         pnlCompra.add(cbxProveedor);
+        cbxProveedor.setBackground(CyanClaro);
         Component editor = cbxProveedor.getEditor().getEditorComponent();
         if (editor instanceof JTextField) {
          JTextField textFieldEditor = (JTextField) editor;
          textFieldEditor.setBackground(CyanClaro); 
      }
-        cbxProveedor.setEditable(true);
         
         
         btnProducto = new JButton("Productos");

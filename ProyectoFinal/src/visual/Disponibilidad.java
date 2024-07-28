@@ -54,6 +54,7 @@ public class Disponibilidad extends JDialog {
 		panel.setBackground(FondoClarito);
 		panel.setBounds(0, 0, 363, 216);
 		getContentPane().add(panel);
+		setLocationRelativeTo(null);
 
 		JLabel label = new JLabel("Ingrese el id del producto: ");
 		label.setFont(new Font("Bahnschrift", Font.PLAIN, 14));

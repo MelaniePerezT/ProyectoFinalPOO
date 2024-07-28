@@ -27,12 +27,14 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
+import javax.swing.JPasswordField;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTextField textField_1;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -87,6 +89,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/Imagenes/bienvenido-de-nuevo.png")));
 		Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);
 		Color CyanClaro =  new Color (222, 249, 196);
@@ -129,14 +132,6 @@ public class Login extends JFrame {
 		textField.setBorder(bottomBorder);
 		textField.setBackground(CyanClaro);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		textField_1.setBounds(37, 117, 191, 20);
-		panel.add(textField_1);
-		textField_1.setBorder(bottomBorder);
-		textField_1.setBackground(CyanClaro);
-		textField_1.setColumns(10);
-		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setForeground(new Color(255, 255, 255));
 		btnLogin.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
@@ -144,7 +139,7 @@ public class Login extends JFrame {
 		btnLogin.setBackground(CyanMid);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Tienda.getInstance().confirmLogin(textField.getText(),textField_1.getText())){
+				if(Tienda.getInstance().confirmLogin(textField.getText(),new String (passwordField.getPassword()))){
 					Principal frame = new Principal();
 					dispose();
 					frame.setVisible(true);
@@ -155,7 +150,7 @@ public class Login extends JFrame {
 	                mensajito.setModal(true);
 	                mensajito.setVisible(true);
 					textField.setText("");
-				   	textField_1.setText("");
+					passwordField.setText("");
 				};
 				
 			}
@@ -183,5 +178,12 @@ public class Login extends JFrame {
 		cancelbutton.setBounds(220, 158, 98, 34);
 		
 		panel.add(cancelbutton);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBackground(CyanClaro);
+		passwordField.setBorder(bottomBorder);
+		
+		passwordField.setBounds(37, 113, 191, 20);
+		panel.add(passwordField);
 	}
 }

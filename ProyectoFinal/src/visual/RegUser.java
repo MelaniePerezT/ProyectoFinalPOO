@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import logico.Tienda;
 import logico.User;
@@ -15,11 +16,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Toolkit;
 
 public class RegUser extends JDialog {
 
@@ -47,62 +52,92 @@ public class RegUser extends JDialog {
 	 * Create the dialog.
 	 */
 	public RegUser(User usuario) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegUser.class.getResource("/Imagenes/clienteregistrar.png")));
+		
+		Color CyanOscuro = new Color(70, 133, 133);
+		Color CyanMid = new Color(80, 180, 152);
+		Color CyanClaro =  new Color (222, 249, 196);
+		Color Rojito = new Color(250, 128, 114);
+		MatteBorder bottomBorder = new MatteBorder(0, 0, 2, 0, CyanOscuro);
+		
+		
 		if (usuario != null) {
 			setTitle("Modificación de Usuario");
 			codigo = usuario.getUserName();
 		} else {
 			setTitle("Registro de Usuario");
 		}
-		setBounds(100, 100, 450, 228);
+		setBounds(100, 100, 374, 228);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(new Color(240, 255, 240));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
 		JLabel lblNombreUsuario = new JLabel("Nombre Usuario:");
-		lblNombreUsuario.setBounds(20, 26, 97, 14);
+		lblNombreUsuario.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		lblNombreUsuario.setBounds(20, 26, 127, 14);
 		contentPanel.add(lblNombreUsuario);
 
 		textField = new JTextField();
+		textField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		textField.setBounds(20, 49, 127, 20);
 		contentPanel.add(textField);
 		textField.setColumns(10);
+		textField.setBorder(bottomBorder);
+		textField.setBackground(CyanClaro);
 
 		comboBox = new JComboBox();
+		comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Administrador", "Vendedor"}));
 		comboBox.setBounds(20, 113, 127, 20);
+		comboBox.setBackground(CyanClaro);
+		comboBox.setBorder(new MatteBorder(1, 1, 1, 1, CyanOscuro));
 		contentPanel.add(comboBox);
 
 		JLabel lblTipo = new JLabel("Tipo:");
+		lblTipo.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		lblTipo.setBounds(20, 88, 97, 14);
 		contentPanel.add(lblTipo);
 
 		textField_1 = new JTextField();
+		textField_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		textField_1.setBounds(190, 49, 147, 20);
 		contentPanel.add(textField_1);
+		textField_1.setBorder(bottomBorder);
+		textField_1.setBackground(CyanClaro);
 		textField_1.setColumns(10);
 
 		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		lblPassword.setBounds(189, 26, 97, 14);
 		contentPanel.add(lblPassword);
 
 		JLabel lblConfirmarPassword = new JLabel("Confirmar Password:");
+		lblConfirmarPassword.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		lblConfirmarPassword.setBounds(189, 88, 167, 14);
 		contentPanel.add(lblConfirmarPassword);
 
 		textField_2 = new JTextField();
+		textField_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		textField_2.setColumns(10);
 		textField_2.setBounds(190, 113, 147, 20);
+		textField_2.setBorder(bottomBorder);
+		textField_2.setBackground(CyanClaro);
 		contentPanel.add(textField_2);
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(new Color(240, 255, 240));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
+				okButton.setForeground(new Color(255, 255, 255));
+				okButton.setBackground(CyanMid);
+				okButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 				if (usuario != null) {
 					okButton.setText("Actualizar");
 				}
@@ -160,6 +195,9 @@ public class RegUser extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setForeground(new Color(255, 255, 255));
+				cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+				cancelButton.setBackground(Rojito);
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if (usuario == null) {
