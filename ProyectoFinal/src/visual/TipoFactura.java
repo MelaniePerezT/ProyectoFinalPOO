@@ -37,6 +37,7 @@ public class TipoFactura extends JDialog {
 	 * Create the dialog.
 	 */
 	public TipoFactura() {
+		setUndecorated(true);
 		Color CyanOscuro = new Color(70, 133, 133);
         Color CyanMid = new Color(80, 180, 152);
         Color CyanClaro =  new Color (222, 249, 196);
@@ -45,11 +46,26 @@ public class TipoFactura extends JDialog {
 		setBounds(100, 100, 282, 141);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPanel.setBackground(CyanOscuro);
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null);
 		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(240, 255, 240));
+		panel.setBounds(10, 11, 262, 119);
+		contentPanel.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Seleccione el tipo de factura: ");
+		lblNewLabel.setBounds(22, 35, 215, 20);
+		panel.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Bahnschrift", Font.PLAIN, 16));
+		
 		btnCompra = new JButton("Compra");
+		btnCompra.setBounds(32, 66, 89, 23);
+		panel.add(btnCompra);
+		btnCompra.setForeground(Color.WHITE);
 		btnCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegistrarFactura reg= new RegistrarFactura(true);
@@ -59,10 +75,14 @@ public class TipoFactura extends JDialog {
 			}
 		});
 		btnCompra.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-		btnCompra.setBounds(10, 59, 89, 23);
-		contentPanel.add(btnCompra);
+		
+		
+		btnCompra.setBackground(new Color(250, 128, 114));
 		
 		btnVenta = new JButton("Venta");
+		btnVenta.setBounds(131, 66, 89, 23);
+		panel.add(btnVenta);
+		btnVenta.setForeground(Color.WHITE);
 		btnVenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegistrarFactura reg= new RegistrarFactura(false);
@@ -72,24 +92,7 @@ public class TipoFactura extends JDialog {
 			}
 		});
 		btnVenta.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-		btnVenta.setBounds(152, 59, 89, 23);
-		contentPanel.add(btnVenta);
-		
-		JLabel lblNewLabel = new JLabel("Tipo de Factura");
-		lblNewLabel.setFont(new Font("Bahnschrift", Font.PLAIN, 16));
-		lblNewLabel.setBounds(67, 11, 129, 23);
-		
-		
-		btnCompra.setBackground(new Color(250, 128, 114));
 		btnVenta.setBackground(CyanMid);
-		
-		
-		contentPanel.add(lblNewLabel);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-		}
 		
 	}
 }

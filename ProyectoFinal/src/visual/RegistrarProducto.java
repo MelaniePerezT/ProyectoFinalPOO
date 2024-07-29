@@ -38,6 +38,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class RegistrarProducto extends JDialog {
 
@@ -88,6 +89,7 @@ public class RegistrarProducto extends JDialog {
 	 * Create the dialog.
 	 */
 	public RegistrarProducto(Producto producto) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrarProducto.class.getResource("/Imagenes/registerproduct.png")));
 		
 		Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);

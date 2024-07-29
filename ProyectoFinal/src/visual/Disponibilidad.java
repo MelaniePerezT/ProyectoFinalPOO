@@ -15,6 +15,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import logico.Tienda;
+import java.awt.Toolkit;
 
 public class Disponibilidad extends JDialog {
 	private JTextField textField;
@@ -39,6 +40,7 @@ public class Disponibilidad extends JDialog {
 	 * Create the dialog.
 	 */
 	public Disponibilidad() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Disponibilidad.class.getResource("/Imagenes/convenience.png")));
 		setBounds(100, 100, 379, 255);
 		getContentPane().setLayout(null);
 

@@ -1,11 +1,13 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import logico.Cliente;
 import logico.DiscoDuro;
@@ -36,6 +38,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.awt.Toolkit;
+import javax.swing.JLabel;
 
 public class Principal extends JFrame {
 
@@ -61,6 +65,13 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		
+		Color CyanOscuro = new Color(70, 133, 133);
+		Color CyanMid = new Color(80, 180, 152);
+		Color CyanClaro =  new Color (222, 249, 196);
+		Color Rojito = new Color(250, 128, 114);
+		MatteBorder bottomBorder = new MatteBorder(0, 0, 2, 0, CyanOscuro);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/Imagenes/computer.png")));
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
@@ -83,13 +94,16 @@ public class Principal extends JFrame {
 		setBounds(100, 100, 450, 300);
 
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(CyanOscuro);
 		setJMenuBar(menuBar);
 
 		JMenu clientesMenu = new JMenu("Clientes");
 		clientesMenu.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		clientesMenu.setForeground(Color.WHITE);
 		menuBar.add(clientesMenu);
 
 		JMenuItem buttonRegistrarCliente = new JMenuItem("Registrar");
+		buttonRegistrarCliente.setBackground(Color.WHITE);
 		buttonRegistrarCliente.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/ClienteRegistrar1.png")));
 		buttonRegistrarCliente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		buttonRegistrarCliente.addActionListener(new ActionListener() {
@@ -102,6 +116,7 @@ public class Principal extends JFrame {
 		clientesMenu.add(buttonRegistrarCliente);
 
 		JMenuItem muenoListaClientes = new JMenuItem("Lista Clientes");
+		muenoListaClientes.setBackground(Color.WHITE);
 		muenoListaClientes.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		muenoListaClientes.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		muenoListaClientes.addActionListener(new ActionListener() {
@@ -115,9 +130,11 @@ public class Principal extends JFrame {
 
 		JMenu menuEmpleado = new JMenu("Empleados");
 		menuEmpleado.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		menuEmpleado.setForeground(Color.WHITE);
 		menuBar.add(menuEmpleado);
 
 		JMenuItem menubuttonRegistrarEmpleado = new JMenuItem("Registrar");
+		menubuttonRegistrarEmpleado.setBackground(Color.WHITE);
 		menubuttonRegistrarEmpleado.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/EmpleadoRegistrar.png")));
 		menubuttonRegistrarEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -130,6 +147,7 @@ public class Principal extends JFrame {
 		menuEmpleado.add(menubuttonRegistrarEmpleado);
 
 		JMenuItem menubuttonListaEMpleado = new JMenuItem("Lista Empleados");
+		menubuttonListaEMpleado.setBackground(Color.WHITE);
 		menubuttonListaEMpleado.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		menubuttonListaEMpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -143,9 +161,11 @@ public class Principal extends JFrame {
 
 		JMenu menuProveedor = new JMenu("Proveedores");
 		menuProveedor.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		menuProveedor.setForeground(Color.WHITE);
 		menuBar.add(menuProveedor);
 
 		JMenuItem menuRegistrarProveedor = new JMenuItem("Registrar");
+		menuRegistrarProveedor.setBackground(Color.WHITE);
 		menuRegistrarProveedor.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/supplier2.png")));
 		menuRegistrarProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -158,6 +178,7 @@ public class Principal extends JFrame {
 		menuProveedor.add(menuRegistrarProveedor);
 
 		JMenuItem menuListaProveedor = new JMenuItem("Lista Proveedores");
+		menuListaProveedor.setBackground(Color.WHITE);
 		menuListaProveedor.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		menuListaProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -170,10 +191,12 @@ public class Principal extends JFrame {
 		menuProveedor.add(menuListaProveedor);
 
 		JMenu mnNewMenu = new JMenu("Producto");
+		mnNewMenu.setForeground(Color.WHITE);
 		mnNewMenu.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		menuBar.add(mnNewMenu);
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Registrar");
+		mntmNewMenuItem.setBackground(Color.WHITE);
 		mntmNewMenuItem.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/producto.png")));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -200,6 +223,7 @@ public class Principal extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Lista");
+		mntmNewMenuItem_1.setBackground(Color.WHITE);
 		mntmNewMenuItem_1.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -213,9 +237,11 @@ public class Principal extends JFrame {
 
 		JMenu mnNewMenu_2 = new JMenu("Facturas");
 		mnNewMenu_2.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		mnNewMenu_2.setForeground(Color.WHITE);
 		menuBar.add(mnNewMenu_2);
 
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Registrar");
+		mntmNewMenuItem_7.setBackground(Color.WHITE);
 		mntmNewMenuItem_7.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/factura.png")));
 		mntmNewMenuItem_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -228,15 +254,18 @@ public class Principal extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_7);
 
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Lista");
+		mntmNewMenuItem_8.setBackground(Color.WHITE);
 		mntmNewMenuItem_8.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		mntmNewMenuItem_8.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mnNewMenu_2.add(mntmNewMenuItem_8);
 
 		JMenu mnNewMenu_1 = new JMenu("Administracion");
+		mnNewMenu_1.setForeground(Color.WHITE);
 		mnNewMenu_1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		menuBar.add(mnNewMenu_1);
 
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Sobre nosotros");
+		mntmNewMenuItem_2.setBackground(Color.WHITE);
 		mntmNewMenuItem_2.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/aboutus.png")));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -250,6 +279,7 @@ public class Principal extends JFrame {
 		});
 
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Producto Favorito");
+		mntmNewMenuItem_5.setBackground(Color.WHITE);
 		mntmNewMenuItem_5.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/favorite.png")));
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -276,6 +306,7 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_5);
 
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Disponibilidad");
+		mntmNewMenuItem_3.setBackground(Color.WHITE);
 		mntmNewMenuItem_3.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/disponibilidad.png")));
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -299,6 +330,7 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_3);
 
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Cantidad de un producto");
+		mntmNewMenuItem_6.setBackground(Color.WHITE);
 		mntmNewMenuItem_6.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/cantproducto.png")));
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -324,6 +356,7 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_6);
 
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Inventario general");
+		mntmNewMenuItem_4.setBackground(Color.WHITE);
 		mntmNewMenuItem_4.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/inventariogeneral.png")));
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -346,11 +379,14 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 
 		JMenu mnNewMenu_3 = new JMenu("Usuarios");
+		mnNewMenu_3.setBackground(CyanClaro);
+		mnNewMenu_3.setForeground(Color.BLACK);
 		mnNewMenu_3.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/user.png")));
 		mnNewMenu_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mnNewMenu_1.add(mnNewMenu_3);
 
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Registro");
+		mntmNewMenuItem_10.setBackground(Color.WHITE);
 		mntmNewMenuItem_10.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/ClienteRegistrar1.png")));
 		mntmNewMenuItem_10.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mntmNewMenuItem_10.addActionListener(new ActionListener() {
@@ -362,6 +398,7 @@ public class Principal extends JFrame {
 		mnNewMenu_3.add(mntmNewMenuItem_10);
 
 		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Listado");
+		mntmNewMenuItem_9.setBackground(Color.WHITE);
 		mntmNewMenuItem_9.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		mntmNewMenuItem_9.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		mntmNewMenuItem_9.addActionListener(new ActionListener() {
@@ -373,6 +410,8 @@ public class Principal extends JFrame {
 		mnNewMenu_3.add(mntmNewMenuItem_9);
 
 		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Backup");
+		mntmNewMenuItem_11.setBackground(Color.WHITE);
+		mntmNewMenuItem_11.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/backup.png")));
 		mntmNewMenuItem_11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
@@ -434,6 +473,11 @@ public class Principal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		JLabel fondo = new JLabel("");
+		fondo.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/fondo de proyecto final.png")));
+		fondo.setBounds(0, 0, 1921, 1028);
+		contentPane.add(fondo);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 	}

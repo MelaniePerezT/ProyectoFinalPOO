@@ -13,7 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import logico.Cliente;
 import logico.Combo;
@@ -44,6 +46,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.JComboBox;
+import java.awt.Toolkit;
 
 public class RegistrarFactura extends JDialog {
 
@@ -106,6 +109,7 @@ public class RegistrarFactura extends JDialog {
 	 * Create the dialog.
 	 */
 	public RegistrarFactura(boolean esCV) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrarFactura.class.getResource("/Imagenes/invoice.png")));
 
 		Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);
@@ -168,7 +172,7 @@ public class RegistrarFactura extends JDialog {
 		modeloPro.setColumnIdentifiers(proHeaders);
 		tableProDisponible = new JTable(modeloPro);
 		tableProDisponible.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		tableProDisponible.setBackground(new Color(240, 255, 240));
+		tableProDisponible.setBackground(CyanClaro);
 		tableProDisponible.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -181,10 +185,22 @@ public class RegistrarFactura extends JDialog {
 		JScrollPane scrollProDisponible = new JScrollPane(tableProDisponible);
 		pnlProDisponible.add(scrollProDisponible, BorderLayout.CENTER);
 		scrollProDisponible.getViewport().setBackground(FondoClarito);
-		tableProDisponible.setFont(new Font("Bahnschrift", Font.PLAIN, 12));
-		tableProDisponible.setBackground(new Color(240, 255, 240));
-
 		
+		/*Nota: Aqui estoy modificando como se va a ver el header de la tabla*/
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        setBackground(CyanMid);  
+		        setForeground(Color.WHITE);  
+		        setFont(new Font("Bahnschrift", Font.BOLD, 12)); 
+		        return this;
+		    }
+		};
+		for (int i = 0; i < tableProDisponible.getColumnModel().getColumnCount(); i++) {
+		    tableProDisponible.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+		}
+
 		pnlProCarrito = new JPanel();
 		pnlProCarrito.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlProCarrito.setBounds(400, 165, 300, 200);
@@ -194,7 +210,8 @@ public class RegistrarFactura extends JDialog {
 		modeloProCarri.setColumnIdentifiers(proHeaders);
 		tableProCarrito = new JTable(modeloProCarri);
 		tableProCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		tableProCarrito.setBackground(new Color(240, 255, 240));
+		
+		tableProCarrito.setBackground(CyanClaro);
 		tableProCarrito.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -207,6 +224,22 @@ public class RegistrarFactura extends JDialog {
 
 		JScrollPane scrollProCarrito = new JScrollPane(tableProCarrito);
 		pnlProCarrito.add(scrollProCarrito, BorderLayout.CENTER);
+		scrollProCarrito.getViewport().setBackground(FondoClarito);
+
+		/*Nota: Aqui estoy modificando como se va a ver el header de la tabla*/
+		DefaultTableCellRenderer headerRendererCarrito = new DefaultTableCellRenderer() {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        setBackground(CyanMid);  
+		        setForeground(Color.WHITE);  
+		        setFont(new Font("Bahnschrift", Font.BOLD, 12)); 
+		        return this;
+		    }
+		};
+		for (int i = 0; i < tableProCarrito.getColumnModel().getColumnCount(); i++) {
+		    tableProCarrito.getColumnModel().getColumn(i).setHeaderRenderer(headerRendererCarrito);
+		}
 
 		
 		pnlComDisponible = new JPanel();
@@ -226,19 +259,37 @@ public class RegistrarFactura extends JDialog {
 				btnQuitarPro.setEnabled(true);
 			}
 		});
+		
 
 		JScrollPane scrollComDisponible = new JScrollPane(tableComDisponible);
 		pnlComDisponible.add(scrollComDisponible, BorderLayout.CENTER);
+		scrollComDisponible.getViewport().setBackground(FondoClarito);
 
+		/*Nota: Aqui estoy modificando como se va a ver el header de la tabla*/
+		DefaultTableCellRenderer headerRendererComDisponible = new DefaultTableCellRenderer() {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        setBackground(CyanMid);  
+		        setForeground(Color.WHITE);  
+		        setFont(new Font("Bahnschrift", Font.BOLD, 12)); 
+		        return this;
+		    }
+		};
+		for (int i = 0; i < tableComDisponible.getColumnModel().getColumnCount(); i++) {
+		    tableComDisponible.getColumnModel().getColumn(i).setHeaderRenderer(headerRendererComDisponible);
+		}
 		
 		pnlComCarrito = new JPanel();
 		pnlComCarrito.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlComCarrito.setBounds(400, 165, 300, 200);
 		panel.add(pnlComCarrito);
 		pnlComCarrito.setLayout(new BorderLayout());
+		
 
 		modeloComCarri.setColumnIdentifiers(comHeaders);
 		tableComCarrito = new JTable(modeloComCarri);
+		tableComCarrito.setBackground(CyanClaro);
 		tableComCarrito.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -250,8 +301,27 @@ public class RegistrarFactura extends JDialog {
 
 		JScrollPane scrollComCarrito = new JScrollPane(tableComCarrito);
 		scrollComCarrito.setBounds(5, 5, 290, 140);
-		pnlComCarrito.add(scrollComCarrito);
+		pnlComCarrito.add(scrollComCarrito, BorderLayout.CENTER);
+		scrollComCarrito.getViewport().setBackground(FondoClarito);
 
+		/*Nota: Aqui estoy modificando como se va a ver el header de la tabla*/
+		DefaultTableCellRenderer headerRendererComCarrito = new DefaultTableCellRenderer() {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        setBackground(CyanMid);  
+		        setForeground(Color.WHITE);  
+		        setFont(new Font("Bahnschrift", Font.BOLD, 12)); 
+		        return this;
+		    }
+		};
+		for (int i = 0; i < tableComCarrito.getColumnModel().getColumnCount(); i++) {
+		    tableComCarrito.getColumnModel().getColumn(i).setHeaderRenderer(headerRendererComCarrito);
+		}
+
+		
+		pnlComCarrito.add(scrollComCarrito);
+		
 
 
 		
