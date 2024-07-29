@@ -157,7 +157,7 @@ public class RegistrarFactura extends JDialog {
 		txtFecha.setBackground(CyanClaro);
 		panel.add(txtFecha);
 		txtFecha.setColumns(10);
-		// Panel y tabla de productos disponibles
+		
 		pnlProDisponible = new JPanel();
 		pnlProDisponible.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlProDisponible.setBounds(10, 165, 300, 200);
@@ -167,6 +167,8 @@ public class RegistrarFactura extends JDialog {
 		String[] proHeaders = { "ID", "Num Serie", "Tipo", "Precio" };
 		modeloPro.setColumnIdentifiers(proHeaders);
 		tableProDisponible = new JTable(modeloPro);
+		tableProDisponible.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		tableProDisponible.setBackground(new Color(240, 255, 240));
 		tableProDisponible.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -178,8 +180,11 @@ public class RegistrarFactura extends JDialog {
 
 		JScrollPane scrollProDisponible = new JScrollPane(tableProDisponible);
 		pnlProDisponible.add(scrollProDisponible, BorderLayout.CENTER);
+		scrollProDisponible.getViewport().setBackground(FondoClarito);
+		tableProDisponible.setFont(new Font("Bahnschrift", Font.PLAIN, 12));
+		tableProDisponible.setBackground(new Color(240, 255, 240));
 
-		// Panel y tabla de productos en carrito
+		
 		pnlProCarrito = new JPanel();
 		pnlProCarrito.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlProCarrito.setBounds(400, 165, 300, 200);
@@ -188,6 +193,8 @@ public class RegistrarFactura extends JDialog {
 
 		modeloProCarri.setColumnIdentifiers(proHeaders);
 		tableProCarrito = new JTable(modeloProCarri);
+		tableProCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		tableProCarrito.setBackground(new Color(240, 255, 240));
 		tableProCarrito.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -201,7 +208,7 @@ public class RegistrarFactura extends JDialog {
 		JScrollPane scrollProCarrito = new JScrollPane(tableProCarrito);
 		pnlProCarrito.add(scrollProCarrito, BorderLayout.CENTER);
 
-		// Panel y tabla de combos disponibles
+		
 		pnlComDisponible = new JPanel();
 		pnlComDisponible.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlComDisponible.setBounds(10, 165, 300, 200);
@@ -223,7 +230,7 @@ public class RegistrarFactura extends JDialog {
 		JScrollPane scrollComDisponible = new JScrollPane(tableComDisponible);
 		pnlComDisponible.add(scrollComDisponible, BorderLayout.CENTER);
 
-		// Panel y tabla de combos en carrito
+		
 		pnlComCarrito = new JPanel();
 		pnlComCarrito.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlComCarrito.setBounds(400, 165, 300, 200);
@@ -247,7 +254,7 @@ public class RegistrarFactura extends JDialog {
 
 
 
-		// Botones de agregar y quitar productos y combos
+		
 		btnAgregarPro = new JButton("Agregar ");
 		btnAgregarPro.setForeground(new Color(255, 255, 255));
 		btnAgregarPro.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
@@ -467,7 +474,7 @@ public class RegistrarFactura extends JDialog {
 		panel.add(txtHora);
 		txtHora.setColumns(10);
 
-		// Panel de botones para registrar y cancelar
+		
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);

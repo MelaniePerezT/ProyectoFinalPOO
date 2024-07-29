@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 
 import javafx.scene.control.ComboBox;
@@ -36,6 +37,7 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import java.awt.Color;
 
 public class RegistrarProducto extends JDialog {
 
@@ -53,10 +55,10 @@ public class RegistrarProducto extends JDialog {
 	private JPanel pnlMotherBoard;
 	private JTextField txtMBModelo;
 	private JTextField txtMBSocket;
-	private JList listMBDiscosAceptados;
+	private JList<String> listMBDiscosAceptados;
 	private JPanel pnlMemoriaRAM;
 	private JSpinner spnMRCantidad;
-	private JComboBox cbxMRTipo;
+	private JComboBox<String> cbxMRTipo;
 	private JTextField txtMPModelo;
 	private JTextField txtMPSocket;
 	private JPanel pnlMicroprocesador;
@@ -86,6 +88,15 @@ public class RegistrarProducto extends JDialog {
 	 * Create the dialog.
 	 */
 	public RegistrarProducto(Producto producto) {
+		
+		Color CyanOscuro = new Color(70, 133, 133);
+		Color CyanMid = new Color(80, 180, 152);
+		Color CyanClaro =  new Color (222, 249, 196);
+		Color FondoClarito = new Color(240, 255, 240);
+		Color Rojito = new Color(250, 128, 114);
+		MatteBorder bottomBorder = new MatteBorder(0, 0, 2, 0, CyanOscuro);
+        
+		
 		if (producto != null) {
 			setTitle("Actualizar Producto");
 			codigo = producto.getId();
@@ -97,18 +108,22 @@ public class RegistrarProducto extends JDialog {
 		setModal(true);
 		setResizable(false);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(new Color(240, 255, 240));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
 			JPanel panel = new JPanel();
+			panel.setBackground(new Color(240, 255, 240));
 			panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			contentPanel.add(panel, BorderLayout.CENTER);
 			panel.setLayout(null);
 
 			JPanel panel_1 = new JPanel();
+			panel_1.setBackground(new Color(240, 255, 240));
 			panel_1.setBorder(new TitledBorder(null, "Información General", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panel_1.setBounds(4, 4, 534, 127);
+			panel_1.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 			panel.add(panel_1);
 			panel_1.setLayout(null);
 
@@ -119,6 +134,8 @@ public class RegistrarProducto extends JDialog {
 
 			txtId = new JTextField();
 			txtId.setEditable(false);
+			txtId.setBorder(bottomBorder);
+			txtId.setBackground(CyanClaro);
 			txtId.setBounds(85, 25, 140, 22);
 			panel_1.add(txtId);
 			txtId.setColumns(10);
@@ -129,6 +146,8 @@ public class RegistrarProducto extends JDialog {
 			panel_1.add(lblMarca);
 
 			txtMarca = new JTextField();
+			txtMarca.setBackground(CyanClaro);
+			txtMarca.setBorder(bottomBorder);
 			txtMarca.setBounds(85, 57, 140, 22);
 			panel_1.add(txtMarca);
 			txtMarca.setColumns(10);
@@ -139,8 +158,11 @@ public class RegistrarProducto extends JDialog {
 			panel_1.add(lblCantidad);
 
 			spnCantidad = new JSpinner();
+			spnCantidad.setForeground(new Color(255, 255, 255));
 			spnCantidad.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 			spnCantidad.setBounds(85, 89, 140, 22);
+			spnCantidad.setBackground(CyanClaro);
+			spnCantidad.setBorder(bottomBorder);
 			panel_1.add(spnCantidad);
 
 			JLabel lblNumSerie = new JLabel("Num. Serie:");
@@ -150,6 +172,8 @@ public class RegistrarProducto extends JDialog {
 
 			txtNumSerie = new JTextField();
 			txtNumSerie.setBounds(325, 24, 197, 22);
+			txtNumSerie.setBackground(CyanClaro);
+			txtNumSerie.setBorder(bottomBorder);
 			panel_1.add(txtNumSerie);
 			txtNumSerie.setColumns(10);
 
@@ -159,6 +183,8 @@ public class RegistrarProducto extends JDialog {
 			panel_1.add(lblProveedor);
 
 			cbxProveedor = new JComboBox();
+			cbxProveedor.setBackground(CyanClaro);
+			cbxProveedor.setBorder(bottomBorder);
 			cbxProveedor.setBounds(325, 56, 197, 22);
 
 			for (Persona persona : Tienda.getInstance().getListaPersonas()) {
@@ -177,15 +203,20 @@ public class RegistrarProducto extends JDialog {
 			spnPrecio = new JSpinner();
 			spnPrecio.setModel(new SpinnerNumberModel(new Float(0), null, null, new Float(1)));
 			spnPrecio.setBounds(325, 88, 197, 22);
+			spnPrecio.setBackground(CyanClaro);
+			spnPrecio.setBorder(bottomBorder);
 			panel_1.add(spnPrecio);
 
 			JPanel panel_2 = new JPanel();
+			panel_2.setBackground(new Color(240, 255, 240));
 			panel_2.setBorder(new TitledBorder(null, "Tipo Producto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panel_2.setBounds(4, 135, 534, 63);
 			panel.add(panel_2);
+			panel_2.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 			panel_2.setLayout(null);
 
 			rbtnMotherBoard = new JRadioButton("MotherBoard");
+			rbtnMotherBoard.setBackground(FondoClarito);
 			rbtnMotherBoard.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					rbtnMotherBoard.setSelected(true);
@@ -210,12 +241,13 @@ public class RegistrarProducto extends JDialog {
 
 				}
 			});
-			rbtnMotherBoard.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+			rbtnMotherBoard.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 			rbtnMotherBoard.setBounds(12, 23, 119, 25);
 			rbtnMotherBoard.setSelected(true);
 			panel_2.add(rbtnMotherBoard);
 
 			rbtnMemoriaRAM = new JRadioButton("Memoria RAM");
+			rbtnMemoriaRAM.setBackground(FondoClarito);
 			rbtnMemoriaRAM.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					rbtnMotherBoard.setSelected(false);
@@ -239,11 +271,12 @@ public class RegistrarProducto extends JDialog {
 					spnDDCapacidadAlmacenamiento.setVisible(false);
 				}
 			});
-			rbtnMemoriaRAM.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+			rbtnMemoriaRAM.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 			rbtnMemoriaRAM.setBounds(144, 23, 130, 25);
 			panel_2.add(rbtnMemoriaRAM);
 
 			rbtnMicroprocesador = new JRadioButton("Microprocesador");
+			rbtnMicroprocesador.setBackground(FondoClarito);
 			rbtnMicroprocesador.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					rbtnMotherBoard.setSelected(false);
@@ -267,11 +300,12 @@ public class RegistrarProducto extends JDialog {
 					spnDDCapacidadAlmacenamiento.setVisible(false);
 				}
 			});
-			rbtnMicroprocesador.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+			rbtnMicroprocesador.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 			rbtnMicroprocesador.setBounds(278, 23, 141, 25);
 			panel_2.add(rbtnMicroprocesador);
 
 			rbtnDiscoDuro = new JRadioButton("Disco Duro");
+			rbtnDiscoDuro.setBackground(FondoClarito);
 			rbtnDiscoDuro.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					rbtnMotherBoard.setSelected(false);
@@ -295,11 +329,12 @@ public class RegistrarProducto extends JDialog {
 					spnDDCapacidadAlmacenamiento.setVisible(true);
 				}
 			});
-			rbtnDiscoDuro.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+			rbtnDiscoDuro.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 			rbtnDiscoDuro.setBounds(425, 23, 101, 25);
 			panel_2.add(rbtnDiscoDuro);
 
 			pnlMotherBoard = new JPanel();
+			pnlMotherBoard.setBackground(FondoClarito);
 			pnlMotherBoard.setBorder(new TitledBorder(null, "Mother Board", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlMotherBoard.setBounds(4, 204, 534, 93);
 			panel.add(pnlMotherBoard);
@@ -311,6 +346,8 @@ public class RegistrarProducto extends JDialog {
 			pnlMotherBoard.add(lblMBModelo);
 
 			txtMBModelo = new JTextField();
+			txtMBModelo.setBackground(CyanClaro);
+			txtMBModelo.setBorder(bottomBorder);
 			txtMBModelo.setColumns(10);
 			txtMBModelo.setBounds(90, 25, 178, 22);
 			pnlMotherBoard.add(txtMBModelo);
@@ -323,6 +360,8 @@ public class RegistrarProducto extends JDialog {
 			txtMBSocket = new JTextField();
 			txtMBSocket.setColumns(10);
 			txtMBSocket.setBounds(348, 25, 174, 22);
+			txtMBSocket.setBackground(CyanClaro);
+			txtMBSocket.setBorder(bottomBorder);
 			pnlMotherBoard.add(txtMBSocket);
 
 			JLabel lblMBTipoRam = new JLabel("Tipo RAM:");
@@ -337,6 +376,8 @@ public class RegistrarProducto extends JDialog {
 
 			cbxMBTipoRam = new JComboBox();
 			cbxMBTipoRam.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+			cbxMBTipoRam.setBackground(CyanClaro);
+			cbxMBTipoRam.setBorder(bottomBorder);
 			cbxMBTipoRam.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione uno>", "DDR3", "DDR4", "DDR5"}));
 			cbxMBTipoRam.setBounds(90, 58, 156, 22);
 			pnlMotherBoard.add(cbxMBTipoRam);
@@ -348,6 +389,8 @@ public class RegistrarProducto extends JDialog {
 
 			listMBDiscosAceptados = new JList();
 			listMBDiscosAceptados.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+			listMBDiscosAceptados.setBackground(CyanClaro);
+			listMBDiscosAceptados.setBorder(bottomBorder);
 			listMBDiscosAceptados.setModel(new AbstractListModel() {
 				String[] values = new String[] {"<Seleccione uno>", "PATA", "SATA", "SCSI", "SSD", "SSD"};
 				public int getSize() {
@@ -360,6 +403,7 @@ public class RegistrarProducto extends JDialog {
 			scrollPane.setViewportView(listMBDiscosAceptados);
 
 			pnlMemoriaRAM = new JPanel();
+			pnlMemoriaRAM.setBackground(new Color(240, 255, 240));
 			pnlMemoriaRAM.setLayout(null);
 			pnlMemoriaRAM.setBorder(new TitledBorder(null, "Memoria RAM", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlMemoriaRAM.setBounds(4, 204, 534, 63);
@@ -377,16 +421,21 @@ public class RegistrarProducto extends JDialog {
 			pnlMemoriaRAM.add(lblMRTipo);
 
 			spnMRCantidad = new JSpinner();
+			spnMRCantidad.setBackground(CyanClaro);
+			spnMRCantidad.setBorder(bottomBorder);
 			spnMRCantidad.setBounds(148, 25, 140, 22);
 			pnlMemoriaRAM.add(spnMRCantidad);
 
 			cbxMRTipo = new JComboBox();
+			cbxMRTipo.setBackground(CyanClaro);
+			cbxMRTipo.setBorder(bottomBorder);
 			cbxMRTipo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione uno>", "DDR3", "DDR4", "DDR5"}));
 			cbxMRTipo.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 			cbxMRTipo.setBounds(355, 25, 167, 22);
 			pnlMemoriaRAM.add(cbxMRTipo);
 
 			pnlMicroprocesador = new JPanel();
+			pnlMicroprocesador.setBackground(new Color(240, 255, 240));
 			pnlMicroprocesador.setLayout(null);
 			pnlMicroprocesador.setBorder(new TitledBorder(null, "Microprocesador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlMicroprocesador.setBounds(4, 204, 534, 93);
@@ -399,6 +448,8 @@ public class RegistrarProducto extends JDialog {
 			pnlMicroprocesador.add(lblMPModelo);
 
 			txtMPModelo = new JTextField();
+			txtMPModelo.setBackground(CyanClaro);
+			txtMPModelo.setBorder(bottomBorder);
 			txtMPModelo.setColumns(10);
 			txtMPModelo.setBounds(90, 25, 178, 22);
 			pnlMicroprocesador.add(txtMPModelo);
@@ -409,6 +460,8 @@ public class RegistrarProducto extends JDialog {
 			pnlMicroprocesador.add(lblMPSocket);
 
 			txtMPSocket = new JTextField();
+			txtMPSocket.setBackground(CyanClaro);
+			txtMPSocket.setBorder(bottomBorder);
 			txtMPSocket.setColumns(10);
 			txtMPSocket.setBounds(348, 25, 174, 22);
 			pnlMicroprocesador.add(txtMPSocket);
@@ -419,10 +472,13 @@ public class RegistrarProducto extends JDialog {
 			pnlMicroprocesador.add(lblMPVelocidadProcesamiento);
 
 			spnMPVelocidadProcesamiento = new JSpinner();
+			spnMPVelocidadProcesamiento.setBackground(CyanClaro);
+			spnMPVelocidadProcesamiento.setBorder(bottomBorder);
 			spnMPVelocidadProcesamiento.setBounds(195, 56, 206, 22);
 			pnlMicroprocesador.add(spnMPVelocidadProcesamiento);
 
 			pnlDiscoDuro = new JPanel();
+			pnlDiscoDuro.setBackground(new Color(240, 255, 240));
 			pnlDiscoDuro.setLayout(null);
 			pnlDiscoDuro.setBorder(new TitledBorder(null, "Disco Duro", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlDiscoDuro.setBounds(4, 204, 534, 93);
@@ -435,6 +491,8 @@ public class RegistrarProducto extends JDialog {
 			pnlDiscoDuro.add(label);
 
 			txtDDModelo = new JTextField();
+			txtDDModelo.setBackground(CyanClaro);
+			txtDDModelo.setBorder(bottomBorder);
 			txtDDModelo.setColumns(10);
 			txtDDModelo.setBounds(80, 25, 178, 22);
 			pnlDiscoDuro.add(txtDDModelo);
@@ -450,10 +508,14 @@ public class RegistrarProducto extends JDialog {
 			pnlDiscoDuro.add(lblDDCapacidadAlmacenamiento);
 
 			spnDDCapacidadAlmacenamiento = new JSpinner();
+			spnDDCapacidadAlmacenamiento.setBackground(CyanClaro);
+			spnDDCapacidadAlmacenamiento.setBorder(bottomBorder);
 			spnDDCapacidadAlmacenamiento.setBounds(207, 57, 206, 22);
 			pnlDiscoDuro.add(spnDDCapacidadAlmacenamiento);
 
 			cbxDDTipoConexion = new JComboBox();
+			cbxDDTipoConexion.setBackground(CyanClaro);
+			cbxDDTipoConexion.setBorder(bottomBorder);
 			cbxDDTipoConexion.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 			cbxDDTipoConexion.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione uno>", "IDE", "SCSI", "SAS", "PCI-e"}));
 			cbxDDTipoConexion.setBounds(383, 25, 139, 22);
@@ -461,10 +523,13 @@ public class RegistrarProducto extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBackground(new Color(240, 255, 240));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
+				okButton.setForeground(Color.WHITE);
+				okButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 				if (producto != null) {
 					okButton.setText("Actualizar");
 				}
@@ -621,11 +686,14 @@ public class RegistrarProducto extends JDialog {
 					}
 				});
 				okButton.setActionCommand("OK");
+				okButton.setBackground(CyanMid);
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setForeground(Color.WHITE);
+				cancelButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						if (producto == null) {
@@ -654,6 +722,7 @@ public class RegistrarProducto extends JDialog {
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
+				cancelButton.setBackground(Rojito);
 				buttonPane.add(cancelButton);
 			}
 		}

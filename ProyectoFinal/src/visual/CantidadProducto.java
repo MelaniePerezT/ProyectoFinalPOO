@@ -1,28 +1,25 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import logico.Producto;
 import logico.Tienda;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import java.awt.Color;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 
 public class CantidadProducto extends JDialog {
 
@@ -97,9 +94,10 @@ public class CantidadProducto extends JDialog {
              		 mensajito.setModal(true);
              		 mensajito.setVisible(true);
                   }
-             	  
 			}
 		});
+		
+		
 		okButton.setForeground(new Color(255, 255, 255));
 		okButton.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		okButton.setBounds(129, 71, 95, 30);
@@ -126,4 +124,5 @@ public class CantidadProducto extends JDialog {
 		contentPanel.add(separator);
 	}
 	
+
 }
