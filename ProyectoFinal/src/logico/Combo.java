@@ -20,12 +20,13 @@ public class Combo {
 	public void setMisProductos(ArrayList<Producto> misProductos) {
 		this.misProductos = misProductos;
 	}
-	public Combo(String nombreCombo, int CantDisponible) {
+	public Combo(String nombreCombo, int CantDisponible,float precio) {
 		super();
 		this.nombreCombo = nombreCombo;
 		this.misProductos = new ArrayList<>();
 		this.seleccionado=false;
 		this.CantDisponible= CantDisponible;
+		this.precio=precio;
 	}
 	public float getPrecio() {
 		return precio;

@@ -244,6 +244,11 @@ public class Tienda implements Serializable {
 		return true;
 		
 	}
+	public boolean registrarCombo(Combo newCombo) {
+		listaCombos.add(newCombo);
+		return true;
+		
+	}
 	public Factura buscarFacturaId(String idFactura) {
 		Factura factura=null;
 		boolean encontrado = false;
@@ -528,31 +533,33 @@ public class Tienda implements Serializable {
 		}
 		return descuento;
 	}
-	//Nota: Calcula el precio de la factura
-	public float calculaPrecioProducto(ArrayList<Producto> productos, String idClient, boolean esCombo)
-	{
-		float precio=0;
-		for (Producto producto : productos) {
-			precio= producto.getPrecio();
-		}
-		float descuento=descuentoAplicado(idClient, esCombo);
-		precio=precio*(descuento/100);
-		return precio;
+	public float calculaPrecioProducto(ArrayList<Producto> productos, String idCliente, boolean esCombo) {
+	    float precio = 0;
+	    for (Producto producto : productos) {
+	        precio += producto.getPrecio();  
+	    }
+	    float descuento = descuentoAplicado(idCliente, esCombo);
+	    if (descuento > 0) {
+	        precio = precio - (precio * (descuento / 100)); 
+	    }
+	    return precio;
 	}
+
 	// Nota: Calcula el precio de la factura con combos
-	public float calculaPrecioProductoCombos(ArrayList<Combo> combos, String idClient, boolean esCombo) {
+	public float calculaPrecioProductoCombos(ArrayList<Combo> combos, String idCliente, boolean esCombo) {
 	    float precio = 0;
 	    for (Combo combo : combos) {
 	        for (Producto producto : combo.getMisProductos()) {  
 	            precio += producto.getPrecio();  
 	        }
 	    }
-	    float descuento = descuentoAplicado(idClient, esCombo);
+	    float descuento = descuentoAplicado(idCliente, esCombo);
 	    if (descuento > 0) {
 	        precio = precio - (precio * (descuento / 100));  
 	    }
 	    return precio;
 	}
+
 
 
 	public ArrayList<Producto> getProductoNoSeleccionados() {
