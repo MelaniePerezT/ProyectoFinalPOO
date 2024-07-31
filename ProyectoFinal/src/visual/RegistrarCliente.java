@@ -207,7 +207,7 @@ public class RegistrarCliente extends JDialog {
 
 						if (cliente ==  null) {
 							Cliente newCliente = new Cliente(nombreApellido, edad, cedula, correo);
-							Tienda.getInstance().RegistrarPersona(newCliente);
+							Tienda.getInstance().registrarPersona(newCliente);
 							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
 							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nCliente registrado!");
 							mensajito.setModal(true);

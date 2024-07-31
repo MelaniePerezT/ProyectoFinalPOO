@@ -62,6 +62,7 @@ public class ListaClientes extends JDialog {
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(new BorderLayout(0, 0));
         setLocationRelativeTo(null); /*Poner en el centro*/
+        setResizable(false);
         
         Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);

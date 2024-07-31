@@ -626,7 +626,7 @@ public class RegistrarProducto extends JDialog {
 									producto = new DiscoDuro(numSerie, cantidad, proveedor, marca, precio, modelo, cantAlm, tipoConex);
 								}
 							}
-							Tienda.getInstance().RegistrarProducto(producto);
+							Tienda.getInstance().registrarProducto(producto);
 							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
 			                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProducto registrado!");
 			                mensajito.setModal(true);

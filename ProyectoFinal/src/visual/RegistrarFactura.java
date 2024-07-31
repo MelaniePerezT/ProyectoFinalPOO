@@ -20,6 +20,7 @@ import javax.swing.table.JTableHeader;
 import logico.Cliente;
 import logico.Combo;
 import logico.DiscoDuro;
+import logico.Factura;
 import logico.FacturaCompra;
 import logico.FacturaVenta;
 import logico.Microprocesador;
@@ -70,7 +71,8 @@ public class RegistrarFactura extends JDialog {
 	private int indexProDisponible;
 	private int indexComCarrito;
 	private int indexComDisponible;
-	private ArrayList<Producto> ProductosComprados = new ArrayList<Producto>();
+	private ArrayList<Producto> productosComprados = new ArrayList<Producto>();
+	private ArrayList<Combo> combosComprados = new ArrayList<Combo>();
 	private double precioTotal = 0;
 	private double descuentoTotal = 0;
 	private JTextField txtTotal;
@@ -139,7 +141,7 @@ public class RegistrarFactura extends JDialog {
 		panel.setBackground(FondoClarito);
 
 		txtID = new JTextField();
-		txtID.setText(Tienda.getInstance().generarIdFactura());
+		txtID.setText("Factura - "+Tienda.getInstance().numFactura);
 		txtID.setEditable(false);
 		txtID.setBounds(60, 10, 133, 20);
 		txtID.setBorder(bottomBorder);
@@ -388,7 +390,12 @@ public class RegistrarFactura extends JDialog {
 			JTextField textFieldEditor = (JTextField) editor;
 			textFieldEditor.setBackground(CyanClaro); 
 		}
-
+		for (Persona persona : Tienda.getInstance().getListaPersonas()) {
+			if (persona instanceof Proveedor) {
+				proveedoresRegistrados.addElement((Proveedor) persona);
+			}
+		}
+		cbxProveedor.setModel(proveedoresRegistrados);
 
 		btnProducto = new JButton("Productos");
 		btnProducto.setEnabled(false);
@@ -487,7 +494,7 @@ public class RegistrarFactura extends JDialog {
 				if(client==null)
 				{
 
-					opcion = JOptionPane.showConfirmDialog(null, "Cliente no encontrado, ¿Desea registrar el cliente?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					opcion = JOptionPane.showConfirmDialog(null, "Cliente no encontrado,  Desea registrar el cliente?", "Confirmaci n", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				}
 				if(opcion==JOptionPane.YES_OPTION)
 				{
@@ -555,47 +562,63 @@ public class RegistrarFactura extends JDialog {
 		btnRegistrarFactura.setBackground(CyanMid);
 		btnRegistrarFactura.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (txtID.getText().isEmpty() || txtIdCliente.getText().isEmpty() ) {
-					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
-					MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de\nestar llenos!");
-					mensajito.setModal(true);
-					mensajito.setVisible(true);
-					return;
-				}
+
 				ArrayList<Producto> productos=Tienda.getInstance().getProductosSeleccionados();
 				ArrayList<Combo> combos=Tienda.getInstance().getCombosSeleccionados();
 				for (Producto prod : productos) {
-					ProductosComprados.add(prod);
+					productosComprados.add(prod);
 				}
 
 				for (Combo combo : combos) {
 					for (Producto prod : combo.getMisProductos()) {
-						ProductosComprados.add(prod);
+						productosComprados.add(prod);
 					}
 				}
 				LocalDate hoy= LocalDate.now();
 				if(esCV)
-				{
+				{	
 					Proveedor proveedor = null;
 					if (cbxProveedor.getSelectedItem() != null) {
 						proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(cbxProveedor.getSelectedItem().toString());
 					}
 
-					FacturaCompra compra = new FacturaCompra(txtID.getText(), hoy,ProductosComprados,proveedor,(Tienda.getInstance().getCantProductos() + Tienda.getInstance().getCantCombos()) );
+					Factura compra = new FacturaCompra(txtID.getText(), hoy,productosComprados,proveedor,(Tienda.getInstance().getCantProductos() + Tienda.getInstance().getCantCombos()),precioTotal);
+					Tienda.getInstance().registrarFactura(compra);
 					clean();
 				}
 				else
 				{
+					if (txtID.getText().isEmpty() || txtIdCliente.getText().isEmpty() ) {
+						ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+						MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de\nestar llenos!");
+						mensajito.setModal(true);
+						mensajito.setVisible(true);
+						return;
+					}
+					
 					Cliente clien = (Cliente) Tienda.getInstance().buscarPersonaId(txtIdCliente.getText());
-					FacturaVenta venta = new FacturaVenta( txtID.getText(), hoy, ProductosComprados,  clien, (Tienda.getInstance().getCantProductos() + Tienda.getInstance().getCantCombos()) );
+					Factura venta = new FacturaVenta( txtID.getText(), hoy, productosComprados,  clien, (Tienda.getInstance().getCantProductos() + Tienda.getInstance().getCantCombos()),precioTotal);
+					Tienda.getInstance().registrarFactura(venta);
 					clean();
 
 				}
+				
+				for (Producto pro : productos) {
+            		pro.setCantDisponible(pro.getCantDisponible()-1);
+				}
+				
+				for (Combo combo : combos) {
+					combo.setCantDisponible(combo.getCantDisponible() - 1);
+				}
+				
 				ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
 				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Factura registrada correctamente.");
 				mensajito.setModal(true);
 				mensajito.setVisible(true);
-
+				cargaComboCarritoDisponible();
+				cargaComboDisponible(); 
+				cargaProCarritoDisponible();
+				cargaProductoDisponible();
 			}
 		});
 		btnRegistrarFactura.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
@@ -730,7 +753,7 @@ public class RegistrarFactura extends JDialog {
 	}
 	public void clean() {
 
-		txtID.setText("Factura -"+Tienda.numFactura);
+		txtID.setText("Factura - "+Tienda.getInstance().numFactura);
 		LocalDate hoy= LocalDate.now();
 		txtFecha.setText(hoy.toString());
 		txtTotal.setText("0.0");
@@ -739,8 +762,11 @@ public class RegistrarFactura extends JDialog {
 		btnBuscarCliente.setEnabled(true);
 
 		txtEmpleado.setText(Tienda.getInstance().getLoginUser().getUserName());
-		txtHora.setText("");
 
+		LocalDateTime ahora = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		txtHora.setText(ahora.format(formatter));
+		
 
 		modeloPro.setRowCount(0);
 		modeloProCarri.setRowCount(0);
@@ -760,7 +786,7 @@ public class RegistrarFactura extends JDialog {
 		indexComDisponible = 0;
 
 
-		ProductosComprados.clear();
+		productosComprados.clear();
 
 		btnAgregarPro.setEnabled(false);
 		btnQuitarPro.setEnabled(false);
@@ -777,6 +803,9 @@ public class RegistrarFactura extends JDialog {
 		pnlProDisponible.setVisible(true);
 
 
-		cbxProveedor.setSelectedIndex(0);
+		cbxProveedor.setSelectedIndex(-1);
+		
+    	productosComprados.removeAll(productosComprados);
+    	Tienda.getInstance().recargaSelecionado();
 	}
 }

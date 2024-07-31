@@ -196,7 +196,7 @@ public class RegistrarProveedor extends JDialog {
                     
                     if (proveedor == null) {
                         Proveedor newProveedor = new Proveedor(nombreApellido, edad, cedula, correo, empresa);
-                        Tienda.getInstance().RegistrarPersona(newProveedor);
+                        Tienda.getInstance().registrarPersona(newProveedor);
                         
                         ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
 						MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProveedor registrado!");

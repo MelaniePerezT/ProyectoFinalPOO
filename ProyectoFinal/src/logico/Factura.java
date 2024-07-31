@@ -11,6 +11,7 @@ public class Factura implements Serializable {
 	protected LocalDate fechaFactura;
 	protected int cantidadxProducto;
 	protected ArrayList <Producto> productosFacturados;
+	protected double precio;
 	private boolean esCombo;
 	public String getId() {
 		return id;
@@ -32,13 +33,22 @@ public class Factura implements Serializable {
 		this.productosFacturados = productosFacturados;
 	}
 	
-	public Factura(String id, LocalDate fechaFactura, ArrayList<Producto> productosFacturados,int CantidadxProducto) {
+	public double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
+	public Factura(String id, LocalDate fechaFactura, ArrayList<Producto> productosFacturados,int CantidadxProducto, double precio) {
 		super();
 		this.id = Tienda.getInstance().generarIdFactura();
 		this.fechaFactura = fechaFactura;
 		this.productosFacturados = productosFacturados;
 		this.esCombo=false;
 		this.cantidadxProducto=CantidadxProducto;
+		this.precio = precio;
 	}
 	
 	public boolean isEsCombo() {

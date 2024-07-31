@@ -7,11 +7,11 @@ public class Main_pruebas {
 
 	        
 	        Persona cliente1 = new Cliente("Ambar Torres", 20, "40247211929", "ambar@gmail.com");
-	        miTienda.RegistrarPersona(cliente1);
+	        miTienda.registrarPersona(cliente1);
 	        Persona empleado1 = new Empleado("Luis Reynaldo", 18, "40245484712", "reynaldo@gmail.com", (float) 0.25);
-	        miTienda.RegistrarPersona(empleado1);
+	        miTienda.registrarPersona(empleado1);
 	        Persona proveedor1 = new Proveedor("Melanie Perez", 19, "40154874693", "melanie@gmail.com", "NVIDIA");
-	        miTienda.RegistrarPersona(proveedor1);
+	        miTienda.registrarPersona(proveedor1);
 	        for (Persona persona : miTienda.getListaPersonas()) {
 	            System.out.println(persona.id +" "+ persona.nombre);
 	        }
@@ -40,8 +40,8 @@ public class Main_pruebas {
 
 	        Cliente clienteVIP = new Cliente("Cliente VIP", 30, "123456789", "vip@gmail.com");
 	        clienteVIP.setCantVentas(10);
-	        miTienda.RegistrarPersona(clienteVIP);
-	        miTienda.VerSiClienteVIP();
+	        miTienda.registrarPersona(clienteVIP);
+	        miTienda.verSiClienteVIP();
 	        if (clienteVIP.getClasificacion() == 'V') {
 	            System.out.println("Cliente VIP actualizado correctamente.");
 	        } else {
@@ -49,8 +49,8 @@ public class Main_pruebas {
 	        }
 	        MemoriaRam memo= new MemoriaRam("Producto - 1", 1, proveedor1, "JAHA", 120, 64, "Tipo");
 	        MemoriaRam memo2= new MemoriaRam("Producto - 2", 1, proveedor1, "JAHA", 120, 64, "Tipo");
-	        miTienda.getInstance().RegistrarProducto(memo);
-	        miTienda.getInstance().RegistrarProducto(memo2);
+	        miTienda.getInstance().registrarProducto(memo);
+	        miTienda.getInstance().registrarProducto(memo2);
 	        boolean alarma=miTienda.getInstance().alarmaProducto("Producto - 1");
 	        if(alarma)
 	        {

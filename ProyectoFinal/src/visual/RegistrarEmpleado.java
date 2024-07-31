@@ -214,7 +214,7 @@ public class RegistrarEmpleado extends JDialog {
 
 						if (empleado ==  null) {
 							Empleado newEmpleado = new Empleado(nombreApellido, edad, cedula, correo, (float) (comision / 100.0));
-							Tienda.getInstance().RegistrarPersona(newEmpleado);
+							Tienda.getInstance().registrarPersona(newEmpleado);
 							ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
 							MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nEmpleado registrado!");
 							mensajito.setModal(true);

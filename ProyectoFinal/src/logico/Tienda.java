@@ -227,19 +227,19 @@ public class Tienda implements Serializable {
 	}
 
 	
-	public boolean RegistrarPersona(Persona newPersona) {
+	public boolean registrarPersona(Persona newPersona) {
 		listaPersonas.add(newPersona);
 		return true;
 		
 	}
 	
-	public boolean RegistrarProducto(Producto newProducto) {
+	public boolean registrarProducto(Producto newProducto) {
 		listaProductos.add(newProducto);
 		return true;
 		
 	}
 	
-	public boolean RegistrarFactura(Factura newFactura) {
+	public boolean registrarFactura(Factura newFactura) {
 		listaFacturas.add(newFactura);
 		return true;
 		
@@ -324,7 +324,7 @@ public class Tienda implements Serializable {
 		
 	}
 
-	public void VerSiClienteVIP() { /*Nota: Lo hice de manera en que se llame esta funcion para actualizar a TODOS los Clientes de la lista*/
+	public void verSiClienteVIP() { /*Nota: Lo hice de manera en que se llame esta funcion para actualizar a TODOS los Clientes de la lista*/
 		
 		for (Persona cliente : listaPersonas) {
 			

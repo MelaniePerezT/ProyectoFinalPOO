@@ -15,11 +15,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import logico.DiscoDuro;
-import logico.Empleado;
 import logico.MemoriaRam;
 import logico.Microprocesador;
 import logico.MotherBoard;
-import logico.Persona;
 import logico.Producto;
 import logico.Tienda;
 import java.awt.Font;
@@ -47,7 +45,7 @@ public class ListarProducto extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			ListarProducto dialog = new ListarProducto();
+			ListarProducto dialog = new ListarProducto(new ArrayList<>());
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -58,7 +56,7 @@ public class ListarProducto extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ListarProducto() {
+	public ListarProducto(ArrayList<Producto> productosComprados) {
 		Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);
 		Color CyanClaro =  new Color (222, 249, 196);
@@ -74,8 +72,7 @@ public class ListarProducto extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
-		setLocationRelativeTo(null); /*Poner en el centro*/
-
+		
 		String[] columnas = {"ID","NO. Serie","Tipo","Cantidad","Proovedor","Precio"};
 		tableModel = new DefaultTableModel(columnas, 0);
 		table = new JTable(tableModel);
@@ -120,6 +117,10 @@ public class ListarProducto extends JDialog {
 				botonActualizar.setForeground(new Color(255, 255, 255));
 				botonActualizar.setBackground(CyanMid);
 				botonActualizar.setEnabled(false);
+				botonActualizar.setVisible(false);
+				if (productosComprados.isEmpty()) {
+					botonActualizar.setVisible(true);
+				}
 				botonActualizar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(!codigo.equalsIgnoreCase("")){
@@ -127,7 +128,7 @@ public class ListarProducto extends JDialog {
 							if(aux!= null){
 								RegistrarProducto updatePublicacion = new RegistrarProducto(aux);
 								updatePublicacion.setVisible(true);
-								cargarProducto();
+								cargarProducto(productosComprados);
 								btnVerMas.setEnabled(false);
 								botonActualizar.setEnabled(false);
 								botonEliminar.setEnabled(false);
@@ -154,6 +155,10 @@ public class ListarProducto extends JDialog {
 					});
 					btnVerMas.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 					btnVerMas.setEnabled(false);
+					btnVerMas.setVisible(false);
+					if (productosComprados.isEmpty()) {
+						btnVerMas.setVisible(true);
+					}
 					buttonPane.add(btnVerMas);
 				}
 				botonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
@@ -176,13 +181,6 @@ public class ListarProducto extends JDialog {
 					botonEliminar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							if(codigo != ""){
-
-								// HAY QUE HACER UNA VALIDACIÓN DE QUE SI SE HA VENDIDO ALGO DE ELLA, YA NO PUEDE SER ELIMINADA
-								/*if (Tienda.getInstance().busca(codigo)) {
-									JOptionPane.showMessageDialog(null, "Operación errónea. El producto seleccionado no puede ser eliminado, al menos un ejemplar de este ha sido vendido!", "Error", JOptionPane.WARNING_MESSAGE);
-									return;
-								} else {*/
-								//int option = JOptionPane.showConfirmDialog(null, "Seguro desea eliminar el producto con código: "+codigo, "Confirmación", JOptionPane.WARNING_MESSAGE);
 								
 								ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
 					            String texto = "¿Seguro desea eliminar el producto con código: "+ codigo +"?";
@@ -199,7 +197,7 @@ public class ListarProducto extends JDialog {
 					                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Producto eliminado correctamente.");
 					                mensajito.setModal(true);
 					                mensajito.setVisible(true);
-									cargarProducto();
+									cargarProducto(productosComprados);
 								} else {
 					            	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
 									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminación cancelada.");
@@ -210,44 +208,55 @@ public class ListarProducto extends JDialog {
 						}
 					});
 					botonEliminar.setEnabled(false);
+					botonEliminar.setVisible(false);
+					if (productosComprados.isEmpty()) {
+						botonEliminar.setVisible(true);
+					}
 					buttonPane.add(botonEliminar);
 				}
 				buttonPane.add(cancelButton);
 			}
 		}
-		cargarProducto();
+		cargarProducto(productosComprados);
 	}
 
-	public void cargarProducto() {
-		tableModel.setRowCount(0);
-		rows = new Object[tableModel.getColumnCount()];
-		int cant = Tienda.getInstance().getListaProductos().size();
-		for (int i = 0; i < cant; i++) {
-			rows[0] = Tienda.getInstance().getListaProductos().get(i).getId();
-			rows[1] = Tienda.getInstance().getListaProductos().get(i).getNumSerie();
-			
-			if (Tienda.getInstance().getListaProductos().get(i) instanceof MotherBoard) {
-				rows[2] = "MotherBoard";
-			}
-			if (Tienda.getInstance().getListaProductos().get(i) instanceof MemoriaRam) {
-				rows[2] = "Memoria RAM";				
-			}
-			if (Tienda.getInstance().getListaProductos().get(i) instanceof Microprocesador) {
-				rows[2] = "Microprocesador";				
-			}
-			if (Tienda.getInstance().getListaProductos().get(i) instanceof DiscoDuro) {
-					rows[2] = "Disco Duro";				
-			}
-			
-			rows[3] = Tienda.getInstance().getListaProductos().get(i).getCantDisponible();
-			if (Tienda.getInstance().getListaProductos().get(i).getProveedor() != null) {
-				rows[4]= Tienda.getInstance().getListaProductos().get(i).getProveedor().getId();
-			} else {
-				rows[4] = "Vacío";
-			}
-			rows[5]=Tienda.getInstance().getListaProductos().get(i).getPrecio();
-			tableModel.addRow(rows);
+	public void cargarProducto(ArrayList<Producto> productosComprados) {
+		ArrayList<Producto> listaProductos = new ArrayList<>();
+		
+		if (productosComprados.isEmpty())
+		{
+			listaProductos = Tienda.getInstance().getListaProductos();
+		} else {
+			listaProductos = productosComprados;
 		}
-
+		
+			tableModel.setRowCount(0);
+			rows = new Object[tableModel.getColumnCount()];
+			for (Producto producto : listaProductos) {
+				rows[0] = producto.getId();
+				rows[1] = producto.getNumSerie();
+				
+				if (producto instanceof MotherBoard) {
+					rows[2] = "MotherBoard";
+				}
+				if (producto instanceof MemoriaRam) {
+					rows[2] = "Memoria RAM";				
+				}
+				if (producto instanceof Microprocesador) {
+					rows[2] = "Microprocesador";				
+				}
+				if (producto instanceof DiscoDuro) {
+						rows[2] = "Disco Duro";				
+				}
+				
+				rows[3] = producto.getCantDisponible();
+				if (producto.getProveedor() != null) {
+					rows[4]= producto.getProveedor().getId();
+				} else {
+					rows[4] = "Vac o";
+				}
+				rows[5] = producto.getPrecio();
+				tableModel.addRow(rows);
+			}		
 	}
 }

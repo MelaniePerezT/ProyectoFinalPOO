@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 
@@ -92,6 +93,7 @@ public class Principal extends JFrame {
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setTitle("AML Tech");
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(CyanOscuro);
@@ -227,7 +229,7 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_1.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListarProducto lista= new ListarProducto();
+				ListarProducto lista= new ListarProducto(new ArrayList<>());
 				lista.setModal(true);
 				lista.setVisible(true);
 			}
@@ -254,6 +256,12 @@ public class Principal extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_7);
 
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Lista");
+		mntmNewMenuItem_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListadoFacturas listadoFacturas = new ListadoFacturas();
+				listadoFacturas.setVisible(true);
+			}
+		});
 		mntmNewMenuItem_8.setBackground(Color.WHITE);
 		mntmNewMenuItem_8.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		mntmNewMenuItem_8.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -269,9 +277,7 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_2.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/aboutus.png")));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*String mensaje = "Ambar Nicole Torres Viamonte, Luis Reynaldo Colon Garcia y Melanie Perez Trinidad";
-				   JOptionPane.showMessageDialog(null, mensaje, "Desarrolladores", JOptionPane.INFORMATION_MESSAGE);*/
-
+				
 				SobreNosotros tipo= new SobreNosotros();
 				tipo.setVisible(true);
 
@@ -283,20 +289,6 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_5.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/favorite.png")));
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*Producto pro=Tienda.getInstance().productoFavorito();
-				String tipo;
-				if(pro instanceof MotherBoard)
-					tipo="MotherBoard";
-				else if(pro instanceof Microprocesador)
-					tipo="Microprocesador";
-				else if(pro instanceof DiscoDuro)
-					tipo="DiscoDuro";
-				else
-					tipo="Memoria Ram";
-				String cad = "ID" + pro.getId()+ ", Tipo: " + tipo;
-
-				JOptionPane.showMessageDialog(null,cad , "Producto mas vendido", JOptionPane.INFORMATION_MESSAGE);*/
-
 				Favoritos ventanita = new Favoritos();
 				ventanita.setModal(true);
 				ventanita.setVisible(true);
@@ -321,16 +313,6 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_3.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/disponibilidad.png")));
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*String cad = (String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto:", "Mensaje", JOptionPane.QUESTION_MESSAGE);
-                  if (cad != null) {
-                	  boolean hay=Tienda.getInstance().disponibleProducto(cad);
-
-                	  if(hay)
-                		  JOptionPane.showMessageDialog(null, "Quedan ejemplares disponibles", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-                	  else
-                		  JOptionPane.showMessageDialog(null, "No quedan ejemplares disponibles", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-
-                  } */
 				Disponibilidad ventanita = new Disponibilidad();
 				ventanita.setModal(true);
 				ventanita.setVisible(true);
@@ -345,21 +327,10 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_6.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/cantproducto.png")));
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*String cad = (String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto:", "Mensaje", JOptionPane.QUESTION_MESSAGE);
-                 if (cad != null) {
-               	  Producto pro=Tienda.getInstance().buscarProductoId(cad);
-
-               	  if(pro!=null)
-               		  JOptionPane.showMessageDialog(null, "Quedan "+pro.getCantDisponible(), "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-               	  else
-               		  JOptionPane.showMessageDialog(null, "El producto no existe", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-
-                 } */
 
 				CantidadProducto ventanita = new CantidadProducto();
 				ventanita.setModal(true);
 				ventanita.setVisible(true);
-
 
 			}
 		});
@@ -371,11 +342,6 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_4.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/inventariogeneral.png")));
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				/*int [] array =new int[4];
-				array=Tienda.getInstance().cantInventario();
-				String pres = "MotherBoard: " + array[0] + ", DiscoDuro: " + array[1] + ", MemoriaRam: " + array[2]+ ", Microprocesador: " + array[3];
-				JOptionPane.showMessageDialog(null,pres , "Inventario", JOptionPane.INFORMATION_MESSAGE);*/
 
 				InventarioGeneral ventanita = new InventarioGeneral();
 

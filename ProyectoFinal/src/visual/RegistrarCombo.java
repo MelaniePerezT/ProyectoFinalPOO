@@ -81,19 +81,14 @@ public class  RegistrarCombo extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null); /*Poner en el centro*/
+		setResizable(false);
 		contentPanel.setBackground(FondoClarito);
-
-       
 
         JPanel panel = new JPanel();
         panel.setBounds(10, 11, 660, 327);
         panel.setBackground(FondoClarito);
         contentPanel.add(panel);
         panel.setLayout(null);
-
-
-       
-        
 
         JLabel lblNewLabel_1 = new JLabel("Nombre:");
         lblNewLabel_1.setFont(new Font("Bahnschrift", Font.PLAIN, 14));

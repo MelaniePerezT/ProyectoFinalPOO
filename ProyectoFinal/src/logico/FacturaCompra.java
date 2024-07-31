@@ -18,8 +18,8 @@ public class FacturaCompra extends Factura implements Serializable {
 	}
 
 	public FacturaCompra(String id, LocalDate fechaFactura, ArrayList<Producto> productosFacturados,
-			Proveedor proveedor,int CantidadxProducto) {
-		super(id, fechaFactura, productosFacturados,CantidadxProducto);
+			Proveedor proveedor,int CantidadxProducto, double precio) {
+		super(id, fechaFactura, productosFacturados,CantidadxProducto, precio);
 		this.proveedor = proveedor;
 	
 	}
