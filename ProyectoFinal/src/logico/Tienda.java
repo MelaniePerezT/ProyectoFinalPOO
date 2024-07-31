@@ -698,5 +698,21 @@ public class Tienda implements Serializable {
 			misUsers.remove(aux);
 		}
 	}
+	public void recargaSelecionado()
+	{
+		for (Combo combo : listaCombos) {
+			if(combo.getCantDisponible()>0)
+			{
+				combo.setSeleccionado(false);
+			}
+			
+		}
+		for (Producto product : listaProductos) {
+			if(product.getCantDisponible()>0)
+			{
+				product.setSeleccionado(false);
+			}
+		}
+	}
 
 }

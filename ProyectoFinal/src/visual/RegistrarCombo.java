@@ -11,7 +11,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -32,7 +35,7 @@ import logico.MotherBoard;
 import logico.Producto;
 import logico.Tienda;
 
-public class RegistrarCombo extends JDialog {
+public class  RegistrarCombo extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
    
@@ -74,14 +77,17 @@ public class RegistrarCombo extends JDialog {
         setTitle("Registrar Combo");
         setBounds(100, 100, 700, 436);
         getContentPane().setLayout(new BorderLayout());
-        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        getContentPane().add(contentPanel, BorderLayout.CENTER);
-        contentPanel.setLayout(null);
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		setLocationRelativeTo(null); /*Poner en el centro*/
+		contentPanel.setBackground(FondoClarito);
 
        
 
         JPanel panel = new JPanel();
         panel.setBounds(10, 11, 660, 327);
+        panel.setBackground(FondoClarito);
         contentPanel.add(panel);
         panel.setLayout(null);
 
@@ -169,6 +175,14 @@ public class RegistrarCombo extends JDialog {
         panel.add(lblNewLabel_2);
 
         JSpinner spnCantidad = new JSpinner();
+        spnCantidad.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        spnCantidad.setBounds(272, 47, 86, 20);
+        spnCantidad.setBorder(bottomBorder);
+		/*Nota: esta parte de aqui es para cambiar el Background del spinner*/
+		JComponent editor = spnCantidad.getEditor();
+		if (editor instanceof JSpinner.DefaultEditor) {
+			JSpinner.DefaultEditor spinnerEditor = (JSpinner.DefaultEditor) editor;
+			spinnerEditor.getTextField().setBackground(CyanClaro);}
         spnCantidad.setModel(new SpinnerNumberModel(1, 1, 100, 1));
         spnCantidad.setBounds(413, 9, 153, 20);
         panel.add(spnCantidad);
@@ -202,35 +216,34 @@ public class RegistrarCombo extends JDialog {
                 panel.add(lblTotal);
                 lblTotal.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 
-        btnAgregar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (indexProDisponible >= 0) {
-                    Producto producto = Tienda.getInstance().getProductoNoSeleccionados().get(indexProDisponible);
-                    productos.add(producto);
-                    cargarProductoDisponible();
-                    cargarProCarritoDisponible();
-                    btnAgregar.setEnabled(false);
-                    float precio = Tienda.getInstance().calculaPrecioProducto(Tienda.getInstance().getProductosSeleccionados(), "", true);
-                    txtTotal.setText(String.valueOf(precio));
-
+                btnAgregar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (indexProDisponible >= 0) {
+                            Producto producto = Tienda.getInstance().getProductoNoSeleccionados().get(indexProDisponible);
+                            producto.setSeleccionado(true);
+                            productos.add(producto);
+                            cargarProCarritoDisponible();
+                            cargarProductoDisponible();
+                            txtTotal.setText(String.valueOf(Tienda.getInstance().calculaPrecioProducto(Tienda.getInstance().getProductosSeleccionados(), "", true)));
+                            
+                        }
                     }
-            }
-        });
+                });
 
-        btnQuitar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (indexProCarrito >= 0) {
-                    Producto producto = productos.get(indexProCarrito);
-                    productos.remove(indexProCarrito);
-                    cargarProductoDisponible();
-                    cargarProCarritoDisponible();
-                    btnQuitar.setEnabled(false);
-                    float precio = Tienda.getInstance().calculaPrecioProducto(Tienda.getInstance().getProductosSeleccionados(), "", true);
-                    txtTotal.setText(String.valueOf(precio));
+                btnQuitar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (indexProCarrito >= 0) {
+                            Producto producto = productos.get(indexProCarrito);
+                            producto.setSeleccionado(false);
+                            productos.remove(producto);
+                            cargarProductoDisponible();
+                            cargarProCarritoDisponible();
+                            txtTotal.setText(String.valueOf(Tienda.getInstance().calculaPrecioProducto(Tienda.getInstance().getProductosSeleccionados(), "", true)));
+                            
+                        }
+                    }
+                });
 
-                }
-            }
-        });
 
         
 
@@ -245,6 +258,13 @@ public class RegistrarCombo extends JDialog {
         contentPanel.add(btnRegistrar);
         btnRegistrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	if (txtNombre.getText().isEmpty() || txtTotal.getText().isEmpty() || productos.isEmpty() ) {
+					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+					MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación errónea.\nTodos los campos deben de\nestar llenos!");
+					mensajito.setModal(true);
+					mensajito.setVisible(true);
+					return;
+				}
                 if (!txtNombre.getText().isEmpty() && !productos.isEmpty()) {
                 	
                 	double precio = Double.parseDouble(txtTotal.getText());
@@ -252,6 +272,10 @@ public class RegistrarCombo extends JDialog {
                 	productos= Tienda.getInstance().getProductosSeleccionados();
 					combo.setMisProductos(productos);
                 	Tienda.getInstance().creacionCombos(combo);
+                	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+    				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Combo registrado correctamente.");
+    				mensajito.setModal(true);
+    				mensajito.setVisible(true);
                    clean();
                 }
             }
@@ -264,84 +288,68 @@ public class RegistrarCombo extends JDialog {
         btnCancelar.setBounds(550, 350, 100, 25);
         contentPanel.add(btnCancelar);
         btnCancelar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
+        	public void actionPerformed(ActionEvent e) {
+        		dispose();
+        	}
         });
 
         cargarProductoDisponible();
         cargarProCarritoDisponible();
     }
 
+
     public void cargarProductoDisponible() {
-        modeloPro.setRowCount(0);
-        dispProRows = new Object[tableProDisponible.getColumnCount()];
-        for (Producto pro : Tienda.getInstance().getProductoNoSeleccionados()) {
-            if (pro.getCantDisponible() > 0) {
-                dispProRows[0] = pro.getId();
-                dispProRows[1] = pro.getNumSerie();
-                String tipo = null;
-                if (pro instanceof MotherBoard) {
-                    tipo = "MotherBoard";
-                } else if (pro instanceof Microprocesador) {
-                    tipo = "Microprocesador";
-                } else if (pro instanceof DiscoDuro) {
-                    tipo = "DiscoDuro";
-                } else {
-                    tipo = "Memoria Ram";
-                }
-                dispProRows[2] = tipo;
-               
-                modeloPro.addRow(dispProRows);
-            }
-        }
+    	modeloPro.setRowCount(0);
+    	dispProRows = new Object[tableProDisponible.getColumnCount()];
+    	for (Producto pro : Tienda.getInstance().getProductoNoSeleccionados()) {
+    		if (!pro.isSeleccionado() && pro.getCantDisponible() > 0) {
+    			dispProRows[0] = pro.getId();
+    			dispProRows[1] = pro.getNumSerie();
+    			dispProRows[2] = obtenerTipoProducto(pro);
+    			modeloPro.addRow(dispProRows);
+    		}
+    	}
     }
 
     public void cargarProCarritoDisponible() {
-        precioTotal = 0;
-        modeloProCarri.setRowCount(0);
-        caProRows = new Object[tableProCarrito.getColumnCount()];
-        for (Producto pro : productos) {
-            precioTotal += pro.getPrecio();
-            caProRows[0] = pro.getId();
-            caProRows[1] = pro.getNumSerie();
-            String tipo = null;
-            if (pro instanceof MotherBoard) {
-                tipo = "MotherBoard";
-            } else if (pro instanceof Microprocesador) {
-                tipo = "Microprocesador";
-            } else if (pro instanceof DiscoDuro) {
-                tipo = "DiscoDuro";
-            } else {
-                tipo = "Memoria Ram";
-            }
-            caProRows[2] = tipo;
-            
-            modeloProCarri.addRow(caProRows);
-        }
+    	modeloProCarri.setRowCount(0);
+    	caProRows = new Object[tableProCarrito.getColumnCount()];
+    	for (Producto pro : productos) {
+    		caProRows[0] = pro.getId();
+    		caProRows[1] = pro.getNumSerie();
+    		caProRows[2] = obtenerTipoProducto(pro);
+    		modeloProCarri.addRow(caProRows);
+    	}
     }
+
+    private void actualizarTotal() {
+    	precioTotal = 0;
+    	for (Producto pro : productos) {
+    		precioTotal += pro.getPrecio();
+    	}
+    	txtTotal.setText(String.format("%.2f", precioTotal));
+    }
+
+    private String obtenerTipoProducto(Producto pro) {
+    	if (pro instanceof MotherBoard) {
+    		return "MotherBoard";
+    	} else if (pro instanceof Microprocesador) {
+    		return "Microprocesador";
+    	} else if (pro instanceof DiscoDuro) {
+    		return "DiscoDuro";
+    	} else {
+    		return "Memoria Ram";
+    	}
+    }
+
     public void clean() {
-
-		
-		txtTotal.setText("0.0");
-		
-		txtNombre.setText("");
-		
-
-		modeloPro.setRowCount(0);
-		modeloProCarri.setRowCount(0);
-		
-
-		productos.clear();
-
-		dispProRows = null;
-		caProRows = null;
-
-		indexProCarrito = 0;
-		indexProDisponible = 0;
-
-		btnAgregar.setEnabled(false);
-		btnQuitar.setEnabled(false);
-		
-	}
+    	txtTotal.setText("0.0");
+    	txtNombre.setText("");
+    	productos.removeAll(productos);
+    	Tienda.getInstance().recargaSelecionado();
+    	cargarProductoDisponible();
+    	cargarProCarritoDisponible();
+    	btnAgregar.setEnabled(false);
+    	btnQuitar.setEnabled(false);
+    }
 }
