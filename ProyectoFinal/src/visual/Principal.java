@@ -312,6 +312,7 @@ public class Principal extends JFrame {
 		});
 		
 		JMenuItem mntmNewMenuItem_12 = new JMenuItem("Registrar Combo");
+		mntmNewMenuItem_12.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/bag_11959013.png")));
 		if (!Tienda.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 			mntmNewMenuItem_12.setVisible(false);
 		}
@@ -375,9 +376,23 @@ public class Principal extends JFrame {
 		menuAdministracion.add(mntmNewMenuItem_2);
 
 		JMenu mnNewMenu_3 = new JMenu("Usuarios");
+		mnNewMenu_3.setBackground(Color.WHITE);
 		if (!Tienda.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 			mnNewMenu_3.setVisible(false);
 		}
+		
+		JMenuItem mntmNewMenuItem_13 = new JMenuItem("Calcular sueldo de un empleado");
+		mntmNewMenuItem_13.setBackground(Color.WHITE);
+		mntmNewMenuItem_13.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/wallet.png")));
+		mntmNewMenuItem_13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PagoSueldo pago= new PagoSueldo();
+				pago.setVisible(true);
+				
+			}
+		});
+		mntmNewMenuItem_13.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		menuAdministracion.add(mntmNewMenuItem_13);
 		mnNewMenu_3.setBackground(CyanClaro);
 		mnNewMenu_3.setForeground(Color.BLACK);
 		mnNewMenu_3.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/user.png")));
