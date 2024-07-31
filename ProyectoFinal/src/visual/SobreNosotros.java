@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import java.awt.Toolkit;
@@ -63,6 +65,14 @@ public class SobreNosotros extends JFrame {
 		
 		contentPane.add(fotopanel);
 		fotopanel.setLayout(null);
+		
+		ImageIcon iconito = new ImageIcon(SobreNosotros.class.getResource("/Imagenes/foto.jpeg"));
+		JLabel lblNewLabel = new JLabel(new ImageIcon(
+				iconito.getImage().getScaledInstance(500, 400, Image.SCALE_SMOOTH)));
+		lblNewLabel.setBounds(0, 0, 410, 264);
+		
+		lblNewLabel.setBorder(new LineBorder(CyanOscuro, 3, true));
+		fotopanel.add(lblNewLabel);
 
 		JLabel names = new JLabel("Ambar Torres #10152701 - Melanie Pérez #10151906 - Luis Colón García #10152311");
 		names.setHorizontalAlignment(SwingConstants.CENTER);
