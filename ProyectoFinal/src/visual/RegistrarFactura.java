@@ -90,8 +90,9 @@ public class RegistrarFactura extends JDialog {
 	private JPanel pnlProCarrito;
 	private JPanel pnlComDisponible;
 	private JPanel pnlComCarrito;
-	private JComboBox cbxProveedor;
 	private JButton btnBuscarCliente;
+	private JButton btnBuscarProoveedor;
+	private JTextField txtProveedor;
 
 
 	/**
@@ -375,27 +376,6 @@ public class RegistrarFactura extends JDialog {
 		lblNewLabel_4.setBounds(10, 11, 89, 14);
 		pnlCompra.add(lblNewLabel_4);
 
-		for (Persona persona : Tienda.getInstance().getListaPersonas()) {
-			if (persona instanceof Proveedor) {
-				proveedoresRegistrados.addElement((Proveedor) persona);
-			}
-		}
-
-		cbxProveedor = new JComboBox();
-		cbxProveedor.setBounds(94, 10, 161, 20);
-		pnlCompra.add(cbxProveedor);
-		cbxProveedor.setBackground(CyanClaro);
-		Component editor = cbxProveedor.getEditor().getEditorComponent();
-		if (editor instanceof JTextField) {
-			JTextField textFieldEditor = (JTextField) editor;
-			textFieldEditor.setBackground(CyanClaro); 
-		}
-		for (Persona persona : Tienda.getInstance().getListaPersonas()) {
-			if (persona instanceof Proveedor) {
-				proveedoresRegistrados.addElement((Proveedor) persona);
-			}
-		}
-		cbxProveedor.setModel(proveedoresRegistrados);
 
 		btnProducto = new JButton("Productos");
 		btnProducto.setEnabled(false);
@@ -419,6 +399,10 @@ public class RegistrarFactura extends JDialog {
 		panel.add(btnProducto);
 
 		btnCombos = new JButton("Combos");
+		if(esCV)
+		{
+			btnCombos.setEnabled(false);
+		}
 		btnCombos.setForeground(new Color(255, 255, 255));
 		btnCombos.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		btnCombos.setBackground(CyanMid);
@@ -477,6 +461,7 @@ public class RegistrarFactura extends JDialog {
 
 		txtIdCliente = new JTextField();
 		txtIdCliente.setBounds(89, 10, 86, 20);
+		txtIdCliente.setText("Cliente - ");
 		txtIdCliente.setBackground(CyanClaro);
 		txtIdCliente.setBorder(bottomBorder);
 		pnlVenta.add(txtIdCliente);
@@ -493,8 +478,11 @@ public class RegistrarFactura extends JDialog {
 				Cliente client= (Cliente) Tienda.getInstance().buscarPersonaId(txtIdCliente.getText());
 				if(client==null)
 				{
-
-					opcion = JOptionPane.showConfirmDialog(null, "Cliente no encontrado,  Desea registrar el cliente?", "Confirmaci n", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+					VentanaOpcion mensajito = new VentanaOpcion(iconito, "Cliente no encontrado,  Desea registrar el Cliente?");
+					mensajito.setModal(true);
+					mensajito.setVisible(true);
+					
 				}
 				if(opcion==JOptionPane.YES_OPTION)
 				{
@@ -578,12 +566,19 @@ public class RegistrarFactura extends JDialog {
 				if(esCV)
 				{	
 					Proveedor proveedor = null;
-					if (cbxProveedor.getSelectedItem() != null) {
-						proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(cbxProveedor.getSelectedItem().toString());
+					if (txtProveedor.getText().isEmpty()) {
+						proveedor = (Proveedor) Tienda.getInstance().buscarPersonaId(txtProveedor.getText());
 					}
-
-					Factura compra = new FacturaCompra(txtID.getText(), hoy,productosComprados,proveedor,(Tienda.getInstance().getCantProductos() + Tienda.getInstance().getCantCombos()),precioTotal);
+					int cant=0;
+					for (Producto pro : productos) {
+	            		pro.setCantDisponible(pro.getSiemprePedir()+pro.getCantDisponible());
+	            		cant+=pro.getCantDisponible();
+	            		pro.setSeleccionado(false);
+					}
+					Factura compra = new FacturaCompra(txtID.getText(), hoy,productosComprados,proveedor,cant,precioTotal);
 					Tienda.getInstance().registrarFactura(compra);
+					
+					
 					clean();
 				}
 				else
@@ -599,22 +594,24 @@ public class RegistrarFactura extends JDialog {
 					Cliente clien = (Cliente) Tienda.getInstance().buscarPersonaId(txtIdCliente.getText());
 					Factura venta = new FacturaVenta( txtID.getText(), hoy, productosComprados,  clien, (Tienda.getInstance().getCantProductos() + Tienda.getInstance().getCantCombos()),precioTotal);
 					Tienda.getInstance().registrarFactura(venta);
+					for (Producto pro : productos) {
+	            		pro.setCantDisponible(pro.getCantDisponible()-1);
+					}
+					
+					for (Combo combo : combos) {
+						combo.setCantDisponible(combo.getCantDisponible() - 1);
+					}
 					clean();
 
 				}
 				
-				for (Producto pro : productos) {
-            		pro.setCantDisponible(pro.getCantDisponible()-1);
-				}
 				
-				for (Combo combo : combos) {
-					combo.setCantDisponible(combo.getCantDisponible() - 1);
-				}
 				
 				ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
 				MensajeAlerta mensajito = new MensajeAlerta(iconito, "Factura registrada correctamente.");
 				mensajito.setModal(true);
 				mensajito.setVisible(true);
+				Tienda.getInstance().recargaSelecionado();
 				cargaComboCarritoDisponible();
 				cargaComboDisponible(); 
 				cargaProCarritoDisponible();
@@ -644,6 +641,9 @@ public class RegistrarFactura extends JDialog {
 		{
 			pnlVenta.setVisible(false);
 			pnlCompra.setVisible(true);
+			for (Producto pro : Tienda.getInstance().getListaProductos()) {
+				pro.setEstado(true);	
+			}
 			txtDescuento.setText(String.valueOf(Tienda.getInstance().descuentoAplicado(txtIdCliente.getText(), !btnCombos.isEnabled())));
 			if(!btnCombos.isEnabled())
 				txtTotal.setText(String.valueOf(Tienda.getInstance().calculaPrecioProductoCombos(Tienda.getInstance().getCombosSeleccionados(), txtIdCliente.getText(), !btnCombos.isEnabled())));
@@ -654,6 +654,17 @@ public class RegistrarFactura extends JDialog {
 		{
 			pnlVenta.setVisible(true);
 			pnlCompra.setVisible(false);
+			for (Producto pro : Tienda.getInstance().getListaProductos()) {
+				if(pro.getCantDisponible()>0)
+				{
+					pro.setEstado(true);	
+				}
+				else
+				{
+					pro.setEstado(false);
+				}
+				
+			}
 			txtDescuento.setText(String.valueOf(Tienda.getInstance().descuentoAplicado("", !btnCombos.isEnabled())));
 			if(!btnCombos.isEnabled())
 				txtTotal.setText(String.valueOf(Tienda.getInstance().calculaPrecioProductoCombos(Tienda.getInstance().getCombosSeleccionados(), "", !btnCombos.isEnabled())));
@@ -668,6 +679,53 @@ public class RegistrarFactura extends JDialog {
 		pnlComCarrito.setBackground(FondoClarito);
 		pnlComDisponible.setBackground(FondoClarito);
 		pnlCompra.setBackground(FondoClarito);
+		
+		btnBuscarProoveedor = new JButton("Buscar ");
+		btnBuscarProoveedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+
+				int opcion= JOptionPane.NO_OPTION;
+				
+				Proveedor prove= (Proveedor) Tienda.getInstance().buscarPersonaId(txtProveedor.getText());
+				if(prove==null)
+				{
+					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
+					VentanaOpcion mensajito = new VentanaOpcion(iconito, "Proveedor no encontrado,  Desea registrar el Proveedor?");
+					mensajito.setModal(true);
+					mensajito.setVisible(true);
+
+				}
+				if(opcion==JOptionPane.YES_OPTION)
+				{
+					btnBuscarProoveedor.setEnabled(false);
+					RegistrarProveedor reg = new RegistrarProveedor(null);
+					reg.setModal(true);
+					reg.setVisible(true);
+					txtProveedor.setText("Proveedor - " + (Tienda.getInstance().numProveedor - 1));
+				}
+				else if(prove!=null)
+				{
+					txtProveedor.setText(prove.getId());
+					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
+					MensajeAlerta mensajito = new MensajeAlerta(iconito, "Busqueda exitosa.");
+					mensajito.setModal(true);
+					mensajito.setVisible(true);
+					btnBuscarProoveedor.setEnabled(false);
+				}
+			}
+		});
+		btnBuscarProoveedor.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		btnBuscarProoveedor.setBounds(267, 9, 89, 23);
+		pnlCompra.add(btnBuscarProoveedor);
+		
+		txtProveedor = new JTextField();
+		txtProveedor.setBounds(93, 10, 164, 20);
+		txtProveedor.setText("Proveedor - ");
+		txtProveedor.setBackground(CyanClaro);
+		txtProveedor.setBorder(bottomBorder);
+		pnlCompra.add(txtProveedor);
+		txtProveedor.setColumns(10);
 		pnlProCarrito.setBackground(FondoClarito);
 		pnlProDisponible.setBackground(FondoClarito);
 		pnlVenta.setBackground(FondoClarito);
@@ -676,8 +734,9 @@ public class RegistrarFactura extends JDialog {
 	public void cargaProductoDisponible() {
 		modeloPro.setRowCount(0);
 		dispProRows = new Object[tableProDisponible.getColumnCount()];
+		
 		for (Producto pro : Tienda.getInstance().getProductoNoSeleccionados()) {
-			if (pro.getCantDisponible() > 0) {
+			if (pro.isEstado()) {
 				dispProRows[0] = pro.getId();
 				dispProRows[1] = pro.getNumSerie();
 				String tipo = null;
@@ -729,7 +788,7 @@ public class RegistrarFactura extends JDialog {
 		modeloProCarri.setRowCount(0);
 		caProRows = new Object[tableProCarrito.getColumnCount()];
 		for (Producto pro : Tienda.getInstance().getProductosSeleccionados()) {
-			if (pro.getCantDisponible() > 0) {
+			if (pro.isEstado()) {
 				precioTotal += pro.getPrecio();
 				caProRows[0] = pro.getId();
 				caProRows[1] = pro.getNumSerie();
@@ -758,7 +817,7 @@ public class RegistrarFactura extends JDialog {
 		txtFecha.setText(hoy.toString());
 		txtTotal.setText("0.0");
 		txtDescuento.setText("0.0");
-		txtIdCliente.setText("");
+		txtIdCliente.setText("Cliente - ");
 		btnBuscarCliente.setEnabled(true);
 
 		txtEmpleado.setText(Tienda.getInstance().getLoginUser().getUserName());
@@ -803,7 +862,7 @@ public class RegistrarFactura extends JDialog {
 		pnlProDisponible.setVisible(true);
 
 
-		cbxProveedor.setSelectedIndex(-1);
+		txtProveedor.setText("Proveedor - ");
 		
     	productosComprados.removeAll(productosComprados);
     	Tienda.getInstance().recargaSelecionado();

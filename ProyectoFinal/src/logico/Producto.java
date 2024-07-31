@@ -13,6 +13,7 @@ public class Producto implements Serializable {
 	protected String marca;
 	protected float precio;
 	protected boolean seleccionado;
+	protected int siemprePedir;
 	
 	public String getId() {
 		return id;
@@ -76,6 +77,7 @@ public class Producto implements Serializable {
 		this.marca = marca;
 		this.precio = precio;
 		this.seleccionado=false;
+		this.siemprePedir= cantDisponible;
 	}
 
 	public boolean isSeleccionado() {
@@ -84,6 +86,14 @@ public class Producto implements Serializable {
 
 	public void setSeleccionado(boolean seleccionado) {
 		this.seleccionado = seleccionado;
+	}
+
+	public int getSiemprePedir() {
+		return siemprePedir;
+	}
+
+	public void setSiemprePedir(int siemprePedir) {
+		this.siemprePedir = siemprePedir;
 	}
 	
 
