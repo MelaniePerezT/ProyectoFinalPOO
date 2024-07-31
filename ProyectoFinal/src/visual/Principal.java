@@ -118,6 +118,9 @@ public class Principal extends JFrame {
 		clientesMenu.add(buttonRegistrarCliente);
 
 		JMenuItem muenoListaClientes = new JMenuItem("Lista Clientes");
+		if (!Tienda.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
+			muenoListaClientes.setVisible(false);
+		}
 		muenoListaClientes.setBackground(Color.WHITE);
 		muenoListaClientes.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		muenoListaClientes.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -131,6 +134,9 @@ public class Principal extends JFrame {
 		clientesMenu.add(muenoListaClientes);
 
 		JMenu menuEmpleado = new JMenu("Empleados");
+		if (!Tienda.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
+			menuEmpleado.setVisible(false);
+		}
 		menuEmpleado.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		menuEmpleado.setForeground(Color.WHITE);
 		menuBar.add(menuEmpleado);
@@ -162,6 +168,9 @@ public class Principal extends JFrame {
 		menuEmpleado.add(menubuttonListaEMpleado);
 
 		JMenu menuProveedor = new JMenu("Proveedores");
+		if (!Tienda.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
+			menuProveedor.setVisible(false);
+		}
 		menuProveedor.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		menuProveedor.setForeground(Color.WHITE);
 		menuBar.add(menuProveedor);
@@ -192,10 +201,14 @@ public class Principal extends JFrame {
 		menuListaProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		menuProveedor.add(menuListaProveedor);
 
-		JMenu mnNewMenu = new JMenu("Producto");
-		mnNewMenu.setForeground(Color.WHITE);
-		mnNewMenu.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		menuBar.add(mnNewMenu);
+		JMenu menuProducto = new JMenu("Producto");
+		if (!Tienda.getLoginUser().getTipo().equalsIgnoreCase("Administrador"))
+		{
+			menuProducto.setVisible(false);
+		}
+		menuProducto.setForeground(Color.WHITE);
+		menuProducto.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		menuBar.add(menuProducto);
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Registrar");
 		mntmNewMenuItem.setBackground(Color.WHITE);
@@ -222,7 +235,7 @@ public class Principal extends JFrame {
 			}
 		});
 		mntmNewMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu.add(mntmNewMenuItem);
+		menuProducto.add(mntmNewMenuItem);
 
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Lista");
 		mntmNewMenuItem_1.setBackground(Color.WHITE);
@@ -235,12 +248,12 @@ public class Principal extends JFrame {
 			}
 		});
 		mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu.add(mntmNewMenuItem_1);
+		menuProducto.add(mntmNewMenuItem_1);
 
-		JMenu mnNewMenu_2 = new JMenu("Facturas");
-		mnNewMenu_2.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		mnNewMenu_2.setForeground(Color.WHITE);
-		menuBar.add(mnNewMenu_2);
+		JMenu menuFactura = new JMenu("Facturas");
+		menuFactura.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		menuFactura.setForeground(Color.WHITE);
+		menuBar.add(menuFactura);
 
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Registrar");
 		mntmNewMenuItem_7.setBackground(Color.WHITE);
@@ -253,7 +266,7 @@ public class Principal extends JFrame {
 			}
 		});
 		mntmNewMenuItem_7.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu_2.add(mntmNewMenuItem_7);
+		menuFactura.add(mntmNewMenuItem_7);
 
 		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Lista");
 		mntmNewMenuItem_8.addActionListener(new ActionListener() {
@@ -265,12 +278,15 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_8.setBackground(Color.WHITE);
 		mntmNewMenuItem_8.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		mntmNewMenuItem_8.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu_2.add(mntmNewMenuItem_8);
+		menuFactura.add(mntmNewMenuItem_8);
 
-		JMenu mnNewMenu_1 = new JMenu("Administracion");
-		mnNewMenu_1.setForeground(Color.WHITE);
-		mnNewMenu_1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		menuBar.add(mnNewMenu_1);
+		JMenu menuAdministracion = new JMenu("Administracion");
+		if (!Tienda.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
+			menuAdministracion.setText("Inventario");
+		}
+		menuAdministracion.setForeground(Color.WHITE);
+		menuAdministracion.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		menuBar.add(menuAdministracion);
 
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Sobre nosotros");
 		mntmNewMenuItem_2.setBackground(Color.WHITE);
@@ -296,6 +312,9 @@ public class Principal extends JFrame {
 		});
 		
 		JMenuItem mntmNewMenuItem_12 = new JMenuItem("Registrar Combo");
+		if (!Tienda.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
+			mntmNewMenuItem_12.setVisible(false);
+		}
 		mntmNewMenuItem_12.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegistrarCombo com= new RegistrarCombo();
@@ -304,9 +323,9 @@ public class Principal extends JFrame {
 			}
 		});
 		mntmNewMenuItem_12.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu_1.add(mntmNewMenuItem_12);
+		menuAdministracion.add(mntmNewMenuItem_12);
 		mntmNewMenuItem_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu_1.add(mntmNewMenuItem_5);
+		menuAdministracion.add(mntmNewMenuItem_5);
 
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Disponibilidad");
 		mntmNewMenuItem_3.setBackground(Color.WHITE);
@@ -320,7 +339,7 @@ public class Principal extends JFrame {
 			}
 		});
 		mntmNewMenuItem_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu_1.add(mntmNewMenuItem_3);
+		menuAdministracion.add(mntmNewMenuItem_3);
 
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Cantidad de un producto");
 		mntmNewMenuItem_6.setBackground(Color.WHITE);
@@ -335,7 +354,7 @@ public class Principal extends JFrame {
 			}
 		});
 		mntmNewMenuItem_6.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu_1.add(mntmNewMenuItem_6);
+		menuAdministracion.add(mntmNewMenuItem_6);
 
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Inventario general");
 		mntmNewMenuItem_4.setBackground(Color.WHITE);
@@ -351,16 +370,19 @@ public class Principal extends JFrame {
 			}
 		});
 		mntmNewMenuItem_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu_1.add(mntmNewMenuItem_4);
+		menuAdministracion.add(mntmNewMenuItem_4);
 		mntmNewMenuItem_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu_1.add(mntmNewMenuItem_2);
+		menuAdministracion.add(mntmNewMenuItem_2);
 
 		JMenu mnNewMenu_3 = new JMenu("Usuarios");
+		if (!Tienda.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
+			mnNewMenu_3.setVisible(false);
+		}
 		mnNewMenu_3.setBackground(CyanClaro);
 		mnNewMenu_3.setForeground(Color.BLACK);
 		mnNewMenu_3.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/user.png")));
 		mnNewMenu_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu_1.add(mnNewMenu_3);
+		menuAdministracion.add(mnNewMenu_3);
 
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Registro");
 		mntmNewMenuItem_10.setBackground(Color.WHITE);
@@ -387,6 +409,9 @@ public class Principal extends JFrame {
 		mnNewMenu_3.add(mntmNewMenuItem_9);
 
 		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Backup");
+		if (!Tienda.getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
+			mntmNewMenuItem_11.setVisible(false);
+		}
 		mntmNewMenuItem_11.setBackground(Color.WHITE);
 		mntmNewMenuItem_11.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/backup.png")));
 		mntmNewMenuItem_11.addActionListener(new ActionListener() {
@@ -445,7 +470,7 @@ public class Principal extends JFrame {
 			}
 		});
 		mntmNewMenuItem_11.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		mnNewMenu_1.add(mntmNewMenuItem_11);
+		menuAdministracion.add(mntmNewMenuItem_11);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
