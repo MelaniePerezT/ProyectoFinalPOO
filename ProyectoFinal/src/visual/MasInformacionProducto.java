@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import logico.DiscoDuro;
@@ -207,8 +206,8 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtModeloMicro = new JTextField();
+				txtModeloMicro.setEditable(false);
 				txtModeloMicro.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-				txtModeloMicro.setEnabled(false);
 				txtModeloMicro.setBounds(80, 25, 145, 20);
 				txtModeloMicro.setBackground(CyanClaro);
 				txtModeloMicro.setBorder(bottomBorder);
@@ -223,8 +222,8 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtSocketMicro = new JTextField();
+				txtSocketMicro.setEditable(false);
 				txtSocketMicro.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-				txtSocketMicro.setEnabled(false);
 				txtSocketMicro.setBounds(317, 25, 145, 20);
 				txtSocketMicro.setBackground(CyanClaro);
 				txtSocketMicro.setBorder(bottomBorder);
@@ -239,8 +238,8 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtVeProMicro = new JTextField();
+				txtVeProMicro.setEditable(false);
 				txtVeProMicro.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-				txtVeProMicro.setEnabled(false);
 				txtVeProMicro.setBounds(215, 57, 187, 20);
 				txtVeProMicro.setBackground(CyanClaro);
 				txtVeProMicro.setBorder(bottomBorder);
@@ -381,7 +380,7 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtConexionDisco = new JTextField();
-				txtConexionDisco.setEnabled(false);
+				txtConexionDisco.setEditable(false);
 				txtConexionDisco.setBounds(350, 24, 112, 20);
 				txtConexionDisco.setBackground(CyanClaro);
 				txtConexionDisco.setBorder(bottomBorder);
@@ -390,7 +389,7 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtModeloDisco = new JTextField();
-				txtModeloDisco.setEnabled(false);
+				txtModeloDisco.setEditable(false);
 				txtModeloDisco.setBounds(77, 25, 149, 20);
 				txtModeloDisco.setBackground(CyanClaro);
 				txtModeloDisco.setBorder(bottomBorder);
@@ -399,7 +398,7 @@ public class MasInformacionProducto extends JDialog {
 			}
 			{
 				txtCapAlmDisco = new JTextField();
-				txtCapAlmDisco.setEnabled(false);
+				txtCapAlmDisco.setEditable(false);
 				txtCapAlmDisco.setBounds(225, 57, 237, 20);
 				txtCapAlmDisco.setBackground(CyanClaro);
 				txtCapAlmDisco.setBorder(bottomBorder);
@@ -418,9 +417,8 @@ public class MasInformacionProducto extends JDialog {
 				btnVisualizar.setBackground(CyanMid);
 				btnVisualizar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						VisualizarProducto visualiza =new VisualizarProducto(producto);
+						VisualizacionProducto visualiza =new VisualizacionProducto(producto);
 						visualiza.setVisible(true);
-						dispose();
 					}
 				});
 				btnVisualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));

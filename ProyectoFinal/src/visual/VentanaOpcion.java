@@ -25,7 +25,6 @@ public class VentanaOpcion extends JDialog {
     	
     	Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);
-		Color CyanClaro =  new Color (222, 249, 196);
 		Color Rojito = new Color(250, 128, 114);
 		MatteBorder bottomBorder = new MatteBorder(0, 0, 2, 0, CyanOscuro);
 		

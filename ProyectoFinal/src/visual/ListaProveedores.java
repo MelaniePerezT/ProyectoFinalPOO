@@ -62,10 +62,7 @@ public class ListaProveedores extends JDialog {
         setLocationRelativeTo(null); /*Poner en el centro*/
         setResizable(false);
         
-        Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);
-		Color CyanClaro =  new Color (222, 249, 196);
-		Color FondoClarito = new Color(240, 255, 240);
 
         String[] columnas = {"ID", "Nombre", "Cedula", "Correo", "Empresa"};
         tableModel = new DefaultTableModel(columnas, 0);

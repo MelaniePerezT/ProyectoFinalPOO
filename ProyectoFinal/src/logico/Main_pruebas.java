@@ -3,7 +3,7 @@ package logico;
 public class Main_pruebas {
 
 	public static void main(String[] args) {
-		 Tienda miTienda = Tienda.getInstance();
+		/* Tienda miTienda = Tienda.getInstance();
 
 	        
 	        Persona cliente1 = new Cliente("Ambar Torres", 20, "40247211929", "ambar@gmail.com");
@@ -60,7 +60,7 @@ public class Main_pruebas {
 	        {
 	        	 System.out.println("Quedan disponibles");
 	        }
-	        
+	        */
 	        
 	     
 	    }

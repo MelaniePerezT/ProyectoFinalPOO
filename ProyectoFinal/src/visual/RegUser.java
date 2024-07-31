@@ -16,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
@@ -90,7 +89,7 @@ public class RegUser extends JDialog {
 		textField.setBorder(bottomBorder);
 		textField.setBackground(CyanClaro);
 
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<>();
 		comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Administrador", "Vendedor"}));
 		comboBox.setBounds(20, 113, 127, 20);

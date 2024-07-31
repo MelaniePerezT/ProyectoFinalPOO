@@ -1,6 +1,5 @@
 package visual;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -48,9 +47,7 @@ public class SobreNosotros extends JFrame {
 		
 		Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);
-		Color CyanClaro =  new Color (222, 249, 196);
-		Color Rojito = new Color(250, 128, 114);
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 602, 491);
 		contentPane = new JPanel();

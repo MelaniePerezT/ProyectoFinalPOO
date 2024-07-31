@@ -13,11 +13,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import logico.DiscoDuro;
-import logico.MemoriaRam;
-import logico.Microprocesador;
-import logico.MotherBoard;
-import logico.Producto;
 import logico.Tienda;
 import logico.User;
 
@@ -59,9 +54,7 @@ public class ListadoUsuarios extends JDialog {
 	 */
 	public ListadoUsuarios() {
 		
-		Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);
-		Color CyanClaro =  new Color (222, 249, 196);
 		
 		setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoUsuarios.class.getResource("/Imagenes/clienteregistrar.png")));

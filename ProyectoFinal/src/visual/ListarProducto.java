@@ -25,7 +25,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.awt.Toolkit;
 import java.awt.Color;
 
@@ -45,7 +44,7 @@ public class ListarProducto extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			ListarProducto dialog = new ListarProducto(new ArrayList<>());
+			ListarProducto dialog = new ListarProducto();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -56,10 +55,8 @@ public class ListarProducto extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ListarProducto(ArrayList<Producto> productosComprados) {
-		Color CyanOscuro = new Color(70, 133, 133);
+	public ListarProducto() {
 		Color CyanMid = new Color(80, 180, 152);
-		Color CyanClaro =  new Color (222, 249, 196);
 		Color Rojito = new Color(250, 128, 114);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ListarProducto.class.getResource("/Imagenes/to-do-list.png")));
 		setTitle("Lista de Productos");
@@ -72,18 +69,18 @@ public class ListarProducto extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
-		
+
 		String[] columnas = {"ID","NO. Serie","Tipo","Cantidad","Proovedor","Precio"};
 		tableModel = new DefaultTableModel(columnas, 0);
 		table = new JTable(tableModel);
 		table.setBackground(new Color(240, 255, 240));
 		table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		table.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-        table.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
-		 DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-	        for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
-	            table.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-	        }
+		table.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+		for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+		}
 		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 		table.setFillsViewportHeight(true);
 
@@ -117,10 +114,6 @@ public class ListarProducto extends JDialog {
 				botonActualizar.setForeground(new Color(255, 255, 255));
 				botonActualizar.setBackground(CyanMid);
 				botonActualizar.setEnabled(false);
-				botonActualizar.setVisible(false);
-				if (productosComprados.isEmpty()) {
-					botonActualizar.setVisible(true);
-				}
 				botonActualizar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(!codigo.equalsIgnoreCase("")){
@@ -128,7 +121,6 @@ public class ListarProducto extends JDialog {
 							if(aux!= null){
 								RegistrarProducto updatePublicacion = new RegistrarProducto(aux);
 								updatePublicacion.setVisible(true);
-								cargarProducto(productosComprados);
 								btnVerMas.setEnabled(false);
 								botonActualizar.setEnabled(false);
 								botonEliminar.setEnabled(false);
@@ -149,16 +141,11 @@ public class ListarProducto extends JDialog {
 								MasInformacionProducto mas = new MasInformacionProducto(pro);
 								mas.setModal(true);
 								mas.setVisible(true);
-								dispose();
 							}
 						}
 					});
 					btnVerMas.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
 					btnVerMas.setEnabled(false);
-					btnVerMas.setVisible(false);
-					if (productosComprados.isEmpty()) {
-						btnVerMas.setVisible(true);
-					}
 					buttonPane.add(btnVerMas);
 				}
 				botonActualizar.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
@@ -181,12 +168,12 @@ public class ListarProducto extends JDialog {
 					botonEliminar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							if(codigo != ""){
-								
+
 								ImageIcon icono = new ImageIcon(VentanaOpcion.class.getResource("/Imagenes/alert.png"));
-					            String texto = "¿Seguro desea eliminar el producto con código: "+ codigo +"?";
-					            VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
-					            ventanita.setModal(true);
-					            ventanita.setVisible(true);
+								String texto = "¿Seguro desea eliminar el producto con código: "+ codigo +"?";
+								VentanaOpcion ventanita = new VentanaOpcion(icono, texto);
+								ventanita.setModal(true);
+								ventanita.setVisible(true);
 								int option = ventanita.getResultado();
 								if(option == JOptionPane.YES_OPTION){
 									Tienda.getInstance().eliminarProducto(codigo);
@@ -194,12 +181,11 @@ public class ListarProducto extends JDialog {
 									botonEliminar.setEnabled(false);
 									botonActualizar.setEnabled(false);
 									ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/check.png"));
-					                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Producto eliminado correctamente.");
-					                mensajito.setModal(true);
-					                mensajito.setVisible(true);
-									cargarProducto(productosComprados);
+									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Producto eliminado correctamente.");
+									mensajito.setModal(true);
+									mensajito.setVisible(true);
 								} else {
-					            	ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
+									ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/cancel.png"));
 									MensajeAlerta mensajito = new MensajeAlerta(iconito, "Eliminación cancelada.");
 									mensajito.setModal(true);
 									mensajito.setVisible(true);
@@ -208,34 +194,21 @@ public class ListarProducto extends JDialog {
 						}
 					});
 					botonEliminar.setEnabled(false);
-					botonEliminar.setVisible(false);
-					if (productosComprados.isEmpty()) {
-						botonEliminar.setVisible(true);
-					}
 					buttonPane.add(botonEliminar);
 				}
 				buttonPane.add(cancelButton);
 			}
 		}
-		cargarProducto(productosComprados);
+		cargarProducto();
 	}
 
-	public void cargarProducto(ArrayList<Producto> productosComprados) {
-		ArrayList<Producto> listaProductos = new ArrayList<>();
-		
-		if (productosComprados.isEmpty())
-		{
-			listaProductos = Tienda.getInstance().getListaProductos();
-		} else {
-			listaProductos = productosComprados;
-		}
-		
-			tableModel.setRowCount(0);
-			rows = new Object[tableModel.getColumnCount()];
-			for (Producto producto : listaProductos) {
+	public void cargarProducto() {		
+		tableModel.setRowCount(0);
+		rows = new Object[tableModel.getColumnCount()];
+			for (Producto producto : Tienda.getInstance().getListaProductos()) {
 				rows[0] = producto.getId();
 				rows[1] = producto.getNumSerie();
-				
+
 				if (producto instanceof MotherBoard) {
 					rows[2] = "MotherBoard";
 				}
@@ -246,9 +219,9 @@ public class ListarProducto extends JDialog {
 					rows[2] = "Microprocesador";				
 				}
 				if (producto instanceof DiscoDuro) {
-						rows[2] = "Disco Duro";				
+					rows[2] = "Disco Duro";				
 				}
-				
+
 				rows[3] = producto.getCantDisponible();
 				if (producto.getProveedor() != null) {
 					rows[4]= producto.getProveedor().getId();
@@ -257,6 +230,7 @@ public class ListarProducto extends JDialog {
 				}
 				rows[5] = producto.getPrecio();
 				tableModel.addRow(rows);
-			}		
+			
+			}
 	}
 }

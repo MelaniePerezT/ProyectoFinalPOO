@@ -61,11 +61,8 @@ public class ListaEmpleados extends JDialog {
         setLocationRelativeTo(null); /*Poner en el centro*/
         setResizable(false);
         
-        Color CyanOscuro = new Color(70, 133, 133);
 		Color CyanMid = new Color(80, 180, 152);
-		Color CyanClaro =  new Color (222, 249, 196);
 		Color Rojito = new Color(250, 128, 114);
-		Color FondoClarito = new Color(240, 255, 240);
 
         String[] columnas = {"ID", "Nombre", "Cedula", "Correo", "Comision por Ventas", "Empleado del Mes"};
         tableModel = new DefaultTableModel(columnas, 0);

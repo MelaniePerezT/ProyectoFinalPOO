@@ -1,6 +1,5 @@
 package visual;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -9,12 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
-import logico.Cliente;
-import logico.DiscoDuro;
-import logico.Microprocesador;
-import logico.MotherBoard;
 import logico.Persona;
-import logico.Producto;
 import logico.Proveedor;
 import logico.Tienda;
 
@@ -38,7 +32,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 
@@ -68,10 +61,7 @@ public class Principal extends JFrame {
 	public Principal() {
 		
 		Color CyanOscuro = new Color(70, 133, 133);
-		Color CyanMid = new Color(80, 180, 152);
 		Color CyanClaro =  new Color (222, 249, 196);
-		Color Rojito = new Color(250, 128, 114);
-		MatteBorder bottomBorder = new MatteBorder(0, 0, 2, 0, CyanOscuro);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/Imagenes/computer.png")));
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -242,7 +232,7 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_1.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/listaClientes.png")));
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListarProducto lista= new ListarProducto(new ArrayList<>());
+				ListarProducto lista= new ListarProducto();
 				lista.setModal(true);
 				lista.setVisible(true);
 			}

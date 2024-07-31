@@ -2,13 +2,11 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -40,8 +38,6 @@ public class TipoFactura extends JDialog {
 		setUndecorated(true);
 		Color CyanOscuro = new Color(70, 133, 133);
         Color CyanMid = new Color(80, 180, 152);
-        Color CyanClaro =  new Color (222, 249, 196);
-        Color FondoClarito = new Color(240, 255, 240);
         
 		setBounds(100, 100, 282, 141);
 		getContentPane().setLayout(new BorderLayout());

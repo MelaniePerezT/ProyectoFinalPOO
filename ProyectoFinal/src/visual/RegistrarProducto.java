@@ -11,9 +11,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 
-import com.sun.javafx.css.CalculatedValue;
-
-import javafx.scene.control.ComboBox;
 import logico.DiscoDuro;
 import logico.FacturaCompra;
 import logico.MemoriaRam;
@@ -683,19 +680,20 @@ public class RegistrarProducto extends JDialog {
 				                MensajeAlerta mensajito = new MensajeAlerta(iconito, "Operación satisfactoria.\nProducto modificado!");
 				                mensajito.setModal(true);
 				                mensajito.setVisible(true);
-								dispose();
+				                
 							}	
-
+							
+							LocalDate hoy= LocalDate.now();
+							ArrayList<Producto> pro= new ArrayList<Producto>();
+						    String proveedorIndex = new String( cbxProveedor.getSelectedItem().toString());
+						    Proveedor provee=(Proveedor)Tienda.getInstance().buscarPersonaId(proveedorIndex);
+						    int cantidadfact = (int) spnCantidad.getValue();
+						    double preciofact = (float) spnPrecio.getValue();	
+						    pro.add(producto);
+						    FacturaCompra fact = new FacturaCompra("Factura - " + Tienda.getNumFactura(), hoy, pro, proveedor, cantidadfact, ((preciofact * cantidadfact) - ((preciofact * cantidadfact) * 0.25)));
+						    Tienda.getInstance().registrarFactura(fact);
+							dispose();
 						}
-						LocalDate hoy= LocalDate.now();
-						ArrayList<Producto> pro= new ArrayList<Producto>();
-					    String proveedorIndex = new String( cbxProveedor.getSelectedItem().toString());
-					    Proveedor provee=(Proveedor)Tienda.getInstance().buscarPersonaId(proveedorIndex);
-					    int cantidadfact = (int) spnCantidad.getValue();
-					    double preciofact = (float) spnPrecio.getValue();	
-					    pro.add(producto);
-					    FacturaCompra fact = new FacturaCompra("Factura - " + Tienda.getNumFactura(), hoy, pro, proveedor, cantidadfact, cantidadfact * preciofact);
-					    Tienda.getInstance().registrarFactura(fact);
 
 
 					}
