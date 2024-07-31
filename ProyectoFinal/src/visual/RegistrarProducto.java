@@ -11,8 +11,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 
+import com.sun.javafx.css.CalculatedValue;
+
 import javafx.scene.control.ComboBox;
 import logico.DiscoDuro;
+import logico.FacturaCompra;
 import logico.MemoriaRam;
 import logico.Microprocesador;
 import logico.MotherBoard;
@@ -22,6 +25,7 @@ import logico.Proveedor;
 import logico.Tienda;
 
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -683,6 +687,15 @@ public class RegistrarProducto extends JDialog {
 							}	
 
 						}
+						LocalDate hoy= LocalDate.now();
+						ArrayList<Producto> pro= new ArrayList<Producto>();
+					    String proveedorIndex = new String( cbxProveedor.getSelectedItem().toString());
+					    Proveedor provee=(Proveedor)Tienda.getInstance().buscarPersonaId(proveedorIndex);
+					    int cantidadfact = (int) spnCantidad.getValue();
+					    double preciofact = (float) spnPrecio.getValue();	
+					    pro.add(producto);
+					    FacturaCompra fact = new FacturaCompra("Factura - " + Tienda.getNumFactura(), hoy, pro, proveedor, cantidadfact, cantidadfact * preciofact);
+					    Tienda.getInstance().registrarFactura(fact);
 
 
 					}

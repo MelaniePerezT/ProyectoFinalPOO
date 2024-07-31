@@ -288,7 +288,7 @@ public class Principal extends JFrame {
 		menuAdministracion.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		menuBar.add(menuAdministracion);
 
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Sobre nosotros");
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Desarrolladores");
 		mntmNewMenuItem_2.setBackground(Color.WHITE);
 		mntmNewMenuItem_2.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/aboutus.png")));
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {

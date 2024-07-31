@@ -15,6 +15,7 @@ import java.awt.Toolkit;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class SobreNosotros extends JFrame {
 
@@ -61,6 +62,7 @@ public class SobreNosotros extends JFrame {
 		fotopanel.setBounds(87, 31, 410, 264);
 		
 		contentPane.add(fotopanel);
+		fotopanel.setLayout(null);
 
 		JLabel names = new JLabel("Ambar Torres #10152701 - Melanie Pérez #10151906 - Luis Colón García #10152311");
 		names.setHorizontalAlignment(SwingConstants.CENTER);
