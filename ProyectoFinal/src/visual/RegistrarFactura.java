@@ -474,17 +474,10 @@ public class RegistrarFactura extends JDialog {
 		btnBuscarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				int opcion=JOptionPane.NO_OPTION;
+			
 				Cliente client= (Cliente) Tienda.getInstance().buscarPersonaId(txtIdCliente.getText());
+				
 				if(client==null)
-				{
-					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
-					VentanaOpcion mensajito = new VentanaOpcion(iconito, "Cliente no encontrado,  Desea registrar el Cliente?");
-					mensajito.setModal(true);
-					mensajito.setVisible(true);
-					
-				}
-				if(opcion==JOptionPane.YES_OPTION)
 				{
 					btnBuscarCliente.setEnabled(false);
 					RegistrarCliente reg = new RegistrarCliente(null);
@@ -681,22 +674,16 @@ public class RegistrarFactura extends JDialog {
 		pnlCompra.setBackground(FondoClarito);
 		
 		btnBuscarProoveedor = new JButton("Buscar ");
+		btnBuscarProoveedor.setBackground(CyanMid);
 		btnBuscarProoveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 
-				int opcion= JOptionPane.NO_OPTION;
+			
 				
 				Proveedor prove= (Proveedor) Tienda.getInstance().buscarPersonaId(txtProveedor.getText());
+				
 				if(prove==null)
-				{
-					ImageIcon iconito = new ImageIcon(MensajeAlerta.class.getResource("/Imagenes/alert.png"));
-					VentanaOpcion mensajito = new VentanaOpcion(iconito, "Proveedor no encontrado,  Desea registrar el Proveedor?");
-					mensajito.setModal(true);
-					mensajito.setVisible(true);
-
-				}
-				if(opcion==JOptionPane.YES_OPTION)
 				{
 					btnBuscarProoveedor.setEnabled(false);
 					RegistrarProveedor reg = new RegistrarProveedor(null);
